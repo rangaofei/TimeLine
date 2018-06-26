@@ -41,7 +41,7 @@ public class AdapterUtil {
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(constructorParameter)
                 .addStatement("super(list)")
-                .addStatement("model = new $T()", ClassName.bestGuess(fullClassName))
+//                .addStatement("model = new $T()", ClassName.bestGuess(fullClassName))
                 .build();
     }
 

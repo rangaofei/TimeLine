@@ -153,7 +153,6 @@ public class TimeLineAnnotationProcessor extends AbstractProcessor {
         TypeName superClass = ParameterizedTypeName
                 .get(ClassName.bestGuess("io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter"), ClassName.bestGuess(element.getSimpleName().toString()));
         TypeSpec adapter = TypeSpec.classBuilder(adapterName)
-                .addField(ClassName.bestGuess(fullClassName), "model", Modifier.PRIVATE)
                 .superclass(superClass)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addMethods(Arrays.asList(constructor, getKeyLayoutIdMethod, getValueLayoutIdMethod,

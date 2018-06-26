@@ -33,7 +33,6 @@ public class TimeLineView extends RecyclerView {
     public TimeLineView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         getCustomAttr(attrs);
-//        initData();
     }
 
 
@@ -68,7 +67,6 @@ public class TimeLineView extends RecyclerView {
             default:
                 break;
         }
-//        divider = new LeftOnlyDivider(getContext(), timeLineConfig);
         this.setLayoutManager(layoutManager);
         this.addItemDecoration(divider);
         timeLineConfig.getAdapter().setTimeLineType(timeLineConfig.getTimeLineType());
@@ -76,12 +74,11 @@ public class TimeLineView extends RecyclerView {
     }
 
     private void getCustomAttr(AttributeSet attributeSet) {
-
         this.timeLineConfig = new TimeLineConfig();
         final TypedArray ta = getContext().obtainStyledAttributes(attributeSet, R.styleable.TimeLineView);
         float padding = ta.getDimension(R.styleable.TimeLineView_timePadding, 30);
         Drawable drawable = ta.getDrawable(R.styleable.TimeLineView_timeDrawable);
-        int color = ta.getColor(R.styleable.TimeLineView_timeStrokeColor, Color.parseColor("#00bfa5"));
+        int color = ta.getColor(R.styleable.TimeLineView_timeStrokeColor, Color.parseColor("#9e9e9e"));
         float strokeWidth = ta.getDimension(R.styleable.TimeLineView_timeStrokeWidth, 10);
         timeLineConfig.setPadding(padding);
         timeLineConfig.setTimeDrawable(drawable);

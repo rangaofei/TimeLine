@@ -21,6 +21,7 @@ public class TimeLineConfig {
     private TimeLineType timeLineType = TimeLineType.ONLY_LEFT;
     private AbstractTimeLineAdapter adapter;
 
+
     public TimeLineConfig() {
     }
 
@@ -77,11 +78,24 @@ public class TimeLineConfig {
         this.adapter = adapter;
     }
 
+
     public Bitmap getBitmap() {
         BitmapDrawable bd = (BitmapDrawable) timeDrawable;
         if (bd == null) {
             throw new BaseException(ExceptionMessage.DRAWABLE_NULL);
         }
         return bd.getBitmap();
+    }
+
+    private static class StepViewConfig {
+        private boolean showStepText;
+
+        public boolean isShowStepText() {
+            return showStepText;
+        }
+
+        public void setShowStepText(boolean showStepText) {
+            this.showStepText = showStepText;
+        }
     }
 }
