@@ -6,13 +6,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".MainActivity">
 
         <io.github.rangaofei.sakatimeline.TimeLineView
-            android:id="@+id/tlv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:timePadding="30dp"
+            app:timeStrokeWidth="3dp" />
+
+        <io.github.rangaofei.sakatimeline.TimeLineView
+            android:id="@+id/two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:timePadding="30dp"
+            app:timeStrokeWidth="3dp" />
+
+        <io.github.rangaofei.sakatimeline.TimeLineView
+            android:id="@+id/three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:timePadding="30dp"
+            app:timeStrokeWidth="3dp" />
+
+        <io.github.rangaofei.sakatimeline.TimeLineView
+            android:id="@+id/four"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             app:timePadding="30dp"
             app:timeStrokeWidth="3dp" />
 

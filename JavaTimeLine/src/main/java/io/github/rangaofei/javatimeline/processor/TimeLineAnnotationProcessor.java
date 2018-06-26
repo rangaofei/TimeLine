@@ -163,29 +163,4 @@ public class TimeLineAnnotationProcessor extends AbstractProcessor {
         javaFile.writeTo(filter);
     }
 
-    private Element processField(Element element, Class<? extends Annotation> timeLine) {
-        for (Element e : ElementFilter.fieldsIn(element.getEnclosedElements())) {
-            if (e.getAnnotation(timeLine) != null) {
-                note(e.getSimpleName() + "--------");
-                return e;
-            }
-        }
-        return null;
-    }
-
-
-    private void collectTextView(Element element, Map<String, String> keyList, Map<String, String> valueList) {
-        for (Element e : ElementFilter.fieldsIn(element.getEnclosedElements())) {
-            if (e.getAnnotation(TimeLineTextView.class) != null) {
-                TimeLineTextView timeLineTextView = e.getAnnotation(TimeLineTextView.class);
-                boolean isKey = timeLineTextView.key();
-                if (isKey) {
-                    keyList.put(e.getAnnotation(TimeLineTextView.class).value(), e.getSimpleName().toString());
-                } else {
-                    valueList.put(e.getAnnotation(TimeLineTextView.class).value(), e.getSimpleName().toString());
-                }
-            }
-        }
-    }
-
 }

@@ -1,12 +1,11 @@
 package io.github.rangaofei.sakatimeline;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
+import io.github.rangaofei.sakatimeline.divider.TimeLineType;
 import io.github.rangaofei.sakatimeline.exception.BaseException;
 import io.github.rangaofei.sakatimeline.exception.ExceptionMessage;
 
@@ -18,8 +17,11 @@ public class TimeLineConfig {
     private float timeStrokeWidth;
     private int timeColor;
 
-    private TimeLineType timeLineType = TimeLineType.ONLY_LEFT;
+
+    private TimeLineType type;
     private AbstractTimeLineAdapter adapter;
+
+    private StepViewConfig stepViewConfig;
 
 
     public TimeLineConfig() {
@@ -61,13 +63,6 @@ public class TimeLineConfig {
         this.timeColor = timeColor;
     }
 
-    public TimeLineType getTimeLineType() {
-        return timeLineType;
-    }
-
-    public void setTimeLineType(TimeLineType timeLineType) {
-        this.timeLineType = timeLineType;
-    }
 
 
     public AbstractTimeLineAdapter getAdapter() {
@@ -78,6 +73,13 @@ public class TimeLineConfig {
         this.adapter = adapter;
     }
 
+    public TimeLineType getType() {
+        return type;
+    }
+
+    public void setType(TimeLineType type) {
+        this.type = type;
+    }
 
     public Bitmap getBitmap() {
         BitmapDrawable bd = (BitmapDrawable) timeDrawable;
@@ -87,7 +89,16 @@ public class TimeLineConfig {
         return bd.getBitmap();
     }
 
-    private static class StepViewConfig {
+
+    public StepViewConfig getStepViewConfig() {
+        return stepViewConfig;
+    }
+
+    public void setStepViewConfig(StepViewConfig stepViewConfig) {
+        this.stepViewConfig = stepViewConfig;
+    }
+
+    public static class StepViewConfig {
         private boolean showStepText;
 
         public boolean isShowStepText() {

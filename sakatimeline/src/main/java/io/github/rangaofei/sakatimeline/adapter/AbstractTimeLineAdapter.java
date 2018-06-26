@@ -9,8 +9,12 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import io.github.rangaofei.javatimeline.annotations.TimeLine;
 import io.github.rangaofei.sakatimeline.R;
-import io.github.rangaofei.sakatimeline.TimeLineType;
+import io.github.rangaofei.sakatimeline.divider.TimeLineType;
+
+import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType.*;
+import static io.github.rangaofei.sakatimeline.divider.TimeLineType.TimeLineViewType.*;
 
 public abstract class AbstractTimeLineAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
@@ -64,23 +68,35 @@ public abstract class AbstractTimeLineAdapter<T> extends RecyclerView.Adapter<Ba
     @Override
     public void onBindViewHolder(@NonNull final BaseViewHolder holder, int position) {
         T data = null;
-        switch (timeLineType) {
-            case ONLY_LEFT:
-            case ONLY_RIGHT:
-                data = datas.get(position / holderCount);
-                break;
-            case LEFT_TO_RIGHT:
-            case RIGHT_TO_LEFT:
-                data = datas.get(position / 2);
-                break;
-            case LEFT_KEY:
-            case LEFT_VALUE:
-                data = datas.get(position / 2);
-                break;
-            case LEFT_STEP_PROGRESS:
-                data = datas.get(position);
-                break;
+        if (timeLineType instanceof StepViewType) {
+            switch ((StepViewType) timeLineType) {
+                case TOP_STEP_PROGRESS:
+                case BOTTOM_STEP_PROGRESS:
+                case LEFT_STEP_PROGRESS:
+                case RIGHT_STEP_PROGRESS:
+                    data = datas.get(position);
+                    break;
+                default:
+                    throw new RuntimeException("nu");
+            }
         }
+        if (timeLineType instanceof TimeLineViewType) {
+            switch ((TimeLineViewType) timeLineType) {
+                case ONLY_LEFT:
+                case ONLY_RIGHT:
+                    data = datas.get(position / holderCount);
+                    break;
+                case LEFT_TO_RIGHT:
+                case RIGHT_TO_LEFT:
+                    data = datas.get(position / 2);
+                    break;
+                case LEFT_KEY:
+                case LEFT_VALUE:
+                    data = datas.get(position / 2);
+                    break;
+            }
+        }
+
 
         if (data == null) {
             return;
@@ -91,10 +107,8 @@ public abstract class AbstractTimeLineAdapter<T> extends RecyclerView.Adapter<Ba
             ((KeyViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
                     if (itemClickListener != null) {
-                        itemClickListener.onKeyViewClick(holder.getAdapterPosition() / 2);
+                        itemClickListener.onKeyViewClick(holder.getAdapterPosition());
                     }
                 }
             });
@@ -105,7 +119,7 @@ public abstract class AbstractTimeLineAdapter<T> extends RecyclerView.Adapter<Ba
                 public void onClick(View v) {
 
                     if (itemClickListener != null) {
-                        itemClickListener.onValueViewClick(holder.getAdapterPosition() / 2);
+                        itemClickListener.onValueViewClick(holder.getAdapterPosition());
                     }
                 }
             });
@@ -114,30 +128,43 @@ public abstract class AbstractTimeLineAdapter<T> extends RecyclerView.Adapter<Ba
 
     @Override
     public int getItemCount() {
-        switch (timeLineType) {
-            case ONLY_RIGHT:
-            case ONLY_LEFT: {
-                if (getValueLayoutId() == -1 && getKeyLayoutId() == -1) {
-
-                    return 0;
-                }
-                if (getValueLayoutId() == -1 || getKeyLayoutId() == -1) {
-                    holderCount = 1;
+        if (timeLineType instanceof StepViewType) {
+            switch ((StepViewType) timeLineType) {
+                case TOP_STEP_PROGRESS:
+                case BOTTOM_STEP_PROGRESS:
+                case LEFT_STEP_PROGRESS:
+                case RIGHT_STEP_PROGRESS:
                     return datas.size();
-                }
-                holderCount = 2;
-                return datas.size() * 2;
+                default:
+                    throw new RuntimeException("nu");
             }
-            case RIGHT_TO_LEFT:
-            case LEFT_TO_RIGHT:
-                return datas.size() * 2;
-            case LEFT_KEY:
-            case LEFT_VALUE:
-                return datas.size() * 2;
-            case LEFT_STEP_PROGRESS:
-                return datas.size();
-            default:
-                return datas.size() * 2;
+        }
+
+        if (timeLineType instanceof TimeLineViewType) {
+            switch ((TimeLineViewType) timeLineType) {
+                case ONLY_RIGHT:
+                case ONLY_LEFT: {
+                    if (getValueLayoutId() == -1 && getKeyLayoutId() == -1) {
+                        return 0;
+                    }
+                    if (getValueLayoutId() == -1 || getKeyLayoutId() == -1) {
+                        holderCount = 1;
+                        return datas.size();
+                    }
+                    holderCount = 2;
+                    return datas.size() * 2;
+                }
+                case RIGHT_TO_LEFT:
+                case LEFT_TO_RIGHT:
+                    return datas.size() * 2;
+                case LEFT_KEY:
+                case LEFT_VALUE:
+                    return datas.size() * 2;
+                default:
+                    return datas.size() * 2;
+            }
+        } else {
+            return datas.size();
         }
 
     }
@@ -160,7 +187,7 @@ public abstract class AbstractTimeLineAdapter<T> extends RecyclerView.Adapter<Ba
         if (getValueLayoutId() == -1 && getKeyLayoutId() != -1) {
             return ItemTypeStrategy.getItemTypeOnlyKey(position, timeLineType);
         }
-        if (timeLineType == TimeLineType.LEFT_STEP_PROGRESS) {
+        if (timeLineType instanceof StepViewType) {
             return ItemTypeStrategy.getItemTypeOnlyValue(position, timeLineType);
         }
         return ItemTypeStrategy.getItemType(position, timeLineType);

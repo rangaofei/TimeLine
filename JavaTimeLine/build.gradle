@@ -18,8 +18,8 @@ dependencies {
 
 
 
-def siteUrl = 'https://github.com/rangaofei'
-def gitUrl = 'https://github.com/openproject/LessCode.git'
+def siteUrl = 'https://github.com/rangaofei/TimeLine'
+def gitUrl = 'https://github.com/rangaofei/TimeLine'
 group = "com.rangaofei"
 
 install {

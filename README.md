@@ -5,7 +5,7 @@
 ## 使用方式
 
 ```groovy
-implementation 'com.rangaofei:sakatimeline:0.0.6''
+implementation 'com.rangaofei:sakatimeline:0.0.8''
 ```
 然后修改app级别的module的build.gralde 文件：
 
@@ -68,7 +68,7 @@ binding.tlv.setTimeLineConfig(adapter, TimeLineType.LEFT_STEP_PROGRESS);
 这样我们就完成了基本设置。
 运行可以看到效果图：
 
-![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/simple_stepview_left.png)
+![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/simple_stepview_all.png)
 
 ## 注解使用
 

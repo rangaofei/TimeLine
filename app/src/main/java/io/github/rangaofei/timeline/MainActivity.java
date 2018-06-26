@@ -2,24 +2,16 @@ package io.github.rangaofei.timeline;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.BaseAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.rangaofei.javatimeline.annotations.TimeLine;
-import io.github.rangaofei.sakatimeline.TimeLineConfig;
-import io.github.rangaofei.sakatimeline.TimeLineType;
 import io.github.rangaofei.sakatimeline.TimeLineView;
 import io.github.rangaofei.sakatimeline.adapter.ItemClickListener;
-import io.github.rangaofei.sakatimeline.divider.TimeLineDivider;
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
+import io.github.rangaofei.sakatimeline.divider.TimeLineType;
 import io.github.rangaofei.timeline.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +49,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.tlv.setTimeLineConfig(adapter, TimeLineType.LEFT_STEP_PROGRESS);
+        ((TimeLineView) findViewById(R.id.one)).
+                setTimeLineConfig(adapter, TimeLineType.StepViewType.BOTTOM_STEP_PROGRESS);
+        ((TimeLineView) findViewById(R.id.two)).
+                setTimeLineConfig(adapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS);
+        ((TimeLineView) findViewById(R.id.three)).
+                setTimeLineConfig(adapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS);
+        ((TimeLineView) findViewById(R.id.four)).
+                setTimeLineConfig(adapter, TimeLineType.StepViewType.RIGHT_STEP_PROGRESS);
+
 
     }
 }

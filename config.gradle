@@ -1,6 +1,6 @@
 def majorVersion = 0
 def minorVersion = 0
-def patchVersion = 6
+def patchVersion = 8
 
 def version_code = majorVersion * 1000 + minorVersion * 10 + patchVersion
 

@@ -5,5 +5,6 @@
         <attr name="timeDrawable" format="color|reference" />
         <attr name="timeStrokeWidth" format="dimension" />
         <attr name="timeStrokeColor" format="color" />
+        <attr name="stepShowOrder" format="boolean" />
     </declare-styleable>
 </resources>
