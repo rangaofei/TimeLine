@@ -68,4 +68,18 @@ binding.tlv.setTimeLineConfig(adapter, TimeLineType.LEFT_STEP_PROGRESS);
 这样我们就完成了基本设置。
 运行可以看到效果图：
 
-![simple_stepview_left]()
+![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/simple_stepview_left.png)
+
+## 注解使用
+
+### @TimeLine
+
+用于标记类，被标记的类将作为model使用
+
+- name 不为空的时候生成的adapter名称为name，为空的时候生成的adapter名称为modle的name加"Adapter"
+- keyLayoutId 用来设置KeyViewHolder的布局文件，必须是string类型，例如："R.layout.item_key"，
+
+- valueLayoutId 用来设置ValueViewHolder的布局文件，必须是string类型，例如："R.layout.item_value"
+
+这里的id必须和下文中将要介绍的TimeLineTextView和TimeLineImageView中的key对应，key为true，则必须对应keyLayoutId，
+key为false，则必须对应valueLayoutId。
