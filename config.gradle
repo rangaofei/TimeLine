@@ -1,0 +1,10 @@
+def majorVersion = 0
+def minorVersion = 0
+def patchVersion = 5
+
+def version_code = majorVersion * 1000 + minorVersion * 10 + patchVersion
+
+def version_name = majorVersion + "." + minorVersion + "." + patchVersion
+ext{
+    version=version_name
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TimeLineView">
+        <attr name="timePadding" format="dimension" />
+        <attr name="timeDrawable" format="color|reference" />
+        <attr name="timeStrokeWidth" format="dimension" />
+        <attr name="timeStrokeColor" format="color" />
+    </declare-styleable>
+</resources>
