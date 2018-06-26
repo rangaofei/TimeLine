@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
-import io.github.rangaofei.sakatimeline.customlayoutmanager.RightLinearLayoutManager;
+import io.github.rangaofei.sakatimeline.customlayoutmanager.PerfectLinearLayoutManager;
 import io.github.rangaofei.sakatimeline.customlayoutmanager.TimeLineGridLayoutManager;
 import io.github.rangaofei.sakatimeline.divider.BaseDivider;
 import io.github.rangaofei.sakatimeline.divider.LeftOnlyDivider;
@@ -20,7 +20,6 @@ import io.github.rangaofei.sakatimeline.divider.SingleStepViewDivider;
 import io.github.rangaofei.sakatimeline.divider.TimeLineType;
 
 import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType.*;
-import static io.github.rangaofei.sakatimeline.divider.TimeLineType.TimeLineViewType.*;
 
 public class TimeLineView extends RecyclerView {
     private LayoutManager layoutManager;
@@ -42,12 +41,20 @@ public class TimeLineView extends RecyclerView {
         if (timeLineConfig.getType() instanceof StepViewType) {
             switch ((StepViewType) timeLineConfig.getType()) {
                 case TOP_STEP_PROGRESS:
+                    layoutManager = new PerfectLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    ((PerfectLinearLayoutManager) layoutManager).setLayoutTTB(true);
+                    break;
                 case BOTTOM_STEP_PROGRESS:
-                    layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    layoutManager = new PerfectLinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    ((PerfectLinearLayoutManager) layoutManager).setLayoutTTB(false);
                     break;
                 case LEFT_STEP_PROGRESS:
+                    layoutManager = new PerfectLinearLayoutManager(getContext());
+                    ((PerfectLinearLayoutManager) layoutManager).setRTL(false);
+                    break;
                 case RIGHT_STEP_PROGRESS:
-                    layoutManager = new LinearLayoutManager(getContext());
+                    layoutManager = new PerfectLinearLayoutManager(getContext());
+                    ((PerfectLinearLayoutManager) layoutManager).setRTL(true);
                     break;
             }
             divider = new SingleStepViewDivider(getContext(), timeLineConfig);
@@ -57,7 +64,7 @@ public class TimeLineView extends RecyclerView {
             divider = new LeftOnlyDivider(getContext(), timeLineConfig);
 
         } else if (TimeLineViewType.ONLY_RIGHT.equals(timeLineConfig.getType())) {
-            layoutManager = new RightLinearLayoutManager(getContext());
+            layoutManager = new PerfectLinearLayoutManager(getContext());
             divider = new RightOnlyDivider(getContext(), timeLineConfig);
 
         } else if (TimeLineViewType.LEFT_TO_RIGHT.equals(timeLineConfig.getType())) {

@@ -28,12 +28,12 @@ import static android.support.v7.widget.RecyclerView.NO_POSITION;
  * A {@link android.support.v7.widget.RecyclerView.LayoutManager} implementation which provides
  * similar functionality to {@link android.widget.ListView}.
  */
-public class RightLinearLayoutManager extends RecyclerView.LayoutManager implements
+public class PerfectLinearLayoutManager extends RecyclerView.LayoutManager implements
         ItemTouchHelper.ViewDropHandler, RecyclerView.SmoothScroller.ScrollVectorProvider {
 
     private static final String TAG = "LinearLayoutManager";
 
-    static final boolean DEBUG = true;
+    static final boolean DEBUG = false;
 
     public static final int HORIZONTAL = RecyclerView.HORIZONTAL;
 
@@ -42,6 +42,7 @@ public class RightLinearLayoutManager extends RecyclerView.LayoutManager impleme
     public static final int INVALID_OFFSET = Integer.MIN_VALUE;
 
     static final boolean VERBOSE_TRACING = false;
+    private boolean isRTL;
 
     private final ViewBoundsCheck.Callback mHorizontalBoundCheckCallback =
             new ViewBoundsCheck.Callback() {
@@ -227,13 +228,14 @@ public class RightLinearLayoutManager extends RecyclerView.LayoutManager impleme
      * Number of items to prefetch when first coming on screen with new data.
      */
     private int mInitialPrefetchItemCount = 2;
+    private boolean layoutTTB;
 
     /**
      * Creates a vertical LinearLayoutManager
      *
      * @param context Current context, will be used to access resources.
      */
-    public RightLinearLayoutManager(Context context) {
+    public PerfectLinearLayoutManager(Context context) {
         this(context, RecyclerView.VERTICAL, false);
     }
 
@@ -243,8 +245,8 @@ public class RightLinearLayoutManager extends RecyclerView.LayoutManager impleme
      *                      #VERTICAL}.
      * @param reverseLayout When set to true, layouts from end to start.
      */
-    public RightLinearLayoutManager(Context context, @RecyclerView.Orientation int orientation,
-                                    boolean reverseLayout) {
+    public PerfectLinearLayoutManager(Context context, @RecyclerView.Orientation int orientation,
+                                      boolean reverseLayout) {
         setOrientation(orientation);
         setReverseLayout(reverseLayout);
     }
@@ -257,8 +259,8 @@ public class RightLinearLayoutManager extends RecyclerView.LayoutManager impleme
      * @attr ref android.support.v7.recyclerview.R.styleable#RecyclerView_reverseLayout
      * @attr ref android.support.v7.recyclerview.R.styleable#RecyclerView_stackFromEnd
      */
-    public RightLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr,
-                                    int defStyleRes) {
+    public PerfectLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr,
+                                      int defStyleRes) {
         Properties properties = getProperties(context, attrs, defStyleAttr, defStyleRes);
         setOrientation(properties.orientation);
         setReverseLayout(properties.reverseLayout);
@@ -1067,7 +1069,12 @@ public class RightLinearLayoutManager extends RecyclerView.LayoutManager impleme
     }
 
     protected boolean isLayoutRTL() {
-        return getLayoutDirection() != ViewCompat.LAYOUT_DIRECTION_RTL;
+        return isRTL;
+    }
+
+
+    public void setRTL(boolean RTL) {
+        isRTL = RTL;
     }
 
     void ensureLayoutState() {
@@ -1682,8 +1689,14 @@ public class RightLinearLayoutManager extends RecyclerView.LayoutManager impleme
                 bottom = layoutState.mOffset + result.mConsumed;
             }
         } else {
-            top = getPaddingTop();
-            bottom = top + mOrientationHelper.getDecoratedMeasurementInOther(view);
+            if (isLayoutTTB()) {
+                top = getPaddingTop();
+                bottom = top + mOrientationHelper.getDecoratedMeasurementInOther(view);
+            } else {
+                bottom = getHeight() - getPaddingBottom();
+                Log.d("---", "bottom=" + getPaddingBottom() + ",top=" + getPaddingTop());
+                top = bottom - mOrientationHelper.getDecoratedMeasurementInOther(view);
+            }
 
             if (layoutState.mLayoutDirection == LayoutState.LAYOUT_START) {
                 right = layoutState.mOffset;
@@ -2202,6 +2215,14 @@ public class RightLinearLayoutManager extends RecyclerView.LayoutManager impleme
                                 - mOrientationHelper.getDecoratedMeasurement(view));
             }
         }
+    }
+
+    public boolean isLayoutTTB() {
+        return layoutTTB;
+    }
+
+    public void setLayoutTTB(boolean layoutTTB) {
+        this.layoutTTB = layoutTTB;
     }
 
     /**

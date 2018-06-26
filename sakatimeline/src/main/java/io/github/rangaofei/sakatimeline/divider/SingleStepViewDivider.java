@@ -7,9 +7,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import io.github.rangaofei.sakatimeline.TimeLineConfig;
+import io.github.rangaofei.sakatimeline.customlayoutmanager.PerfectLinearLayoutManager;
 import io.github.rangaofei.sakatimeline.exception.ExceptionMessage;
 
 import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType.BOTTOM_STEP_PROGRESS;
@@ -36,8 +38,8 @@ public class SingleStepViewDivider extends BaseDivider {
     @Override
     public void onChildDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-        if (layoutManager instanceof LinearLayoutManager) {
-            switch (((LinearLayoutManager) layoutManager).getOrientation()) {
+        if (layoutManager instanceof PerfectLinearLayoutManager) {
+            switch (((PerfectLinearLayoutManager) layoutManager).getOrientation()) {
                 case LinearLayoutManager.HORIZONTAL:
                     drawHorizontalStep(c, parent);
                     break;
@@ -58,9 +60,9 @@ public class SingleStepViewDivider extends BaseDivider {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-        if (layoutManager instanceof LinearLayoutManager) {
-            switch (((LinearLayoutManager) layoutManager).getOrientation()) {
-                case LinearLayoutManager.HORIZONTAL:
+        if (layoutManager instanceof PerfectLinearLayoutManager) {
+            switch (((PerfectLinearLayoutManager) layoutManager).getOrientation()) {
+                case PerfectLinearLayoutManager.HORIZONTAL:
                     int realHPadding = (int) padding;
                     if (timeLineConfig.getType() == TOP_STEP_PROGRESS) {
                         outRect.set(DEFAULT_DIVIDER_GAP, realHPadding, 0, DEFAULT_DIVIDER_GAP);
@@ -68,7 +70,7 @@ public class SingleStepViewDivider extends BaseDivider {
                         outRect.set(DEFAULT_DIVIDER_GAP, 0, DEFAULT_DIVIDER_GAP, realHPadding);
                     }
                     break;
-                case LinearLayoutManager.VERTICAL:
+                case PerfectLinearLayoutManager.VERTICAL:
                     int realVPadding = (int) padding;
                     if (timeLineConfig.getType() == LEFT_STEP_PROGRESS) {
                         outRect.set(realVPadding, DEFAULT_DIVIDER_GAP, 0, DEFAULT_DIVIDER_GAP);
@@ -110,7 +112,9 @@ public class SingleStepViewDivider extends BaseDivider {
             if (timeLineConfig.getType() == LEFT_STEP_PROGRESS) {
                 circleX = view.getLeft() - (int) padding / 2;
             } else if (timeLineConfig.getType() == RIGHT_STEP_PROGRESS) {
+
                 circleX = view.getRight() + (int) padding / 2;
+                Log.d("---", "i=" + i + ",circleY=" + circleX);
             }
             c.drawLine(circleX, view.getTop(), circleX, view.getBottom(), circlePaint);
             c.drawCircle(circleX, circleY, padding / 3, circlePaint);

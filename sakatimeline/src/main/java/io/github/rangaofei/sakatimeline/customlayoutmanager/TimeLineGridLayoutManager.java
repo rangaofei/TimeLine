@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import java.util.Arrays;
 
 
-public class TimeLineGridLayoutManager extends RightLinearLayoutManager {
+public class TimeLineGridLayoutManager extends PerfectLinearLayoutManager {
 
     private static final boolean DEBUG = false;
     private static final String TAG = "GridLayoutManager";

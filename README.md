@@ -5,7 +5,7 @@
 ## 使用方式
 
 ```groovy
-implementation 'com.rangaofei:sakatimeline:0.0.8''
+implementation 'com.rangaofei:sakatimeline:0.0.9''
 ```
 然后修改app级别的module的build.gralde 文件：
 
@@ -70,6 +70,7 @@ binding.tlv.setTimeLineConfig(adapter, TimeLineType.LEFT_STEP_PROGRESS);
 
 ![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/simple_stepview_all.png)
 
+![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/SimpleStepViewUnnormal.png)
 ## 注解使用
 
 ### @TimeLine
