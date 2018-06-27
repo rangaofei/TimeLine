@@ -48,6 +48,8 @@ public class StepViewModel {
     }
 }
 ```
+注意，每个变量必须采用public修饰，否则获取不到变量的值
+
 然后先build一次，在需要使用model的时候要写入
 
 ```java
