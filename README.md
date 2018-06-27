@@ -72,7 +72,7 @@ binding.tlv.setTimeLineConfig(adapter, TimeLineType.StepViewType.RIGHT_STEP_PROG
 
 ![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/SimpleStepViewUnnormal.png)
 
-![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/StepView_anim.webm)
+![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/StepViewAnim.gif)
 ## 注解使用
 
 ### @TimeLine
