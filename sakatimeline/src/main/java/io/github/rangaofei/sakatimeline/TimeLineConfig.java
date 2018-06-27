@@ -64,7 +64,6 @@ public class TimeLineConfig {
     }
 
 
-
     public AbstractTimeLineAdapter getAdapter() {
         return adapter;
     }
@@ -100,6 +99,9 @@ public class TimeLineConfig {
 
     public static class StepViewConfig {
         private boolean showStepText;
+        private int dividerNum;
+        private int preColor;
+        private int afterColor;
 
         public boolean isShowStepText() {
             return showStepText;
@@ -107,6 +109,31 @@ public class TimeLineConfig {
 
         public void setShowStepText(boolean showStepText) {
             this.showStepText = showStepText;
+        }
+
+
+        public int getDividerNum() {
+            return dividerNum;
+        }
+
+        public void setDividerNum(int dividerNum) {
+            this.dividerNum = dividerNum;
+        }
+
+        public int getPreColor() {
+            return preColor;
+        }
+
+        public void setPreColor(int preColor) {
+            this.preColor = preColor;
+        }
+
+        public int getAfterColor() {
+            return afterColor;
+        }
+
+        public void setAfterColor(int afterColor) {
+            this.afterColor = afterColor;
         }
     }
 }

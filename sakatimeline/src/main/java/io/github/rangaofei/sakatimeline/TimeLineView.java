@@ -58,6 +58,7 @@ public class TimeLineView extends RecyclerView {
                     break;
             }
             divider = new SingleStepViewDivider(getContext(), timeLineConfig);
+
         }
         if (TimeLineViewType.ONLY_LEFT.equals(timeLineConfig.getType())) {
             layoutManager = new LinearLayoutManager(getContext());
@@ -90,12 +91,16 @@ public class TimeLineView extends RecyclerView {
         int color = ta.getColor(R.styleable.TimeLineView_timeStrokeColor, Color.parseColor("#9e9e9e"));
         float strokeWidth = ta.getDimension(R.styleable.TimeLineView_timeStrokeWidth, 10);
         boolean showStepOrder = ta.getBoolean(R.styleable.TimeLineView_stepShowOrder, false);
+        int stepPreColor = ta.getColor(R.styleable.TimeLineView_stepPreColor, Color.parseColor("#259b24"));
+        int stepAfterColor = ta.getColor(R.styleable.TimeLineView_stepAfterColor, Color.parseColor("#9e9e9e"));
         timeLineConfig.setPadding(padding);
         timeLineConfig.setTimeDrawable(drawable);
         timeLineConfig.setTimeColor(color);
         timeLineConfig.setTimeStrokeWidth((int) strokeWidth);
         TimeLineConfig.StepViewConfig stepViewConfig = new TimeLineConfig.StepViewConfig();
         stepViewConfig.setShowStepText(showStepOrder);
+        stepViewConfig.setPreColor(stepPreColor);
+        stepViewConfig.setAfterColor(stepAfterColor);
         timeLineConfig.setStepViewConfig(stepViewConfig);
         ta.recycle();
     }
@@ -108,5 +113,33 @@ public class TimeLineView extends RecyclerView {
         this.timeLineConfig.setAdapter(adapter);
         this.timeLineConfig.setType(type);
         initData();
+    }
+
+    public void setTimeLineConfig(AbstractTimeLineAdapter adapter, TimeLineType type, int dividerNum) {
+        if (this.timeLineConfig == null) {
+            throw new RuntimeException("nu");
+        }
+        this.timeLineConfig.setAdapter(adapter);
+        this.timeLineConfig.setType(type);
+        this.timeLineConfig.getStepViewConfig().setDividerNum(dividerNum);
+        initData();
+    }
+
+    public void updateDividerNum(int dividerNum, boolean showAnim) {
+        if (this.timeLineConfig == null || this.timeLineConfig.getStepViewConfig() == null) {
+            throw new RuntimeException("nu");
+        }
+
+        if (this.timeLineConfig.getStepViewConfig().getDividerNum() == dividerNum) {
+            return;
+        }
+        if (this.divider instanceof SingleStepViewDivider) {
+            ((SingleStepViewDivider) divider).updateDividerNum(dividerNum, showAnim);
+        }
+
+    }
+
+    public void updateDividerNum(int dividerNum) {
+        updateDividerNum(dividerNum, true);
     }
 }

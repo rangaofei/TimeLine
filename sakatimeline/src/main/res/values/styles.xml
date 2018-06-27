@@ -6,5 +6,7 @@
         <attr name="timeStrokeWidth" format="dimension" />
         <attr name="timeStrokeColor" format="color" />
         <attr name="stepShowOrder" format="boolean" />
+        <attr name="stepPreColor" format="color" />
+        <attr name="stepAfterColor" format="color" />
     </declare-styleable>
 </resources>

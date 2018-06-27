@@ -2,6 +2,7 @@ package io.github.rangaofei.timeline;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -50,14 +51,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ((TimeLineView) findViewById(R.id.one)).
-                setTimeLineConfig(adapter, TimeLineType.StepViewType.BOTTOM_STEP_PROGRESS);
+                setTimeLineConfig(adapter, TimeLineType.StepViewType.BOTTOM_STEP_PROGRESS,1);
         ((TimeLineView) findViewById(R.id.two)).
-                setTimeLineConfig(adapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS);
+                setTimeLineConfig(adapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS,1);
         ((TimeLineView) findViewById(R.id.three)).
-                setTimeLineConfig(adapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS);
+                setTimeLineConfig(adapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS,3);
         ((TimeLineView) findViewById(R.id.four)).
-                setTimeLineConfig(adapter, TimeLineType.StepViewType.RIGHT_STEP_PROGRESS);
+                setTimeLineConfig(adapter, TimeLineType.StepViewType.RIGHT_STEP_PROGRESS,3);
 
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(2);
+                ((TimeLineView) findViewById(R.id.two)).updateDividerNum(3);
+                ((TimeLineView) findViewById(R.id.three)).updateDividerNum(2);
+                ((TimeLineView) findViewById(R.id.four)).updateDividerNum(2);
+            }
+        }, 3000);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(1);
+                ((TimeLineView) findViewById(R.id.two)).updateDividerNum(1);
+                ((TimeLineView) findViewById(R.id.three)).updateDividerNum(1);
+                ((TimeLineView) findViewById(R.id.four)).updateDividerNum(1);
+            }
+        }, 6000);
     }
 }

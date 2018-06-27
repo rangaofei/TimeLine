@@ -5,12 +5,12 @@ public interface TimeLineType {
     //stepview的枚举类
     enum StepViewType implements TimeLineType {
         LEFT_STEP_PROGRESS,//左侧显示当前的步骤，右侧显示内容
-        RIGHT_STEP_PROGRESS,
-        TOP_STEP_PROGRESS,
-        BOTTOM_STEP_PROGRESS,
+        RIGHT_STEP_PROGRESS,//右侧显示当前的步骤，左侧显示内容
+        TOP_STEP_PROGRESS,//上侧显示当前的步骤，下侧显示内容
+        BOTTOM_STEP_PROGRESS,//下侧显示当前的步骤，上侧显示内容
     }
 
-    enum TimeLineViewType implements TimeLineType{
+    enum TimeLineViewType implements TimeLineType {
         ONLY_RIGHT,//key和value在左侧侧显示，右侧显示时间轴
         ONLY_LEFT,//key和value在右侧显示，左侧显示时间轴
         LEFT_TO_RIGHT,//先左侧显示key，右侧显示value，中间显示时间轴，然后右侧显示key，左侧显示value，交替

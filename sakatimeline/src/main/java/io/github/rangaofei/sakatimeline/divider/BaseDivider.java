@@ -17,7 +17,11 @@ public abstract class BaseDivider extends RecyclerView.ItemDecoration {
     protected Context context;
     protected float padding;
     protected TimeLineConfig timeLineConfig;
-    protected static final int DEFAULT_DIVIDER_GAP = 0;
+    protected Rect globalRect = new Rect();
+    protected static final int DEFAULT_LEFT_DIVIDER_GAP = 10;
+    protected static final int DEFAULT_RIGHT_DIVIDER_GAP = 10;
+    protected static final int DEFAULT_TOP_DIVIDER_GAP = 10;
+    protected static final int DEFAULT_BOTTOM_DIVIDER_GAP = 10;
 
 
     public BaseDivider(Context context, TimeLineConfig timeLineConfig) {
@@ -40,24 +44,9 @@ public abstract class BaseDivider extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
-        if (layoutManager == null) {
-            throwException(LAYOUT_MANAGER_NULL);
-        }
-        if (layoutManager instanceof LinearLayoutManager) {
-            int orientation = ((LinearLayoutManager) layoutManager).getOrientation();
-            switch (orientation) {
-                case LinearLayoutManager.VERTICAL:
-                    getVerticalItemOffsets(outRect, view, parent, state);
-                    break;
-                case LinearLayoutManager.HORIZONTAL:
-                    getHorizontalItemOffsets(outRect, view, parent, state);
-                    break;
-                default:
-                    throwException(UNKNOWN_ORIENTATION);
-                    break;
-            }
-        }
+        outRect.set(DEFAULT_LEFT_DIVIDER_GAP, DEFAULT_TOP_DIVIDER_GAP,
+                DEFAULT_RIGHT_DIVIDER_GAP, DEFAULT_BOTTOM_DIVIDER_GAP);
+        globalRect.set(outRect);
 
     }
 
