@@ -7,7 +7,7 @@
 ```groovy
 implementation 'com.rangaofei:sakatimeline:0.0.9''
 ```
-然后修改app级别的module的build.gralde 文件：
+然后修改app级别的module的build.gradle 文件：
 
 ```groovy
 android {
@@ -70,11 +70,15 @@ binding.tlv.setTimeLineConfig(adapter, TimeLineType.StepViewType.RIGHT_STEP_PROG
 这样我们就完成了基本设置。
 运行可以看到效果图：
 
-![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/simple_stepview_all.png)
+ <div align="center">
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/simple_stepview_all.png" height="960" width="540" >
 
-![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/SimpleStepViewUnnormal.png)
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/SimpleStepViewUnnormal.png" height="960" width="540" >
 
-![simple_stepview_left](https://github.com/rangaofei/TimeLine/blob/master/Pics/StepViewAnim.gif)
+
+
+  </div>
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/StepViewAnim.gif" height="330" width="190" >
 ## 注解使用
 
 ### @TimeLine
