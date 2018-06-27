@@ -49,7 +49,6 @@ public class SingleStepViewDivider extends BaseDivider {
         circlePaint = new Paint();
         circlePaint.setStrokeWidth(5);
         circlePaint.setAntiAlias(true);
-//        circlePaint.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.CLEAR));
         fm = textPaint.getFontMetrics();
 
         currentNum = timeLineConfig.getStepViewConfig().getDividerNum();
@@ -190,6 +189,9 @@ public class SingleStepViewDivider extends BaseDivider {
     }
 
     public void updateDividerNum(int num, boolean showAnim) {
+        if (recyclerView == null) {
+            return;
+        }
         if (num > recyclerView.getChildCount()) {
             num = recyclerView.getChildCount();
         }
