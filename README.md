@@ -71,14 +71,14 @@ binding.tlv.setTimeLineConfig(adapter, TimeLineType.StepViewType.RIGHT_STEP_PROG
 运行可以看到效果图：
 
  <div align="center">
- <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/simple_stepview_all.png" height="960" width="540" >
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/simple_stepview_all.png" height="480" width="270" >
 
- <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/SimpleStepViewUnnormal.png" height="960" width="540" >
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/SimpleStepViewUnnormal.png" height="480" width="270" >
 
 
 
   </div>
- <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/StepViewAnim.gif" height="330" width="190" >
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/StepViewAnim.gif" height="480" width="270" >
 ## 注解使用
 
 ### @TimeLine
