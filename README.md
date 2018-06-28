@@ -2,10 +2,10 @@
 
 一个简单的时间线控件，采用recyclerview实现。
 
-## 使用方式
+## 集成方式
 
 ```groovy
-implementation 'com.rangaofei:sakatimeline:0.0.9''
+implementation 'com.rangaofei:sakatimeline:0.1.0''
 ```
 然后修改app级别的module的build.gradle 文件：
 
@@ -22,9 +22,9 @@ android {
 }
 ```
 
-假如没问题的话就集成成功了
+假如没出现问题的话就集成成功了
 
-### 使用setpview
+## 使用setpview
 
 首先要定义一个model，这个model可以直接要编写一些注解
 
@@ -75,11 +75,87 @@ binding.tlv.setTimeLineConfig(adapter, TimeLineType.StepViewType.RIGHT_STEP_PROG
 
  <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/SimpleStepViewUnnormal.png" height="480" width="270" >
 
-
-
   </div>
+
+   <div align="center">
  <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/StepViewAnim.gif" height="480" width="270" >
-## 注解使用
+  </div>
+## 为item设置不同的样式
+
+注意：目前只支持textview的部分属性的不同样式设置
+
+同样是前边的类，稍微修改一下：
+
+```java
+@TimeLine(valueLayoutId = "R.layout.item_value")
+public class StepViewModel {
+
+    @TimeLineTextView(key = false, id = "R.id.value", style = "R.style.StepView1", styleAnchor = "R.style.StepView2")
+    public String text;
+    @TimeLineAnchor({"R.id.value"})
+    public boolean right;
+
+    public StepViewModel(String text, boolean right) {
+        this.text = text;
+        this.right = right;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+}
+```
+
+我们为TimeLineTextView加上了style和styleANdchor的值，这两个值是自己定义的style样式，这些样式只包含部分attr
+```xml
+    <attr name="android:textSize"/>
+    <attr name="android:textColor"/>
+    <attr name="android:textColorHint"/>
+    <attr name="android:textColorLink"/>
+    <attr name="android:textStyle"/>
+    <attr name="android:typeface"/>
+    <attr name="android:fontFamily"/>
+    <attr name="android:shadowColor"/
+    ><attr name="android:shadowDy"/>
+    <attr name="android:shadowDx"/>
+    <attr name="android:shadowRadius"/>
+    <attr name="android:backGround"/>
+```
+下面是示例中定义的两个style：
+```xml
+<style name="StepView1" parent="AppTheme">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="StepView2" parent="AppTheme">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/white</item>
+    </style>
+```
+
+修改主界面代码：
+
+```java
+stepViewModels.add(new StepViewModel("快递发出\n我没收到", false));
+        stepViewModels.add(new StepViewModel("快递签收我收到了", false));
+        stepViewModels.add(new StepViewModel("快递丢失", true));
+```
+可以看到第三个item设置为true了，那么StepViewModel中的styleAnchor将会生效，
+其他未设置为true的item生效的将会是style。
+
+注意设置background只支持int形式的color，设置背景使用了动态代理。
+
+<div align="center">
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/StepViewDiff.png" height="480" width="270" >
+  </div>
+
+## 注解说明
 
 ### @TimeLine
 
@@ -116,3 +192,4 @@ public void updateDividerNum(int dividerNum)
 public void updateDividerNum(int dividerNum, boolean showAnim)
 
 ```
+## 设置不同的样式

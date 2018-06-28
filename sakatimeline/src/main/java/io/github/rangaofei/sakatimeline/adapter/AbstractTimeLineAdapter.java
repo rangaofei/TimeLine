@@ -181,7 +181,6 @@ public abstract class AbstractTimeLineAdapter<T> extends RecyclerView.Adapter<Ba
     @Override
     public int getItemViewType(int position) {
         if (getKeyLayoutId() == -1 && getValueLayoutId() != -1) {
-            Log.d("---", "value only");
             return ItemTypeStrategy.getItemTypeOnlyValue(position, timeLineType);
         }
         if (getValueLayoutId() == -1 && getKeyLayoutId() != -1) {

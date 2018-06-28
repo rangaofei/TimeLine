@@ -1,11 +1,13 @@
 package io.github.rangaofei.javatimeline;
 
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,9 +58,7 @@ public class AdapterUtil {
 
     public static MethodSpec generateBindMethod(String methodName,
                                                 String fullClassName,
-                                                List<TextViewAttr> textView,
-                                                List<ImageViewAttr> imageView,
-                                                String holderName) {
+                                                CodeBlock codeBlock) {
         ParameterSpec one = ParameterSpec
                 .builder(ClassName.bestGuess("io.github.rangaofei.sakatimeline.adapter.BaseViewHolder"), "holder")
                 .build();
@@ -70,85 +70,29 @@ public class AdapterUtil {
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameters(Arrays.asList(one, two));
-        for (TextViewAttr attr : textView) {
-            bindItemMethod.addStatement("((android.widget.TextView) (((" + holderName +
-                            ")holder).itemView.findViewById($L))).setText(data.$L)",
-                    attr.getTextViewId(), attr.getTextString());
-            if (attr.getTextColor() != null) {
-                bindItemMethod.addStatement("((android.widget.TextView) (((" + holderName +
-                                ")holder).itemView.findViewById($L))).setTextColor($L)",
-                        attr.getTextViewId(), attr.getTextColor());
-            }
-            if (attr.getTextSize() != null) {
-                bindItemMethod.addStatement("((android.widget.TextView) (((" + holderName +
-                                ")holder).itemView.findViewById($L))).setTextSize($L)",
-                        attr.getTextViewId(), attr.getTextSize());
-            }
-            if (attr.getTextSize() != null) {
-                bindItemMethod.addStatement("((android.widget.TextView) (((" + holderName +
-                                ")holder).itemView.findViewById($L))).setBackgroundColor($L)",
-                        attr.getTextViewId(), attr.getBackColor());
-            }
-        }
 
-        for (ImageViewAttr attr : imageView) {
-            bindItemMethod.addStatement("((android.widget.ImageView) (((" + holderName +
-                            ")holder).itemView.findViewById($L))).setImageResource(data.$L)",
-                    attr.getImageViewId(), attr.getImageSrc());
-        }
+        bindItemMethod.addCode(codeBlock);
         return bindItemMethod.build();
 
     }
 
-    public static void getTextViewAttr(List<TextViewAttr> keyText,
-                                       List<TextViewAttr> valueText,
-                                       Element element) {
-        for (Element e : ElementFilter.fieldsIn(element.getEnclosedElements())) {
 
-            if (e.getAnnotation(TimeLineTextView.class) != null) {
-                TimeLineTextView timeLineTextView = e.getAnnotation(TimeLineTextView.class);
-                TextViewAttr textViewAttr = new TextViewAttr();
-                textViewAttr.setTextViewId(timeLineTextView.value());
-                textViewAttr.setTextString(e.getSimpleName().toString());
-                if (!timeLineTextView.textColor().equals(NULL)) {
-                    textViewAttr.setTextColor(timeLineTextView.textColor());
-                }
-                if (!timeLineTextView.textSize().equals(NULL)) {
-                    textViewAttr.setTextSize(timeLineTextView.textSize());
-                }
-                if (!timeLineTextView.backGroundColor().equals(NULL)) {
-                    textViewAttr.setBackColor(timeLineTextView.backGroundColor());
-                }
-                boolean isKey = timeLineTextView.key();
-                if (isKey) {
-                    keyText.add(textViewAttr);
-                } else {
-                    valueText.add(textViewAttr);
-                }
-            }
+    public static List<CodeBlock> getImageViewAttr(List<ImageViewAttr> imageViewAttrList, String holderName) {
+        List<CodeBlock> codeBlockList = new ArrayList<>();
+        ClassName imageView = ClassName.bestGuess("android.widget.ImageView");
+        for (int i = 0; i < imageViewAttrList.size(); i++) {
+            ImageViewAttr imageViewAttr = imageViewAttrList.get(i);
+            String filedName = "imageView_" + i;
+            CodeBlock codeBlock = CodeBlock.builder()
+                    .addStatement("$T $L = (($L)holder).itemView.findViewById($L)",
+                            imageView, filedName, holderName, imageViewAttr.getImageViewId())
+                    .addStatement("$L.setImageResource(data.$L)",
+                            filedName, imageViewAttr.getImageSrc())
+                    .build();
+            codeBlockList.add(codeBlock);
         }
 
-    }
-
-    public static void getImageViewAttr(List<ImageViewAttr> keyImageView,
-                                        List<ImageViewAttr> valueImageView,
-                                        Element element) {
-        for (Element e : ElementFilter.fieldsIn(element.getEnclosedElements())) {
-
-            if (e.getAnnotation(TimeLineImageView.class) != null) {
-                TimeLineImageView timeLineImageView = e.getAnnotation(TimeLineImageView.class);
-                ImageViewAttr imageViewAttr = new ImageViewAttr();
-                imageViewAttr.setImageViewId(timeLineImageView.value());
-                imageViewAttr.setImageSrc(e.getSimpleName().toString());
-
-                boolean isKey = timeLineImageView.key();
-                if (isKey) {
-                    keyImageView.add(imageViewAttr);
-                } else {
-                    valueImageView.add(imageViewAttr);
-                }
-            }
-        }
+        return codeBlockList;
 
     }
 }

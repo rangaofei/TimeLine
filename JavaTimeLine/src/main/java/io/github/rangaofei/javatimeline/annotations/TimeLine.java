@@ -5,6 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import io.github.rangaofei.javatimeline.TimeConfig;
+
 /**
  * 表示这个类将会是用来做list元素的类
  */
@@ -13,8 +15,8 @@ import java.lang.annotation.Target;
 public @interface TimeLine {
     String name() default "";
 
-    String keyLayoutId() default "-1";
+    String keyLayoutId() default TimeConfig.ID_NULL;
 
-    String valueLayoutId() default "-1";
+    String valueLayoutId() default TimeConfig.ID_NULL;
 
 }

@@ -1,6 +1,7 @@
 package io.github.rangaofei.javatimeline.processor;
 
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -8,7 +9,6 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,8 +18,7 @@ import javax.lang.model.element.Modifier;
 import io.github.rangaofei.javatimeline.AdapterUtil;
 import io.github.rangaofei.javatimeline.TimeLineContext;
 import io.github.rangaofei.javatimeline.annotations.TimeLine;
-import io.github.rangaofei.javatimeline.viewattr.ImageViewAttr;
-import io.github.rangaofei.javatimeline.viewattr.TextViewAttr;
+import io.github.rangaofei.javatimeline.viewattr.AnchorInfo;
 
 public class TimeLineProcessor implements TimeLineProcess {
     private Element element;
@@ -35,6 +34,9 @@ public class TimeLineProcessor implements TimeLineProcess {
     private MethodSpec bindValueItemMethod;
     private MethodSpec constructorMethod;
 
+    private AnchorProcessor anchorProcessor;
+    private List<AnchorInfo> anchorInfoList;
+
     public TimeLineProcessor(Element element) {
         this.element = element;
     }
@@ -43,6 +45,7 @@ public class TimeLineProcessor implements TimeLineProcess {
     public void processAnnotation() {
         getBasicField();
         generateConstructorMethod();
+        processAnchor();
         generateLayoutIdMethod();
         generateBindMethod();
         try {
@@ -84,21 +87,24 @@ public class TimeLineProcessor implements TimeLineProcess {
         noteLayoutIdMethod();
     }
 
-    private void generateBindMethod() {
-        List<TextViewAttr> keyTextView = new ArrayList<>();
-        List<ImageViewAttr> keyImageView = new ArrayList<>();
-        List<TextViewAttr> valueTextView = new ArrayList<>();
-        List<ImageViewAttr> valueImageView = new ArrayList<>();
-        AdapterUtil.getTextViewAttr(keyTextView, valueTextView, element);
+    private void processAnchor() {
+        anchorProcessor = new AnchorProcessor(element);
+        anchorProcessor.processAnnotation();
+        anchorInfoList = anchorProcessor.getAnchorInfos();
+    }
 
-        AdapterUtil.getImageViewAttr(keyImageView, valueImageView, element);
+    private void generateBindMethod() {
+
+        TextViewProcessor textViewProcessor = new TextViewProcessor(element, anchorInfoList);
+        textViewProcessor.processAnnotation();
+        CodeBlock keyCode = textViewProcessor.getKeyCodeBlock();
+        CodeBlock valueCode = textViewProcessor.getValueCodeBlock();
 
         bindKeyItemMethod = AdapterUtil.generateBindMethod("bindKeyItem",
-                fullClassName, keyTextView, keyImageView, "KeyViewHolder");
+                fullClassName, keyCode);
 
-        TimeLineContext.note("----bindKeyItemMethod");
         bindValueItemMethod = AdapterUtil.generateBindMethod("bindValueItem",
-                fullClassName, valueTextView, valueImageView, "ValueViewHolder");
+                fullClassName, valueCode);
     }
 
     private void generateAdapter() throws IOException {

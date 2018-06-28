@@ -6,13 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.Xfermode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -208,7 +205,6 @@ public class SingleStepViewDivider extends BaseDivider {
                     if (recyclerView != null) {
                         currentNum = (float) animation.getAnimatedValue();
                         timeLineConfig.getStepViewConfig().setDividerNum((int) currentNum);
-                        Log.d("---", "vaule=" + currentNum);
                         recyclerView.invalidateItemDecorations();
                     }
                 }

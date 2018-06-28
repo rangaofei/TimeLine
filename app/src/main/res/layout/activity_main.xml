@@ -9,6 +9,7 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
+
         <io.github.rangaofei.sakatimeline.TimeLineView
             android:id="@+id/one"
             android:layout_width="wrap_content"

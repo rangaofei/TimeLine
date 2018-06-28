@@ -7,7 +7,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.CLASS)
-@Target(ElementType.FIELD)
-public @interface TimeLineAnchor {
-    String[] value() default {};
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+
+public @interface TimeLineView {
+
+    enum ViewType {
+        VIEW, TEXT_VIEW, IMAGE_VIEW,
+    }
+
+    ViewType value() default ViewType.VIEW;
+
+    int backGroundColor() default 0xffffffff;
 }

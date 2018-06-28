@@ -9,4 +9,5 @@
         <attr name="stepPreColor" format="color" />
         <attr name="stepAfterColor" format="color" />
     </declare-styleable>
+
 </resources>

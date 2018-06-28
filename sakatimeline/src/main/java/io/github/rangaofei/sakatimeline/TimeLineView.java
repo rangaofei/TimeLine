@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
 import io.github.rangaofei.sakatimeline.customlayoutmanager.PerfectLinearLayoutManager;
@@ -34,6 +37,8 @@ public class TimeLineView extends RecyclerView {
     public TimeLineView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         getCustomAttr(attrs);
+
+        ImageView textView = new ImageView(context);
     }
 
 

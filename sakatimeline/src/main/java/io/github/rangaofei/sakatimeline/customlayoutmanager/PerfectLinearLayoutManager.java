@@ -1694,7 +1694,6 @@ public class PerfectLinearLayoutManager extends RecyclerView.LayoutManager imple
                 bottom = top + mOrientationHelper.getDecoratedMeasurementInOther(view);
             } else {
                 bottom = getHeight() - getPaddingBottom();
-                Log.d("---", "bottom=" + getPaddingBottom() + ",top=" + getPaddingTop());
                 top = bottom - mOrientationHelper.getDecoratedMeasurementInOther(view);
             }
 

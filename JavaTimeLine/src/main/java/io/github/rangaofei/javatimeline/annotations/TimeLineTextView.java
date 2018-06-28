@@ -10,14 +10,13 @@ import io.github.rangaofei.javatimeline.TimeConfig;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.CLASS)
+@TimeLineView(TimeLineView.ViewType.TEXT_VIEW)
 public @interface TimeLineTextView {
-    boolean key() default true;
+    boolean key() default true;//是否显示在key布局
 
-    String value() default "-1";
+    String id() default TimeConfig.ID_NULL;
 
-    String textColor() default TimeConfig.NULL;
+    String style() default TimeConfig.ID_NULL;
 
-    String textSize() default TimeConfig.NULL;
-
-    String backGroundColor() default TimeConfig.NULL;
+    String styleAnchor() default TimeConfig.ID_NULL;
 }

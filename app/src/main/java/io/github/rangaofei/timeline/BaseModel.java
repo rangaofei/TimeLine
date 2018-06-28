@@ -12,13 +12,13 @@ import io.github.rangaofei.javatimeline.annotations.TimeLineTextView;
 @TimeLine(name = "BaseModelAdapter", keyLayoutId = "R.layout.item_key", valueLayoutId = "R.layout.item_value")
 public class BaseModel implements Parcelable, Comparable<BaseModel> {
 
-    @TimeLineTextView(value = "R.id.key", textColor = "0xFFFF5722")
+    @TimeLineTextView(id = "R.id.key")
     public String key;
 
-    @TimeLineTextView(key = false, value = "R.id.value", backGroundColor = "0xFFcddc39")
+    @TimeLineTextView(key = false, id = "R.id.value")
     public String value;
 
-    @TimeLineImageView(key = false, value = "R.id.iv")
+    @TimeLineImageView(key = false, src = "R.id.iv")
     public int imageViewId;
 
     public BaseModel() {
