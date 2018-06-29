@@ -97,14 +97,19 @@ public class TimeLineProcessor implements TimeLineProcess {
 
         TextViewProcessor textViewProcessor = new TextViewProcessor(element, anchorInfoList);
         textViewProcessor.processAnnotation();
-        CodeBlock keyCode = textViewProcessor.getKeyCodeBlock();
-        CodeBlock valueCode = textViewProcessor.getValueCodeBlock();
+        CodeBlock keyTextViewCode = textViewProcessor.getKeyCodeBlock();
+        CodeBlock valueTextCode = textViewProcessor.getValueCodeBlock();
+
+        ImageViewProcessor imageViewProcessor = new ImageViewProcessor(element, anchorInfoList);
+        imageViewProcessor.processAnnotation();
+        CodeBlock keyImageViewCode = imageViewProcessor.getKeyCodeBlock();
+        CodeBlock valueImageViewCode = imageViewProcessor.getValueCodeBlock();
 
         bindKeyItemMethod = AdapterUtil.generateBindMethod("bindKeyItem",
-                fullClassName, keyCode);
+                fullClassName, keyTextViewCode, keyImageViewCode);
 
         bindValueItemMethod = AdapterUtil.generateBindMethod("bindValueItem",
-                fullClassName, valueCode);
+                fullClassName, valueTextCode, valueImageViewCode);
     }
 
     private void generateAdapter() throws IOException {

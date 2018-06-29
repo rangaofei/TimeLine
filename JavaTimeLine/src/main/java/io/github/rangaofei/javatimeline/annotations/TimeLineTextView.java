@@ -10,7 +10,7 @@ import io.github.rangaofei.javatimeline.TimeConfig;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.CLASS)
-@TimeLineView(TimeLineView.ViewType.TEXT_VIEW)
+
 public @interface TimeLineTextView {
     boolean key() default true;//是否显示在key布局
 

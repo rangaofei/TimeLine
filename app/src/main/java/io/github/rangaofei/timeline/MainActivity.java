@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         baseModels.add(new BaseModel("2017年2月22日", "我彻底歇菜", R.drawable.ic_launcher_background));
         stepViewModels.add(new StepViewModel("快递发出\n我没收到", false,"2016年5月"));
         stepViewModels.add(new StepViewModel("快递签收我收到了", false,"2016年6月"));
-        stepViewModels.add(new StepViewModel("快递丢失", true,"20167月"));
+        stepViewModels.add(new StepViewModel("快递丢失", true,"20167月",R.drawable.ic_order));
         adapter = new StepViewModelAdapter(stepViewModels);
         adapter.setItemClickListener(new ItemClickListener() {
             @Override

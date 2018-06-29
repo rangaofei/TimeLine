@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.TypedValue;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.lang.reflect.Type;
@@ -16,6 +17,8 @@ import io.github.rangaofei.sakatimeline.R;
 
 public class TextViewProxy implements TextViewInterface {
     private TextView textView;
+
+
 
     public TextViewProxy(TextView textView) {
         this.textView = textView;

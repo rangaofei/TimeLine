@@ -39,21 +39,29 @@ public class TimeLineContext {
         return elementUtil;
     }
 
-    public static void note(String msg) {
-        if (DEBUG) {
-            if (messager == null) {
-                throw new RuntimeException("messager is null");
-            }
-            messager.printMessage(Diagnostic.Kind.NOTE, TAG + ":" + msg);
-        }
-    }
 
     public static void note(String msg, Object... args) {
+        logMessage(Diagnostic.Kind.NOTE, msg, args);
+    }
+
+    public static void error(String msg, Object... args) {
+        logMessage(Diagnostic.Kind.ERROR, msg, args);
+    }
+
+    public static void warning(String msg, Object... args) {
+        logMessage(Diagnostic.Kind.WARNING, msg, args);
+    }
+
+    public static void other(String msg, Object... args) {
+        logMessage(Diagnostic.Kind.OTHER, msg, args);
+    }
+
+    public static void logMessage(Diagnostic.Kind kind, String msg, Object... args) {
         if (DEBUG) {
             if (messager == null) {
-                throw new RuntimeException("messager is null");
+                throw new RuntimeException("Messager is NULL");
             }
-            messager.printMessage(Diagnostic.Kind.NOTE, TAG + ":" + String.format(msg, args));
+            messager.printMessage(kind, String.format(msg, args));
         }
     }
 

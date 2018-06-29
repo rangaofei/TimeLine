@@ -10,7 +10,6 @@ import io.github.rangaofei.javatimeline.TimeConfig;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.CLASS)
-@TimeLineView(TimeLineView.ViewType.IMAGE_VIEW)
 public @interface TimeLineImageView {
     boolean key() default true;
 

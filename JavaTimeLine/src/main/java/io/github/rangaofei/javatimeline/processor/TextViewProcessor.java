@@ -40,12 +40,12 @@ public class TextViewProcessor implements TimeLineProcess {
 
     @Override
     public void processAnnotation() {
-        getStyleId();
+        getTextViewAttr();
         keyCodeBlock = generateTextViewCodeBlock(true);
         valueCodeBlock = generateTextViewCodeBlock(false);
     }
 
-    private void getStyleId() {
+    private void getTextViewAttr() {
         if (this.element == null) {
             return;
         }
@@ -84,8 +84,6 @@ public class TextViewProcessor implements TimeLineProcess {
                     !anchorInfoList.get(0).getAnchorIds().contains(textViewAttr.getTextViewId())) {
                 if (!textViewAttr.getStyleId().equals(TimeConfig.ID_NULL)) {
                     generateTextViewProxyCode(builder, filedName, textViewAttr.getStyleId());
-//                    builder.addStatement("$L.setTextAppearance($L)",
-//                            filedName, textViewAttr.getStyleId());
                 }
                 if (textViewAttr.getTextString() != null) {
                     builder.addStatement("$L.setText(data.$L)", filedName, textViewAttr.getTextString());

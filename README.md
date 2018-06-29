@@ -5,7 +5,7 @@
 ## 集成方式
 
 ```groovy
-implementation 'com.rangaofei:sakatimeline:0.1.1'
+implementation 'com.rangaofei:sakatimeline:0.1.2'
 ```
 然后修改app级别的module的build.gradle 文件：
 
@@ -83,6 +83,8 @@ binding.tlv.setTimeLineConfig(adapter, TimeLineType.StepViewType.RIGHT_STEP_PROG
 ## 为item设置不同的样式
 
 注意：目前只支持textview的部分属性的不同样式设置
+
+支持imageview的src显示。
 
 同样是前边的类，稍微修改一下：
 

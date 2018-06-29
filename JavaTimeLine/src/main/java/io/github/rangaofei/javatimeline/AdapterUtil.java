@@ -58,7 +58,7 @@ public class AdapterUtil {
 
     public static MethodSpec generateBindMethod(String methodName,
                                                 String fullClassName,
-                                                CodeBlock codeBlock) {
+                                                CodeBlock... codeBlocks) {
         ParameterSpec one = ParameterSpec
                 .builder(ClassName.bestGuess("io.github.rangaofei.sakatimeline.adapter.BaseViewHolder"), "holder")
                 .build();
@@ -70,8 +70,9 @@ public class AdapterUtil {
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameters(Arrays.asList(one, two));
-
-        bindItemMethod.addCode(codeBlock);
+        for (CodeBlock codeBlock : codeBlocks) {
+            bindItemMethod.addCode(codeBlock);
+        }
         return bindItemMethod.build();
 
     }
