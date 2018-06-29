@@ -5,7 +5,7 @@
 ## 集成方式
 
 ```groovy
-implementation 'com.rangaofei:sakatimeline:0.1.0''
+implementation 'com.rangaofei:sakatimeline:0.1.1'
 ```
 然后修改app级别的module的build.gradle 文件：
 
@@ -149,7 +149,7 @@ stepViewModels.add(new StepViewModel("快递发出\n我没收到", false));
 可以看到第三个item设置为true了，那么StepViewModel中的styleAnchor将会生效，
 其他未设置为true的item生效的将会是style。
 
-注意设置background只支持int形式的color，设置背景使用了动态代理。
+背景可以是任意的drawable和color，设置背景使用了动态代理。
 
 <div align="center">
  <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/StepViewDiff.png" height="480" width="270" >
@@ -192,4 +192,3 @@ public void updateDividerNum(int dividerNum)
 public void updateDividerNum(int dividerNum, boolean showAnim)
 
 ```
-## 设置不同的样式

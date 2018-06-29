@@ -3,6 +3,7 @@ package io.github.rangaofei.sakatimeline.proxy;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.TextView;
@@ -25,10 +26,11 @@ public class TextViewProxy implements TextViewInterface {
 
         TypedArray ta = context.obtainStyledAttributes(id, R.styleable.ViewBackgroundHelper);
         if (ta != null) {
-            int color = ta.getColor(0, 0x00000000);
+            Drawable drawable = ta.getDrawable(0);
             ta.recycle();
-            if (color != 0x00000000)
-                textView.setBackgroundColor(color);
+            if (drawable != null) {
+                textView.setBackground(drawable);
+            }
             textView.setTextAppearance(context, id);
         }
 

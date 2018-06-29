@@ -93,14 +93,10 @@ public class TextViewProcessor implements TimeLineProcess {
             } else {
                 builder.beginControlFlow("if (data.$L)", anchorInfoList.get(0).getFieldName());
                 if (!textViewAttr.getStyleAnchorId().equals(TimeConfig.ID_NULL)) {
-//                    builder.addStatement("$L.setTextAppearance($L.getContext(),$L)",
-//                            filedName, filedName, textViewAttr.getStyleAnchorId());
                     generateTextViewProxyCode(builder, filedName, textViewAttr.getStyleAnchorId());
                 }
                 builder.nextControlFlow("else ");
                 if (!textViewAttr.getStyleId().equals(TimeConfig.ID_NULL)) {
-//                    builder.addStatement("$L.setTextAppearance($L.getContext(),$L)",
-//                            filedName, filedName, textViewAttr.getStyleId());
                     generateTextViewProxyCode(builder, filedName, textViewAttr.getStyleId());
                 }
                 builder.endControlFlow();

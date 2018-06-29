@@ -14,5 +14,5 @@ import io.github.rangaofei.javatimeline.TimeConfig;
 public @interface TimeLineImageView {
     boolean key() default true;
 
-    String src() default TimeConfig.ID_NULL;
+    String id() default TimeConfig.ID_NULL;
 }

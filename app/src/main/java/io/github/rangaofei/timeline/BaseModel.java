@@ -18,7 +18,8 @@ public class BaseModel implements Parcelable, Comparable<BaseModel> {
     @TimeLineTextView(key = false, id = "R.id.value")
     public String value;
 
-    @TimeLineImageView(key = false, src = "R.id.iv")
+
+    @TimeLineImageView(key = false, id = "R.id.iv")
     public int imageViewId;
 
     public BaseModel() {
