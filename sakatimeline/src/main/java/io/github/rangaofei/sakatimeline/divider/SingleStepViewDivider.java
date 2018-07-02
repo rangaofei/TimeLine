@@ -2,12 +2,16 @@ package io.github.rangaofei.sakatimeline.divider;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -32,6 +36,10 @@ public class SingleStepViewDivider extends BaseDivider {
     private PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
     private PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(mode);
 
+    private DividerLayoutAdapter dividerLayoutAdapter;
+
+    private Rect drawRect = new Rect();
+
     public SingleStepViewDivider(Context context, TimeLineConfig timeLineConfig) {
         super(context, timeLineConfig);
         overColor = new Paint();
@@ -49,6 +57,8 @@ public class SingleStepViewDivider extends BaseDivider {
         fm = textPaint.getFontMetrics();
 
         currentNum = timeLineConfig.getStepViewConfig().getDividerNum();
+        dividerLayoutAdapter = timeLineConfig.getStepViewConfig().getDividerLayoutAdapter();
+
     }
 
     @Override
@@ -107,6 +117,7 @@ public class SingleStepViewDivider extends BaseDivider {
     }
 
     private void drawHorizontalStep(Canvas c, RecyclerView parent) {
+        c.save();
         for (int i = 0; i < parent.getChildCount(); i++) {
             int layoutId = c.saveLayer(0, 0, recyclerView.getWidth(), recyclerView.getHeight(), null);
             circlePaint.setColor(timeLineConfig.getStepViewConfig().getAfterColor());
@@ -140,12 +151,20 @@ public class SingleStepViewDivider extends BaseDivider {
                 float w = textPaint.measureText(text);
                 c.drawText(text, circleX - w / 2, circleY + (fm.bottom - fm.top) / 2 - fm.bottom, textPaint);
             }
-
-
+            if (dividerLayoutAdapter != null && dividerLayoutAdapter.getDrawable(i) != null) {
+                Drawable drawable = dividerLayoutAdapter.getDrawable(i);
+                drawRect.set(circleX - (int) padding / 2, circleY - (int) padding / 2,
+                        circleX + (int) padding / 2, circleY + (int) padding / 2);
+                drawable.setBounds(drawRect);
+                drawable.draw(c);
+            }
+            c.restoreToCount(layoutId);
         }
+        c.restore();
     }
 
     private void drawVerticalStep(Canvas c, RecyclerView parent) {
+        c.save();
         for (int i = 0; i < parent.getChildCount(); i++) {
             int layoutId = c.saveLayer(0, 0, recyclerView.getWidth(), recyclerView.getHeight(), null);
             View view = parent.getChildAt(i);
@@ -181,10 +200,22 @@ public class SingleStepViewDivider extends BaseDivider {
                 float w = textPaint.measureText(text);
                 c.drawText(text, circleX - w / 2, circleY + (fm.bottom - fm.top) / 2 - fm.bottom, textPaint);
             }
+
+            if (dividerLayoutAdapter != null) {
+                dividerLayoutAdapter.getDrawable(i).setBounds(0, 0, 0, 0);
+                dividerLayoutAdapter.getDrawable(i).draw(c);
+            }
             c.restoreToCount(layoutId);
         }
+        c.restore();
     }
 
+    /**
+     * 改变当前进度位置
+     *
+     * @param num      进度值
+     * @param showAnim 是否显示动画
+     */
     public void updateDividerNum(int num, boolean showAnim) {
         if (recyclerView == null) {
             return;

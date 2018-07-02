@@ -8,9 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
 
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
 import io.github.rangaofei.sakatimeline.customlayoutmanager.PerfectLinearLayoutManager;
@@ -29,7 +32,6 @@ public class TimeLineView extends RecyclerView {
     private BaseDivider divider;
     private TimeLineConfig timeLineConfig;
 
-
     public TimeLineView(Context context) {
         this(context, null);
     }
@@ -37,8 +39,6 @@ public class TimeLineView extends RecyclerView {
     public TimeLineView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         getCustomAttr(attrs);
-
-        ImageView textView = new ImageView(context);
     }
 
 
@@ -65,23 +65,7 @@ public class TimeLineView extends RecyclerView {
             divider = new SingleStepViewDivider(getContext(), timeLineConfig);
 
         }
-        if (TimeLineViewType.ONLY_LEFT.equals(timeLineConfig.getType())) {
-            layoutManager = new LinearLayoutManager(getContext());
-            divider = new LeftOnlyDivider(getContext(), timeLineConfig);
 
-        } else if (TimeLineViewType.ONLY_RIGHT.equals(timeLineConfig.getType())) {
-            layoutManager = new PerfectLinearLayoutManager(getContext());
-            divider = new RightOnlyDivider(getContext(), timeLineConfig);
-
-        } else if (TimeLineViewType.LEFT_TO_RIGHT.equals(timeLineConfig.getType())) {
-        } else if (TimeLineViewType.RIGHT_TO_LEFT.equals(timeLineConfig.getType())) {
-        } else if (TimeLineViewType.LEFT_KEY.equals(timeLineConfig.getType())) {
-            layoutManager = new TimeLineGridLayoutManager(getContext(), 2);
-            divider = new LeftRightDivider(getContext(), timeLineConfig);
-
-        } else if (TimeLineViewType.LEFT_VALUE.equals(timeLineConfig.getType())) {
-        } else {
-        }
         this.setLayoutManager(layoutManager);
         this.addItemDecoration(divider);
         timeLineConfig.getAdapter().setTimeLineType(timeLineConfig.getType());
@@ -90,23 +74,37 @@ public class TimeLineView extends RecyclerView {
 
     private void getCustomAttr(AttributeSet attributeSet) {
         this.timeLineConfig = new TimeLineConfig();
-        final TypedArray ta = getContext().obtainStyledAttributes(attributeSet, R.styleable.TimeLineView);
-        float padding = ta.getDimension(R.styleable.TimeLineView_timePadding, 30);
-        Drawable drawable = ta.getDrawable(R.styleable.TimeLineView_timeDrawable);
-        int color = ta.getColor(R.styleable.TimeLineView_timeStrokeColor, Color.parseColor("#9e9e9e"));
-        float strokeWidth = ta.getDimension(R.styleable.TimeLineView_timeStrokeWidth, 10);
-        boolean showStepOrder = ta.getBoolean(R.styleable.TimeLineView_stepShowOrder, false);
-        int stepPreColor = ta.getColor(R.styleable.TimeLineView_stepPreColor, Color.parseColor("#259b24"));
-        int stepAfterColor = ta.getColor(R.styleable.TimeLineView_stepAfterColor, Color.parseColor("#9e9e9e"));
+        final TypedArray ta =
+                getContext().obtainStyledAttributes(attributeSet, R.styleable.TimeLineView);
+        final int padding =
+                ta.getDimensionPixelSize(R.styleable.TimeLineView_timePadding,
+                        getResources().getDimensionPixelOffset(R.dimen.default_padding));
+        final Drawable drawable = ta.getDrawable(R.styleable.TimeLineView_timeDrawable);
+        final int strokeColor =
+                ta.getColor(R.styleable.TimeLineView_timeStrokeColor, getResources().getColor(R.color.grey));
+        final int strokeWidth =
+                ta.getDimensionPixelSize(R.styleable.TimeLineView_timeStrokeWidth,
+                        getResources().getDimensionPixelOffset(R.dimen.default_stroke_width));
+        final boolean showStepOrder =
+                ta.getBoolean(R.styleable.TimeLineView_stepShowOrder, false);
+        final int stepPreColor =
+                ta.getColor(R.styleable.TimeLineView_stepPreColor, getResources().getColor(R.color.teal));
+        final int stepAfterColor =
+                ta.getColor(R.styleable.TimeLineView_stepAfterColor, getResources().getColor(R.color.grey));
+        final int stepIndexColor =
+                ta.getColor(R.styleable.TimeLineView_stepIndexColor, getResources().getColor(R.color.white));
         timeLineConfig.setPadding(padding);
         timeLineConfig.setTimeDrawable(drawable);
-        timeLineConfig.setTimeColor(color);
-        timeLineConfig.setTimeStrokeWidth((int) strokeWidth);
+        timeLineConfig.setTimeColor(strokeColor);
+        timeLineConfig.setTimeStrokeWidth(strokeWidth);
+
         TimeLineConfig.StepViewConfig stepViewConfig = new TimeLineConfig.StepViewConfig();
         stepViewConfig.setShowStepText(showStepOrder);
+        stepViewConfig.setIndexColor(stepIndexColor);
         stepViewConfig.setPreColor(stepPreColor);
         stepViewConfig.setAfterColor(stepAfterColor);
         timeLineConfig.setStepViewConfig(stepViewConfig);
+
         ta.recycle();
     }
 
@@ -127,6 +125,17 @@ public class TimeLineView extends RecyclerView {
         this.timeLineConfig.setAdapter(adapter);
         this.timeLineConfig.setType(type);
         this.timeLineConfig.getStepViewConfig().setDividerNum(dividerNum);
+        initData();
+    }
+
+    public void setTimeLineConfig(AbstractTimeLineAdapter adapter, TimeLineType type, int dividerNum, List<Drawable> list) {
+        if (this.timeLineConfig == null) {
+            throw new RuntimeException("nu");
+        }
+        this.timeLineConfig.setAdapter(adapter);
+        this.timeLineConfig.setType(type);
+        this.timeLineConfig.getStepViewConfig().setDividerNum(dividerNum);
+        this.timeLineConfig.getStepViewConfig().setDividerLayoutAdapter(list);
         initData();
     }
 

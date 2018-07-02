@@ -8,6 +8,17 @@
         <attr name="stepShowOrder" format="boolean" />
         <attr name="stepPreColor" format="color" />
         <attr name="stepAfterColor" format="color" />
+        <attr name="stepDividerAdapterName" format="string" />
+        <attr name="stepIndexColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="TimeLineViewProxy">
+        <attr name="visibleProxy" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+        <attr name="backgroundProxy" format="reference" />
     </declare-styleable>
 
 </resources>

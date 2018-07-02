@@ -114,7 +114,8 @@ public class TimeLineProcessor implements TimeLineProcess {
 
     private void generateAdapter() throws IOException {
         TypeName superClass = ParameterizedTypeName
-                .get(ClassName.bestGuess("io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter"), ClassName.bestGuess(element.getSimpleName().toString()));
+                .get(ClassName.bestGuess("io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter"),
+                        ClassName.bestGuess(element.getSimpleName().toString()));
         TypeSpec adapter = TypeSpec.classBuilder(adapterName)
                 .superclass(superClass)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)

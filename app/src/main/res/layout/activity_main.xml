@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            app:stepDividerAdapterName="Test"
             app:timePadding="30dp"
             app:timeStrokeWidth="3dp" />
 

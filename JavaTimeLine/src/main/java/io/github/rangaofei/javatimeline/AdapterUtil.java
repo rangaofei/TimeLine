@@ -16,6 +16,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.util.ElementFilter;
 
 import io.github.rangaofei.javatimeline.annotations.TimeLine;
+import io.github.rangaofei.javatimeline.annotations.TimeLineDividerAdapter;
 import io.github.rangaofei.javatimeline.annotations.TimeLineImageView;
 import io.github.rangaofei.javatimeline.annotations.TimeLineTextView;
 import io.github.rangaofei.javatimeline.viewattr.ImageViewAttr;
@@ -31,6 +32,14 @@ public class AdapterUtil {
             generatedName = className.trim() + "Adapter";
         }
 
+        return generatedName;
+    }
+
+    public static String generateDividerAdapterName(Element element, String className) {
+        String generatedName = element.getAnnotation(TimeLineDividerAdapter.class).value().trim();
+        if (generatedName.equals("")) {
+            generatedName = className.trim() + "DividerAdapter";
+        }
         return generatedName;
     }
 

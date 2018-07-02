@@ -3,8 +3,12 @@ package io.github.rangaofei.sakatimeline;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+
+import java.util.List;
 
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
+import io.github.rangaofei.sakatimeline.divider.DividerLayoutAdapter;
 import io.github.rangaofei.sakatimeline.divider.TimeLineType;
 import io.github.rangaofei.sakatimeline.exception.BaseException;
 import io.github.rangaofei.sakatimeline.exception.ExceptionMessage;
@@ -100,8 +104,10 @@ public class TimeLineConfig {
     public static class StepViewConfig {
         private boolean showStepText;
         private int dividerNum;
+        private int indexColor;
         private int preColor;
         private int afterColor;
+        private DividerLayoutAdapter dividerLayoutAdapter;
 
         public boolean isShowStepText() {
             return showStepText;
@@ -120,6 +126,14 @@ public class TimeLineConfig {
             this.dividerNum = dividerNum;
         }
 
+        public int getIndexColor() {
+            return indexColor;
+        }
+
+        public void setIndexColor(int indexColor) {
+            this.indexColor = indexColor;
+        }
+
         public int getPreColor() {
             return preColor;
         }
@@ -134,6 +148,25 @@ public class TimeLineConfig {
 
         public void setAfterColor(int afterColor) {
             this.afterColor = afterColor;
+        }
+
+        public DividerLayoutAdapter getDividerLayoutAdapter() {
+            return dividerLayoutAdapter;
+        }
+
+        public void setDividerLayoutAdapter(DividerLayoutAdapter dividerLayoutAdapter) {
+            this.dividerLayoutAdapter = dividerLayoutAdapter;
+        }
+
+        public void setDividerLayoutAdapter(List<Drawable> drawableList) {
+            if (drawableList == null || drawableList.size() < 1) {
+                return;
+            }
+
+            DividerLayoutAdapter d = new DividerLayoutAdapter(drawableList) {
+            };
+            this.dividerLayoutAdapter = d;
+//            this.dividerLayoutAdapter = dividerLayoutAdapter;
         }
     }
 }

@@ -1,28 +1,12 @@
 package io.github.rangaofei.javatimeline.processor;
 
 import com.google.auto.service.AutoService;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeName;
-import com.squareup.javapoet.TypeSpec;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Completion;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -31,18 +15,11 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.ElementFilter;
-import javax.lang.model.util.Elements;
-import javax.tools.Diagnostic;
 
-import io.github.rangaofei.javatimeline.AdapterUtil;
 import io.github.rangaofei.javatimeline.TimeLineContext;
 import io.github.rangaofei.javatimeline.annotations.TimeLine;
-import io.github.rangaofei.javatimeline.annotations.TimeLineTextView;
-import io.github.rangaofei.javatimeline.viewattr.ImageViewAttr;
-import io.github.rangaofei.javatimeline.viewattr.TextViewAttr;
+import io.github.rangaofei.javatimeline.annotations.TimeLineDividerAdapter;
 
 
 @AutoService(Processor.class)
@@ -90,15 +67,29 @@ public class AnnotationProcessor extends AbstractProcessor {
                 throw new RuntimeException("this element is not annotated with class");
             }
 
-            createAdapter(element);
+            createTimeLineAdapter(element);
+        }
+
+        Set<? extends Element> dividerElements = roundEnvironment.getElementsAnnotatedWith(TimeLineDividerAdapter.class);
+        for (Element element : dividerElements) {
+            TimeLineContext.note(element.getSimpleName().toString());
+            if (element.getKind() != ElementKind.FIELD) {
+                throw new RuntimeException("not field");
+            }
+            createDividerAdapter(element);
         }
         return true;
     }
 
 
-    private void createAdapter(Element element) {
+    private void createTimeLineAdapter(Element element) {
         TimeLineProcess adapterProcessor = new TimeLineProcessor(element);
         adapterProcessor.processAnnotation();
+    }
+
+    private void createDividerAdapter(Element element) {
+        TimeLineProcess dividerProcessor = new DividerProcessor(element);
+        dividerProcessor.processAnnotation();
     }
 
 }
