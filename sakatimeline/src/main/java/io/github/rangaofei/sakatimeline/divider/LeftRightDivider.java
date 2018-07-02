@@ -6,7 +6,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import io.github.rangaofei.sakatimeline.TimeLineConfig;
+import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
 
 public class LeftRightDivider extends BaseDivider {

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         list = new ArrayList<>();
         list.add(getResources().getDrawable(R.drawable.ic_order));
+        list.add(null);
         initRecyclerView();
 
     }

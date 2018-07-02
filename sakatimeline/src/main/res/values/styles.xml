@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--timelinewview通用的属性-->
     <declare-styleable name="TimeLineView">
         <attr name="timePadding" format="dimension" />
         <attr name="timeDrawable" format="color|reference" />
         <attr name="timeStrokeWidth" format="dimension" />
         <attr name="timeStrokeColor" format="color" />
+    </declare-styleable>
+
+    <!--timelineview中序号的属性-->
+    <declare-styleable name="IndexText">
+        <attr name="timeIndexColor" format="color" />
+        <attr name="timeIndexSize" format="dimension" />
+    </declare-styleable>
+
+    <!--stepviewdivider的属性-->
+    <declare-styleable name="StepViewDivider">
         <attr name="stepShowOrder" format="boolean" />
         <attr name="stepPreColor" format="color" />
         <attr name="stepAfterColor" format="color" />
-        <attr name="stepDividerAdapterName" format="string" />
-        <attr name="stepIndexColor" format="color" />
     </declare-styleable>
 
     <declare-styleable name="TimeLineViewProxy">

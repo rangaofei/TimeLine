@@ -3,15 +3,12 @@ package io.github.rangaofei.sakatimeline.divider;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import io.github.rangaofei.sakatimeline.R;
-import io.github.rangaofei.sakatimeline.TimeLineConfig;
+import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
 
 public class LeftOnlyDivider extends BaseDivider {

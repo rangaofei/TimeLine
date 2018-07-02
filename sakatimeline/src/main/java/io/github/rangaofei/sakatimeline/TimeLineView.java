@@ -2,28 +2,23 @@ package io.github.rangaofei.sakatimeline;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.List;
 
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
+import io.github.rangaofei.sakatimeline.config.IndexTextConfig;
+import io.github.rangaofei.sakatimeline.config.StepViewConfig;
+import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 import io.github.rangaofei.sakatimeline.customlayoutmanager.PerfectLinearLayoutManager;
-import io.github.rangaofei.sakatimeline.customlayoutmanager.TimeLineGridLayoutManager;
 import io.github.rangaofei.sakatimeline.divider.BaseDivider;
-import io.github.rangaofei.sakatimeline.divider.LeftOnlyDivider;
-import io.github.rangaofei.sakatimeline.divider.LeftRightDivider;
-import io.github.rangaofei.sakatimeline.divider.RightOnlyDivider;
 import io.github.rangaofei.sakatimeline.divider.SingleStepViewDivider;
 import io.github.rangaofei.sakatimeline.divider.TimeLineType;
+import io.github.rangaofei.sakatimeline.util.ExceptionUtil;
 
 import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType.*;
 
@@ -72,8 +67,49 @@ public class TimeLineView extends RecyclerView {
         this.setAdapter(timeLineConfig.getAdapter());
     }
 
+    private void getTimeLineViewAttr(AttributeSet as) {
+        final TypedArray ta = getContext().obtainStyledAttributes(as, R.styleable.TimeLineView);
+
+        ta.recycle();
+    }
+
+    private IndexTextConfig getIndexTextAttr(AttributeSet as) {
+        final IndexTextConfig indexTextConfig = new IndexTextConfig();
+        final TypedArray ta = getContext().obtainStyledAttributes(as, R.styleable.IndexText);
+        if (ta == null) {
+            return indexTextConfig;
+        }
+        final int textSize = ta.getDimensionPixelSize(R.styleable.IndexText_timeIndexSize,
+                getResources().getDimensionPixelSize(R.dimen.default_text_size));
+        final int textColor = ta.getColor(R.styleable.IndexText_timeIndexColor, getResources().getColor(R.color.pink));
+        ta.recycle();
+        indexTextConfig.setTextColor(textColor);
+        indexTextConfig.setTextSize(textSize);
+        return indexTextConfig;
+    }
+
+    private StepViewConfig getStepViewAttr(AttributeSet as) {
+        StepViewConfig stepViewConfig = new StepViewConfig();
+        final TypedArray ta = getContext().obtainStyledAttributes(as, R.styleable.StepViewDivider);
+        if (ta == null) {
+            return stepViewConfig;
+        }
+        final boolean showIndex = ta.getBoolean(R.styleable.StepViewDivider_stepShowOrder, false);
+        final int preColor = ta.getColor(R.styleable.StepViewDivider_stepPreColor, getResources().getColor(R.color.teal));
+        final int afterColor = ta.getColor(R.styleable.StepViewDivider_stepAfterColor, getResources().getColor(R.color.grey));
+        ta.recycle();
+        stepViewConfig.setShowStepText(showIndex);
+        stepViewConfig.setPreColor(preColor);
+        stepViewConfig.setAfterColor(afterColor);
+        return stepViewConfig;
+    }
+
     private void getCustomAttr(AttributeSet attributeSet) {
         this.timeLineConfig = new TimeLineConfig();
+        this.timeLineConfig.setStepViewConfig(getStepViewAttr(attributeSet));
+        this.timeLineConfig.setIndexTextConfig(getIndexTextAttr(attributeSet));
+
+
         final TypedArray ta =
                 getContext().obtainStyledAttributes(attributeSet, R.styleable.TimeLineView);
         final int padding =
@@ -85,53 +121,30 @@ public class TimeLineView extends RecyclerView {
         final int strokeWidth =
                 ta.getDimensionPixelSize(R.styleable.TimeLineView_timeStrokeWidth,
                         getResources().getDimensionPixelOffset(R.dimen.default_stroke_width));
-        final boolean showStepOrder =
-                ta.getBoolean(R.styleable.TimeLineView_stepShowOrder, false);
-        final int stepPreColor =
-                ta.getColor(R.styleable.TimeLineView_stepPreColor, getResources().getColor(R.color.teal));
-        final int stepAfterColor =
-                ta.getColor(R.styleable.TimeLineView_stepAfterColor, getResources().getColor(R.color.grey));
-        final int stepIndexColor =
-                ta.getColor(R.styleable.TimeLineView_stepIndexColor, getResources().getColor(R.color.white));
+
         timeLineConfig.setPadding(padding);
         timeLineConfig.setTimeDrawable(drawable);
         timeLineConfig.setTimeColor(strokeColor);
         timeLineConfig.setTimeStrokeWidth(strokeWidth);
-
-        TimeLineConfig.StepViewConfig stepViewConfig = new TimeLineConfig.StepViewConfig();
-        stepViewConfig.setShowStepText(showStepOrder);
-        stepViewConfig.setIndexColor(stepIndexColor);
-        stepViewConfig.setPreColor(stepPreColor);
-        stepViewConfig.setAfterColor(stepAfterColor);
-        timeLineConfig.setStepViewConfig(stepViewConfig);
 
         ta.recycle();
     }
 
 
     public void setTimeLineConfig(AbstractTimeLineAdapter adapter, TimeLineType type) {
-        if (this.timeLineConfig == null) {
-            throw new RuntimeException("nu");
-        }
-        this.timeLineConfig.setAdapter(adapter);
-        this.timeLineConfig.setType(type);
-        initData();
+        this.setTimeLineConfig(adapter, type, 0);
     }
 
     public void setTimeLineConfig(AbstractTimeLineAdapter adapter, TimeLineType type, int dividerNum) {
-        if (this.timeLineConfig == null) {
-            throw new RuntimeException("nu");
-        }
-        this.timeLineConfig.setAdapter(adapter);
-        this.timeLineConfig.setType(type);
-        this.timeLineConfig.getStepViewConfig().setDividerNum(dividerNum);
-        initData();
+        this.setTimeLineConfig(adapter, type, dividerNum, null);
     }
 
-    public void setTimeLineConfig(AbstractTimeLineAdapter adapter, TimeLineType type, int dividerNum, List<Drawable> list) {
-        if (this.timeLineConfig == null) {
-            throw new RuntimeException("nu");
-        }
+    public void setTimeLineConfig(AbstractTimeLineAdapter adapter,
+                                  TimeLineType type,
+                                  int dividerNum,
+                                  List<Drawable> list) {
+        ExceptionUtil.checkIfNull(this.timeLineConfig, "TimeLineConfig");
+        ExceptionUtil.checkIfNull(adapter, "AbstractTimeLineAdapter");
         this.timeLineConfig.setAdapter(adapter);
         this.timeLineConfig.setType(type);
         this.timeLineConfig.getStepViewConfig().setDividerNum(dividerNum);
@@ -140,9 +153,8 @@ public class TimeLineView extends RecyclerView {
     }
 
     public void updateDividerNum(int dividerNum, boolean showAnim) {
-        if (this.timeLineConfig == null || this.timeLineConfig.getStepViewConfig() == null) {
-            throw new RuntimeException("nu");
-        }
+        ExceptionUtil.checkIfNull(this.timeLineConfig, "TimeLineConfig");
+        ExceptionUtil.checkIfNull(this.timeLineConfig.getStepViewConfig(), "StepViewConfig");
 
         if (this.timeLineConfig.getStepViewConfig().getDividerNum() == dividerNum) {
             return;

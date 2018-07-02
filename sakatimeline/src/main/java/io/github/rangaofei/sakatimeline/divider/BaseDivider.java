@@ -3,15 +3,12 @@ package io.github.rangaofei.sakatimeline.divider;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import io.github.rangaofei.sakatimeline.TimeLineConfig;
+import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 import io.github.rangaofei.sakatimeline.exception.BaseException;
 import io.github.rangaofei.sakatimeline.exception.ExceptionMessage;
-
-import static io.github.rangaofei.sakatimeline.exception.ExceptionMessage.*;
 
 public abstract class BaseDivider extends RecyclerView.ItemDecoration {
     protected Context context;

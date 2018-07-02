@@ -1,9 +1,8 @@
-package io.github.rangaofei.sakatimeline;
+package io.github.rangaofei.sakatimeline.config;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import java.util.List;
 
@@ -15,7 +14,6 @@ import io.github.rangaofei.sakatimeline.exception.ExceptionMessage;
 
 public class TimeLineConfig {
     private float padding;
-
     private Drawable timeDrawable;
 
     private float timeStrokeWidth;
@@ -27,6 +25,16 @@ public class TimeLineConfig {
 
     private StepViewConfig stepViewConfig;
 
+
+    private IndexTextConfig indexTextConfig;
+
+    public IndexTextConfig getIndexTextConfig() {
+        return indexTextConfig;
+    }
+
+    public void setIndexTextConfig(IndexTextConfig indexTextConfig) {
+        this.indexTextConfig = indexTextConfig;
+    }
 
     public TimeLineConfig() {
     }
@@ -101,72 +109,4 @@ public class TimeLineConfig {
         this.stepViewConfig = stepViewConfig;
     }
 
-    public static class StepViewConfig {
-        private boolean showStepText;
-        private int dividerNum;
-        private int indexColor;
-        private int preColor;
-        private int afterColor;
-        private DividerLayoutAdapter dividerLayoutAdapter;
-
-        public boolean isShowStepText() {
-            return showStepText;
-        }
-
-        public void setShowStepText(boolean showStepText) {
-            this.showStepText = showStepText;
-        }
-
-
-        public int getDividerNum() {
-            return dividerNum;
-        }
-
-        public void setDividerNum(int dividerNum) {
-            this.dividerNum = dividerNum;
-        }
-
-        public int getIndexColor() {
-            return indexColor;
-        }
-
-        public void setIndexColor(int indexColor) {
-            this.indexColor = indexColor;
-        }
-
-        public int getPreColor() {
-            return preColor;
-        }
-
-        public void setPreColor(int preColor) {
-            this.preColor = preColor;
-        }
-
-        public int getAfterColor() {
-            return afterColor;
-        }
-
-        public void setAfterColor(int afterColor) {
-            this.afterColor = afterColor;
-        }
-
-        public DividerLayoutAdapter getDividerLayoutAdapter() {
-            return dividerLayoutAdapter;
-        }
-
-        public void setDividerLayoutAdapter(DividerLayoutAdapter dividerLayoutAdapter) {
-            this.dividerLayoutAdapter = dividerLayoutAdapter;
-        }
-
-        public void setDividerLayoutAdapter(List<Drawable> drawableList) {
-            if (drawableList == null || drawableList.size() < 1) {
-                return;
-            }
-
-            DividerLayoutAdapter d = new DividerLayoutAdapter(drawableList) {
-            };
-            this.dividerLayoutAdapter = d;
-//            this.dividerLayoutAdapter = dividerLayoutAdapter;
-        }
-    }
 }

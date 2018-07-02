@@ -2,4 +2,5 @@
 <resources>
     <dimen name="default_padding">30dp</dimen>
     <dimen name="default_stroke_width">10dp</dimen>
+    <dimen name="default_text_size">15sp</dimen>
 </resources>

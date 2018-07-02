@@ -2,22 +2,19 @@ package io.github.rangaofei.sakatimeline.divider;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
-import io.github.rangaofei.sakatimeline.TimeLineConfig;
+import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 import io.github.rangaofei.sakatimeline.customlayoutmanager.PerfectLinearLayoutManager;
 import io.github.rangaofei.sakatimeline.exception.ExceptionMessage;
 
@@ -29,7 +26,7 @@ import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType
 public class SingleStepViewDivider extends BaseDivider {
     private Paint textPaint;
     private Paint circlePaint;
-    private Paint overColor;
+    private Paint overlayPaint;
     private Paint.FontMetrics fm;
     private RecyclerView recyclerView;
     private float currentNum;
@@ -42,19 +39,22 @@ public class SingleStepViewDivider extends BaseDivider {
 
     public SingleStepViewDivider(Context context, TimeLineConfig timeLineConfig) {
         super(context, timeLineConfig);
-        overColor = new Paint();
-        overColor.setColor(timeLineConfig.getStepViewConfig().getPreColor());
-        overColor.setAntiAlias(true);
+        overlayPaint = new Paint();
+        overlayPaint.setColor(timeLineConfig.getStepViewConfig().getPreColor());
+        overlayPaint.setAntiAlias(true);
+        overlayPaint.setXfermode(porterDuffXfermode);
 
-        overColor.setXfermode(porterDuffXfermode);
+
         textPaint = new Paint();
-        textPaint.setTextSize(30);
-        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(timeLineConfig.getIndexTextConfig().getTextSize());
+        textPaint.setColor(timeLineConfig.getIndexTextConfig().getTextColor());
         textPaint.setAntiAlias(true);
-        circlePaint = new Paint();
-        circlePaint.setStrokeWidth(5);
-        circlePaint.setAntiAlias(true);
         fm = textPaint.getFontMetrics();
+
+        circlePaint = new Paint();
+        circlePaint.setStrokeWidth(timeLineConfig.getTimeStrokeWidth());
+        circlePaint.setAntiAlias(true);
+        circlePaint.setColor(timeLineConfig.getStepViewConfig().getAfterColor());
 
         currentNum = timeLineConfig.getStepViewConfig().getDividerNum();
         dividerLayoutAdapter = timeLineConfig.getStepViewConfig().getDividerLayoutAdapter();
@@ -94,9 +94,7 @@ public class SingleStepViewDivider extends BaseDivider {
                     int realHPadding = (int) padding;
                     if (timeLineConfig.getType() == TOP_STEP_PROGRESS) {
                         outRect.top = realHPadding;
-//                        outRect.set(DEFAULT_DIVIDER_GAP, realHPadding, 0, DEFAULT_DIVIDER_GAP);
                     } else if (timeLineConfig.getType() == BOTTOM_STEP_PROGRESS) {
-//                        outRect.set(DEFAULT_DIVIDER_GAP, 0, DEFAULT_DIVIDER_GAP, realHPadding);
                         outRect.bottom = realHPadding;
                     }
                     break;
@@ -104,9 +102,7 @@ public class SingleStepViewDivider extends BaseDivider {
                     int realVPadding = (int) padding;
                     if (timeLineConfig.getType() == LEFT_STEP_PROGRESS) {
                         outRect.left = realVPadding;
-//                        outRect.set(realVPadding, DEFAULT_DIVIDER_GAP, 0, DEFAULT_DIVIDER_GAP);
                     } else if (timeLineConfig.getType() == RIGHT_STEP_PROGRESS) {
-//                        outRect.set(0, DEFAULT_DIVIDER_GAP, realVPadding, DEFAULT_DIVIDER_GAP);
                         outRect.right = realVPadding;
                     }
                     break;
@@ -119,8 +115,12 @@ public class SingleStepViewDivider extends BaseDivider {
     private void drawHorizontalStep(Canvas c, RecyclerView parent) {
         c.save();
         for (int i = 0; i < parent.getChildCount(); i++) {
-            int layoutId = c.saveLayer(0, 0, recyclerView.getWidth(), recyclerView.getHeight(), null);
-            circlePaint.setColor(timeLineConfig.getStepViewConfig().getAfterColor());
+            int layoutId = c.saveLayer(recyclerView.getPaddingLeft(),
+                    recyclerView.getPaddingTop(),
+                    recyclerView.getWidth() - recyclerView.getPaddingLeft() - recyclerView.getPaddingRight(),
+                    recyclerView.getHeight() - recyclerView.getPaddingTop() - recyclerView.getPaddingBottom(),
+                    null);
+
             View view = parent.getChildAt(i);
             int circleX = view.getLeft() + view.getWidth() / 2;
             int circleY = 0, rectTop = 0, rectBottom = 0;
@@ -135,29 +135,19 @@ public class SingleStepViewDivider extends BaseDivider {
             }
             c.drawLine(view.getLeft() - globalRect.left, circleY,
                     view.getRight() + globalRect.right, circleY, circlePaint);
-            c.drawCircle(circleX, circleY, padding / 3, circlePaint);
+            drawDefaultCircle(c, circleX, circleY, i);
 
             if (i < currentNum && i > currentNum - 1) {
                 c.drawRect(view.getLeft() - globalRect.left, rectTop,
                         (view.getRight() + globalRect.right) * (currentNum - i),
-                        rectBottom, overColor);
+                        rectBottom, overlayPaint);
             } else if (i <= currentNum - 1) {
                 c.drawRect(view.getLeft() - globalRect.left, rectTop,
                         (view.getRight() + globalRect.right),
-                        rectBottom, overColor);
+                        rectBottom, overlayPaint);
             }
-            if (timeLineConfig.getStepViewConfig().isShowStepText()) {
-                String text = String.valueOf(i + 1);
-                float w = textPaint.measureText(text);
-                c.drawText(text, circleX - w / 2, circleY + (fm.bottom - fm.top) / 2 - fm.bottom, textPaint);
-            }
-            if (dividerLayoutAdapter != null && dividerLayoutAdapter.getDrawable(i) != null) {
-                Drawable drawable = dividerLayoutAdapter.getDrawable(i);
-                drawRect.set(circleX - (int) padding / 2, circleY - (int) padding / 2,
-                        circleX + (int) padding / 2, circleY + (int) padding / 2);
-                drawable.setBounds(drawRect);
-                drawable.draw(c);
-            }
+            drawDrawable(c, circleX, circleY, i);
+            drawText(c, circleX, circleY, i);
             c.restoreToCount(layoutId);
         }
         c.restore();
@@ -166,9 +156,12 @@ public class SingleStepViewDivider extends BaseDivider {
     private void drawVerticalStep(Canvas c, RecyclerView parent) {
         c.save();
         for (int i = 0; i < parent.getChildCount(); i++) {
-            int layoutId = c.saveLayer(0, 0, recyclerView.getWidth(), recyclerView.getHeight(), null);
+            int layoutId = c.saveLayer(recyclerView.getPaddingLeft(),
+                    recyclerView.getPaddingTop(),
+                    recyclerView.getWidth() - recyclerView.getPaddingLeft() - recyclerView.getPaddingRight(),
+                    recyclerView.getHeight() - recyclerView.getPaddingTop() - recyclerView.getPaddingBottom(),
+                    null);
             View view = parent.getChildAt(i);
-            circlePaint.setColor(timeLineConfig.getStepViewConfig().getAfterColor());
             int circleX = 0, rectLeft = 0, rectRight = 0;
             int circleY = view.getTop() + view.getHeight() / 2;
             if (timeLineConfig.getType() == LEFT_STEP_PROGRESS) {
@@ -182,32 +175,56 @@ public class SingleStepViewDivider extends BaseDivider {
             }
             c.drawLine(circleX, view.getTop() - globalRect.top,
                     circleX, view.getBottom() + globalRect.bottom, circlePaint);
-            c.drawCircle(circleX, circleY, padding / 3, circlePaint);
+            drawDefaultCircle(c, circleX, circleY, i);
 
             if (i < currentNum && i > currentNum - 1) {
                 c.drawRect(rectLeft, view.getTop() - globalRect.top,
                         rectRight,
-                        (view.getBottom() + globalRect.bottom) * (currentNum - i), overColor);
+                        (view.getBottom() + globalRect.bottom) * (currentNum - i), overlayPaint);
             } else if (i <= currentNum - 1) {
                 c.drawRect(rectLeft, view.getTop() - globalRect.top,
                         rectRight,
-                        view.getBottom() + globalRect.bottom, overColor);
+                        view.getBottom() + globalRect.bottom, overlayPaint);
             }
-
-
-            if (timeLineConfig.getStepViewConfig().isShowStepText()) {
-                String text = String.valueOf(i + 1);
-                float w = textPaint.measureText(text);
-                c.drawText(text, circleX - w / 2, circleY + (fm.bottom - fm.top) / 2 - fm.bottom, textPaint);
-            }
-
-            if (dividerLayoutAdapter != null) {
-                dividerLayoutAdapter.getDrawable(i).setBounds(0, 0, 0, 0);
-                dividerLayoutAdapter.getDrawable(i).draw(c);
-            }
+            drawDrawable(c, circleX, circleY, i);
+            drawText(c, circleX, circleY, i);
             c.restoreToCount(layoutId);
         }
         c.restore();
+    }
+
+    /**
+     * 绘制默认的圆
+     *
+     * @param c       画布
+     * @param circleX 圆心x
+     * @param circleY 圆心y
+     */
+    private void drawDefaultCircle(Canvas c, int circleX, int circleY, int index) {
+        if (dividerLayoutAdapter == null || dividerLayoutAdapter.getDrawable(index) == null) {
+            c.drawCircle(circleX, circleY, padding / 3, circlePaint);
+        }
+    }
+
+    /**
+     * 绘制用户设置的drawable
+     */
+    private void drawDrawable(Canvas c, int circleX, int circleY, int i) {
+        if (dividerLayoutAdapter != null && dividerLayoutAdapter.getDrawable(i) != null) {
+            Drawable drawable = dividerLayoutAdapter.getDrawable(i);
+            drawRect.set(circleX - (int) padding / 3, circleY - (int) padding / 3,
+                    circleX + (int) padding / 3, circleY + (int) padding / 3);
+            drawable.setBounds(drawRect);
+            drawable.draw(c);
+        }
+    }
+
+    private void drawText(Canvas c, int circleX, int circleY, int i) {
+        if (timeLineConfig.getStepViewConfig().isShowStepText()) {
+            String text = String.valueOf(i + 1);
+            float w = textPaint.measureText(text);
+            c.drawText(text, circleX - w / 2, circleY + (fm.bottom - fm.top) / 2 - fm.bottom, textPaint);
+        }
     }
 
     /**

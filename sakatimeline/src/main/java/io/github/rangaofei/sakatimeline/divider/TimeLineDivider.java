@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import io.github.rangaofei.sakatimeline.TimeLineConfig;
+import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 
 public class TimeLineDivider extends RecyclerView.ItemDecoration {
     private Rect itemRect = new Rect();
