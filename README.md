@@ -5,7 +5,7 @@
 ## 集成方式
 
 ```groovy
-implementation 'com.rangaofei:sakatimeline:0.1.3'
+implementation 'com.rangaofei:sakatimeline:0.1.5'
 ```
 然后修改app级别的module的build.gradle 文件：
 
@@ -24,7 +24,9 @@ android {
 
 假如没出现问题的话就集成成功了
 
-## 使用setpview
+## 使用SetpView
+
+StepView内部使用apt处理注解实现了adapter，adapter包含两种布局，key和value。目前推出的只需要使用value布局即可。
 
 首先要定义一个model，这个model要编写一些注解
 
@@ -121,8 +123,8 @@ public class StepViewModel {
     <attr name="android:textStyle"/>
     <attr name="android:typeface"/>
     <attr name="android:fontFamily"/>
-    <attr name="android:shadowColor"/
-    ><attr name="android:shadowDy"/>
+    <attr name="android:shadowColor"/>
+    <attr name="android:shadowDy"/>
     <attr name="android:shadowDx"/>
     <attr name="android:shadowRadius"/>
     <attr name="android:backGround"/>
