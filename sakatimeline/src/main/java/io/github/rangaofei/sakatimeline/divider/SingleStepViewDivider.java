@@ -133,19 +133,59 @@ public class SingleStepViewDivider extends BaseDivider {
                 rectTop = view.getBottom();
                 rectBottom = view.getBottom() + (int) padding;
             }
-            c.drawLine(view.getLeft() - globalRect.left, circleY,
-                    view.getRight() + globalRect.right, circleY, circlePaint);
-            drawDefaultCircle(c, circleX, circleY, i);
+            switch (timeLineConfig.getStrokeType()) {
+                case NORMAL:
+                    c.drawLine(view.getLeft() - globalRect.left, circleY,
+                            view.getRight() + globalRect.right, circleY, circlePaint);
+                    break;
+                case NO_ENDPOINT:
+                    if (i == 0) {
+                        c.drawLine(circleX, circleY,
+                                view.getRight() + globalRect.right, circleY, circlePaint);
+                    } else if (i == parent.getChildCount() - 1) {
+                        c.drawLine(view.getLeft() - globalRect.left, circleY,
+                                circleX, circleY, circlePaint);
+                    } else {
+                        c.drawLine(view.getLeft() - globalRect.left, circleY,
+                                view.getRight() + globalRect.right, circleY, circlePaint);
+                    }
 
-            if (i < currentNum && i > currentNum - 1) {
-                c.drawRect(view.getLeft() - globalRect.left, rectTop,
-                        (view.getRight() + globalRect.right) * (currentNum - i),
-                        rectBottom, overlayPaint);
-            } else if (i <= currentNum - 1) {
-                c.drawRect(view.getLeft() - globalRect.left, rectTop,
-                        (view.getRight() + globalRect.right),
-                        rectBottom, overlayPaint);
+                    break;
+                default:
+                    break;
             }
+
+            drawDefaultCircle(c, circleX, circleY, i);
+            switch (timeLineConfig.getStrokeType()) {
+                case NORMAL:
+                    if (i < currentNum && i > currentNum - 1) {
+                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
+                                (view.getRight() + globalRect.right) * (currentNum - i),
+                                rectBottom, overlayPaint);
+                    } else if (i <= currentNum - 1) {
+                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
+                                (view.getRight() + globalRect.right),
+                                rectBottom, overlayPaint);
+                    }
+                    break;
+                case NO_ENDPOINT:
+                    if (i < currentNum - 1.5f) {//全画
+                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
+                                (view.getRight() + globalRect.right),
+                                rectBottom, overlayPaint);
+                    } else if (i < currentNum - 1f && i >= currentNum - 1.5f) {//左全画，右部分画
+                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
+                                view.getLeft() + view.getWidth() / 2 + view.getWidth() * (currentNum - i - 1f),
+//                                (view.getLeft() + view.getWidth() / 2) * (1 + currentNum - i),
+                                rectBottom, overlayPaint);
+                    } else if (i >= currentNum - 1f && i <= currentNum - 0.5f) {//左部分画，右不画
+                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
+                                view.getLeft() + view.getWidth() * (currentNum - i -0.5f),
+                                rectBottom, overlayPaint);
+                    }
+                    break;
+            }
+
             drawDrawable(c, circleX, circleY, i);
             drawText(c, circleX, circleY, i);
             c.restoreToCount(layoutId);
@@ -173,24 +213,81 @@ public class SingleStepViewDivider extends BaseDivider {
                 rectLeft = view.getRight();
                 rectRight = view.getRight() + (int) padding;
             }
-            c.drawLine(circleX, view.getTop() - globalRect.top,
-                    circleX, view.getBottom() + globalRect.bottom, circlePaint);
+            switch (timeLineConfig.getStrokeType()) {
+                case NORMAL:
+                    c.drawLine(circleX, view.getTop() - globalRect.top,
+                            circleX, view.getBottom() + globalRect.bottom, circlePaint);
+                    break;
+                case NO_ENDPOINT:
+                    if (i == 0) {
+                        c.drawLine(circleX, circleY,
+                                circleX, view.getBottom() + globalRect.bottom, circlePaint);
+                    } else if (i == parent.getChildCount() - 1) {
+                        c.drawLine(circleX, view.getTop() - globalRect.top,
+                                circleX, circleY, circlePaint);
+                    } else {
+                        c.drawLine(circleX, view.getTop() - globalRect.top,
+                                circleX, view.getBottom() + globalRect.bottom, circlePaint);
+                    }
+                    c.drawLine(circleX, view.getTop() - globalRect.top,
+                            circleX, view.getBottom() + globalRect.bottom, circlePaint);
+                    break;
+                default:
+                    break;
+            }
+
             drawDefaultCircle(c, circleX, circleY, i);
 
-            if (i < currentNum && i > currentNum - 1) {
-                c.drawRect(rectLeft, view.getTop() - globalRect.top,
-                        rectRight,
-                        (view.getBottom() + globalRect.bottom) * (currentNum - i), overlayPaint);
-            } else if (i <= currentNum - 1) {
-                c.drawRect(rectLeft, view.getTop() - globalRect.top,
-                        rectRight,
-                        view.getBottom() + globalRect.bottom, overlayPaint);
+            switch (timeLineConfig.getStrokeType()) {
+                case NORMAL:
+                    if (i < currentNum && i > currentNum - 1) {
+                        c.drawRect(rectLeft, view.getTop() - globalRect.top,
+                                rectRight,
+                                (view.getBottom() + globalRect.bottom) * (currentNum - i), overlayPaint);
+                    } else if (i <= currentNum - 1) {
+                        c.drawRect(rectLeft, view.getTop() - globalRect.top,
+                                rectRight,
+                                view.getBottom() + globalRect.bottom, overlayPaint);
+                    }
+                    break;
+                case NO_ENDPOINT:
+                    if (i <= currentNum) {
+                        c.drawRect(rectLeft, view.getTop() - globalRect.top,
+                                rectRight,
+                                view.getBottom() + globalRect.bottom, overlayPaint);
+                    } else if (i == currentNum + 1 && i < parent.getChildCount() - 1) {
+                        c.drawRect(rectLeft, view.getTop() - globalRect.top,
+                                rectRight,
+                                (view.getBottom() + globalRect.bottom) * (currentNum + 0.5f - i), overlayPaint);
+                    }
+                    break;
             }
+
             drawDrawable(c, circleX, circleY, i);
             drawText(c, circleX, circleY, i);
             c.restoreToCount(layoutId);
         }
         c.restore();
+    }
+
+
+    private void drawLine() {
+        switch (timeLineConfig.getStrokeType()) {
+            case NORMAL:
+                break;
+            case NO_ENDPOINT:
+                break;
+            default:
+                throw new RuntimeException("unknown stroke_type");
+        }
+    }
+
+    private void drawNormalLine() {
+
+    }
+
+    private void drawNoEndPointLine() {
+
     }
 
     /**
@@ -237,16 +334,16 @@ public class SingleStepViewDivider extends BaseDivider {
         if (recyclerView == null) {
             return;
         }
-        if (num > recyclerView.getChildCount()) {
-            num = recyclerView.getChildCount();
+        if (num > recyclerView.getChildCount() + 1) {
+            num = recyclerView.getChildCount() + 1;
         }
-        if (num < 1) {
-            num = 1;
+        if (num < 0) {
+            num = 0;
         }
         if (showAnim) {
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(currentNum, num);
             valueAnimator.setInterpolator(new LinearInterpolator());
-            valueAnimator.setDuration(2500);
+            valueAnimator.setDuration(1000);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {

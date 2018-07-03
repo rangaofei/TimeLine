@@ -17,27 +17,30 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             app:stepShowOrder="true"
+            app:strokeType="noEndPoint"
             app:timePadding="30dp"
             app:timeStrokeWidth="3dp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/colorAccent" />
+            android:background="@color/colorAccent"
+            android:visibility="gone" />
 
         <io.github.rangaofei.sakatimeline.TimeLineView
             android:id="@+id/two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             app:timePadding="30dp"
             app:timeStrokeWidth="3dp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/colorAccent" />
+            android:background="@color/colorAccent"
+            android:visibility="gone" />
 
         <io.github.rangaofei.sakatimeline.TimeLineView
             android:id="@+id/three"
@@ -45,15 +48,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             app:stepShowOrder="true"
-            app:timePadding="30dp"
             app:timeIndexSize="30sp"
+            app:timePadding="30dp"
             app:timeStrokeWidth="3dp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/colorAccent" />
+            android:background="@color/colorAccent"
+            android:visibility="gone" />
 
         <io.github.rangaofei.sakatimeline.TimeLineView
             android:id="@+id/four"
@@ -61,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             app:timePadding="30dp"
             app:timeStrokeWidth="3dp" />
 

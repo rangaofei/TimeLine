@@ -7,6 +7,10 @@
         <attr name="timeDrawable" format="color|reference" />
         <attr name="timeStrokeWidth" format="dimension" />
         <attr name="timeStrokeColor" format="color" />
+        <attr name="strokeType" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="noEndPoint" value="1" />
+        </attr>
     </declare-styleable>
 
     <!--timelineview中序号的属性-->

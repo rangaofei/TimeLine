@@ -28,6 +28,8 @@ public class TimeLineConfig {
 
     private IndexTextConfig indexTextConfig;
 
+    private StrokeType strokeType;
+
     public IndexTextConfig getIndexTextConfig() {
         return indexTextConfig;
     }
@@ -109,4 +111,11 @@ public class TimeLineConfig {
         this.stepViewConfig = stepViewConfig;
     }
 
+    public StrokeType getStrokeType() {
+        return strokeType;
+    }
+
+    public void setStrokeType(StrokeType strokeType) {
+        this.strokeType = strokeType;
+    }
 }

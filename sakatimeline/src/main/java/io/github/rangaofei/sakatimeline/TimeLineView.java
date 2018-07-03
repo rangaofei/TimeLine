@@ -13,6 +13,7 @@ import java.util.List;
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
 import io.github.rangaofei.sakatimeline.config.IndexTextConfig;
 import io.github.rangaofei.sakatimeline.config.StepViewConfig;
+import io.github.rangaofei.sakatimeline.config.StrokeType;
 import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 import io.github.rangaofei.sakatimeline.customlayoutmanager.PerfectLinearLayoutManager;
 import io.github.rangaofei.sakatimeline.divider.BaseDivider;
@@ -121,7 +122,17 @@ public class TimeLineView extends RecyclerView {
         final int strokeWidth =
                 ta.getDimensionPixelSize(R.styleable.TimeLineView_timeStrokeWidth,
                         getResources().getDimensionPixelOffset(R.dimen.default_stroke_width));
-
+        final int strokeType = ta.getInt(R.styleable.TimeLineView_strokeType, 0);
+        switch (strokeType) {
+            case 0:
+                timeLineConfig.setStrokeType(StrokeType.NORMAL);
+                break;
+            case 1:
+                timeLineConfig.setStrokeType(StrokeType.NO_ENDPOINT);
+                break;
+            case 2:
+                break;
+        }
         timeLineConfig.setPadding(padding);
         timeLineConfig.setTimeDrawable(drawable);
         timeLineConfig.setTimeColor(strokeColor);

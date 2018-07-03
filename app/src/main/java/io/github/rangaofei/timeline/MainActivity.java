@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         ((TimeLineView) findViewById(R.id.one)).
                 setTimeLineConfig(adapter, TimeLineType.StepViewType.BOTTOM_STEP_PROGRESS, 1, list);
         ((TimeLineView) findViewById(R.id.two)).
-                setTimeLineConfig(adapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 1);
+                setTimeLineConfig(adapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 0);
         ((TimeLineView) findViewById(R.id.three)).
                 setTimeLineConfig(adapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS, 3, list);
         ((TimeLineView) findViewById(R.id.four)).
@@ -76,20 +76,20 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(2);
+                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(3);
                 ((TimeLineView) findViewById(R.id.two)).updateDividerNum(3);
                 ((TimeLineView) findViewById(R.id.three)).updateDividerNum(2);
                 ((TimeLineView) findViewById(R.id.four)).updateDividerNum(2);
             }
-        }, 3000);
+        }, 1000);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(1);
-                ((TimeLineView) findViewById(R.id.two)).updateDividerNum(1);
+                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(2);
+                ((TimeLineView) findViewById(R.id.two)).updateDividerNum(0);
                 ((TimeLineView) findViewById(R.id.three)).updateDividerNum(1);
                 ((TimeLineView) findViewById(R.id.four)).updateDividerNum(1);
             }
-        }, 6000);
+        }, 4000);
     }
 }
