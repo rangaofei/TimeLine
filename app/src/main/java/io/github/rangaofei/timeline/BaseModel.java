@@ -2,6 +2,7 @@ package io.github.rangaofei.timeline;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
 import io.github.rangaofei.javatimeline.annotations.TimeLine;
@@ -18,7 +19,7 @@ public class BaseModel implements Parcelable, Comparable<BaseModel> {
     @TimeLineTextView(key = false, id = "R.id.value")
     public String value;
 
-
+    @DrawableRes
     @TimeLineImageView(key = false, id = "R.id.iv")
     public int imageViewId;
 

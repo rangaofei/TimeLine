@@ -17,14 +17,14 @@
     <style name="StepView2">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:background">@color/white</item>
+        <item name="backgroundProxy">@color/white</item>
         <item name="visibleProxy">invisible</item>
     </style>
 
     <style name="StepView3">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/teal</item>
-        <item name="android:background">@drawable/bg_rect</item>
+        <item name="backgroundProxy">@drawable/bg_rect</item>
         <item name="visibleProxy">visible</item>
     </style>
 </resources>

@@ -30,32 +30,10 @@ public class TextViewProxy implements TextViewInterface {
 
     @Override
     public void setTextAppearance(Context context, int id) {
+        textView.setTextAppearance(textView.getContext(), id);
+        ViewProxy<TextView> viewProxy = new ViewProxy<>(textView);
+        viewProxy.setStyle(id);
 
-        TypedArray ta = context.obtainStyledAttributes(id, R.styleable.ViewBackgroundHelper);
-        if (ta != null) {
-            Drawable drawable = ta.getDrawable(0);
-            ta.recycle();
-            if (drawable != null) {
-                textView.setBackground(drawable);
-            }
-            textView.setTextAppearance(context, id);
-        }
-
-        TypedArray t = context.obtainStyledAttributes(id, R.styleable.TimeLineViewProxy);
-        if (ta != null) {
-            int v = ta.getInt(R.styleable.TimeLineViewProxy_visibleProxy, 0);
-            switch (v) {
-                case 0:
-                    textView.setVisibility(View.VISIBLE);
-                    break;
-                case 1:
-                    textView.setVisibility(View.INVISIBLE);
-                    break;
-                case 2:
-                    textView.setVisibility(View.GONE);
-                    break;
-            }
-        }
-        t.recycle();
     }
+
 }

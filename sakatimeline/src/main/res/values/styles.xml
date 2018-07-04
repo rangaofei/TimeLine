@@ -11,6 +11,14 @@
             <enum name="normal" value="0" />
             <enum name="noEndPoint" value="1" />
         </attr>
+        <attr name="timeLineType" format="enum">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="top" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+
+
     </declare-styleable>
 
     <!--timelineview中序号的属性-->
@@ -26,13 +34,21 @@
         <attr name="stepAfterColor" format="color" />
     </declare-styleable>
 
+
     <declare-styleable name="TimeLineViewProxy">
         <attr name="visibleProxy" format="enum">
             <enum name="visible" value="0" />
             <enum name="invisible" value="1" />
             <enum name="gone" value="2" />
         </attr>
-        <attr name="backgroundProxy" format="reference" />
+        <attr name="backgroundProxy" />
+        <attr name="clickProxy" format="boolean" />
     </declare-styleable>
 
+
+    <style name="DefaultViewAttr">
+        <item name="visibleProxy">visible</item>
+        <item name="backgroundProxy">@drawable/drawable_null</item>
+        <item name="clickProxy">true</item>
+    </style>
 </resources>

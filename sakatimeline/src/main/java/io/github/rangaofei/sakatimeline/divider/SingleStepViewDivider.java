@@ -9,11 +9,14 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import io.github.rangaofei.sakatimeline.config.StrokeType;
 import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 import io.github.rangaofei.sakatimeline.customlayoutmanager.PerfectLinearLayoutManager;
 import io.github.rangaofei.sakatimeline.exception.ExceptionMessage;
@@ -63,13 +66,21 @@ public class SingleStepViewDivider extends BaseDivider {
 
     @Override
     public void onChildDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        if (parent.getClipToPadding()) {
+            c.clipRect(parent.getPaddingLeft(), parent.getPaddingTop(),
+                    parent.getWidth() - parent.getPaddingRight(),
+                    parent.getHeight() - parent.getPaddingBottom());
+        }
+
         RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
         if (layoutManager instanceof PerfectLinearLayoutManager) {
+
             switch (((PerfectLinearLayoutManager) layoutManager).getOrientation()) {
                 case LinearLayoutManager.HORIZONTAL:
                     drawHorizontalStep(c, parent);
                     break;
                 case LinearLayoutManager.VERTICAL:
+                    Log.d("---", "onDraw");
                     drawVerticalStep(c, parent);
                     break;
                 default:
@@ -112,85 +123,130 @@ public class SingleStepViewDivider extends BaseDivider {
         }
     }
 
+    private void drawHorizontalLine(Canvas c, RecyclerView parent, View view) {
+        int i = parent.getChildAdapterPosition(view);
+        int widthWithPadding = view.getWidth() + globalRect.right + globalRect.left;
+        int lineStartX = 0, lineStopX = 0, lineStartY = 0, lineStopY = 0, rectStopX = 0;
+        if (timeLineConfig.getStrokeType() == StrokeType.NORMAL) {
+            lineStartX = view.getLeft() - globalRect.left;
+            lineStopX = view.getRight() + globalRect.right;
+            if (i <= currentNum - 1) {
+                rectStopX = view.getRight() + globalRect.right;
+            } else if (i > currentNum - 1 && i <= currentNum) {
+                rectStopX = (int) (view.getLeft() - globalRect.left +
+                        widthWithPadding * (currentNum - (int) currentNum));
+            }
+        } else if (timeLineConfig.getStrokeType() == StrokeType.NO_ENDPOINT) {
+            if (i == 0) {
+                lineStartX = view.getLeft() + view.getWidth() / 2;
+                lineStopX = view.getRight() + globalRect.right;
+            } else if (i == parent.getAdapter().getItemCount() - 1) {
+                lineStartX = view.getLeft() - globalRect.left;
+                lineStopX = view.getLeft() + view.getWidth() / 2;
+            } else {
+                lineStartX = view.getLeft() - globalRect.left;
+                lineStopX = view.getRight() + globalRect.right;
+            }
+
+            if (i <= currentNum - 1.5f) {
+                rectStopX = view.getRight() + globalRect.right;
+            } else if (i > currentNum - 1.5f && i <= currentNum - 1f) {
+                rectStopX = (int) (view.getLeft() + view.getWidth() / 2 +
+                        (view.getWidth() / 2 + globalRect.right) * 2 * (currentNum - (int) currentNum));
+            } else if (i > currentNum - 1f && i <= currentNum - 0.5) {
+                rectStopX = (int) (view.getLeft() - globalRect.left +
+                        (view.getWidth() / 2 + globalRect.left) * 2 * (currentNum - (int) currentNum));
+            }
+        }
+        switch ((TimeLineType.StepViewType) timeLineConfig.getType()) {
+            case TOP_STEP_PROGRESS:
+                lineStartY = lineStopY = (int) (padding / 2);
+                break;
+            case BOTTOM_STEP_PROGRESS:
+                lineStartY = lineStopY = view.getBottom() + (int) (padding / 2);
+                break;
+        }
+        c.drawLine(lineStartX, lineStartY, lineStopX, lineStopY, circlePaint);
+
+        c.drawRect(lineStartX, lineStartY - (int) (padding / 2), rectStopX,
+                lineStopY + (int) (padding / 2), overlayPaint);
+    }
+
+    //DividerItemDecoration
     private void drawHorizontalStep(Canvas c, RecyclerView parent) {
         c.save();
         for (int i = 0; i < parent.getChildCount(); i++) {
             int layoutId = c.saveLayer(recyclerView.getPaddingLeft(),
                     recyclerView.getPaddingTop(),
-                    recyclerView.getWidth() - recyclerView.getPaddingLeft() - recyclerView.getPaddingRight(),
-                    recyclerView.getHeight() - recyclerView.getPaddingTop() - recyclerView.getPaddingBottom(),
+                    recyclerView.getWidth() - recyclerView.getPaddingRight(),
+                    recyclerView.getHeight() - recyclerView.getPaddingBottom(),
                     null);
 
             View view = parent.getChildAt(i);
+            drawHorizontalLine(c, parent, view);
             int circleX = view.getLeft() + view.getWidth() / 2;
-            int circleY = 0, rectTop = 0, rectBottom = 0;
+            int circleY = 0;
             if (timeLineConfig.getType() == TOP_STEP_PROGRESS) {
                 circleY = view.getTop() - (int) padding / 2;
-                rectTop = view.getTop() - (int) padding;
-                rectBottom = view.getTop();
             } else if (timeLineConfig.getType() == BOTTOM_STEP_PROGRESS) {
                 circleY = view.getBottom() + (int) padding / 2;
-                rectTop = view.getBottom();
-                rectBottom = view.getBottom() + (int) padding;
             }
-            switch (timeLineConfig.getStrokeType()) {
-                case NORMAL:
-                    c.drawLine(view.getLeft() - globalRect.left, circleY,
-                            view.getRight() + globalRect.right, circleY, circlePaint);
-                    break;
-                case NO_ENDPOINT:
-                    if (i == 0) {
-                        c.drawLine(circleX, circleY,
-                                view.getRight() + globalRect.right, circleY, circlePaint);
-                    } else if (i == parent.getChildCount() - 1) {
-                        c.drawLine(view.getLeft() - globalRect.left, circleY,
-                                circleX, circleY, circlePaint);
-                    } else {
-                        c.drawLine(view.getLeft() - globalRect.left, circleY,
-                                view.getRight() + globalRect.right, circleY, circlePaint);
-                    }
-
-                    break;
-                default:
-                    break;
-            }
-
             drawDefaultCircle(c, circleX, circleY, i);
-            switch (timeLineConfig.getStrokeType()) {
-                case NORMAL:
-                    if (i < currentNum && i > currentNum - 1) {
-                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
-                                (view.getRight() + globalRect.right) * (currentNum - i),
-                                rectBottom, overlayPaint);
-                    } else if (i <= currentNum - 1) {
-                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
-                                (view.getRight() + globalRect.right),
-                                rectBottom, overlayPaint);
-                    }
-                    break;
-                case NO_ENDPOINT:
-                    if (i < currentNum - 1.5f) {//全画
-                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
-                                (view.getRight() + globalRect.right),
-                                rectBottom, overlayPaint);
-                    } else if (i < currentNum - 1f && i >= currentNum - 1.5f) {//左全画，右部分画
-                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
-                                view.getLeft() + view.getWidth() / 2 + view.getWidth() * (currentNum - i - 1f),
-//                                (view.getLeft() + view.getWidth() / 2) * (1 + currentNum - i),
-                                rectBottom, overlayPaint);
-                    } else if (i >= currentNum - 1f && i <= currentNum - 0.5f) {//左部分画，右不画
-                        c.drawRect(view.getLeft() - globalRect.left, rectTop,
-                                view.getLeft() + view.getWidth() * (currentNum - i -0.5f),
-                                rectBottom, overlayPaint);
-                    }
-                    break;
-            }
-
             drawDrawable(c, circleX, circleY, i);
             drawText(c, circleX, circleY, i);
             c.restoreToCount(layoutId);
         }
         c.restore();
+    }
+
+
+    private void drawVerticalLine(Canvas c, RecyclerView parent, View view) {
+        int i = parent.getChildAdapterPosition(view);
+        int heightWithPadding = view.getHeight() + globalRect.top + globalRect.bottom;
+        int lineStartX = 0, lineStopX = 0, lineStartY = 0, lineStopY = 0, rectStopY = 0;
+        if (timeLineConfig.getStrokeType() == StrokeType.NORMAL) {
+            lineStartY = view.getTop() - globalRect.top;
+            lineStopY = view.getBottom() + globalRect.bottom;
+            if (i <= currentNum - 1) {
+                rectStopY = view.getBottom() + globalRect.bottom;
+            } else if (i > currentNum - 1 && i <= currentNum) {
+                rectStopY = (int) (view.getTop() - globalRect.top +
+                        heightWithPadding * (currentNum - (int) currentNum));
+            }
+        } else if (timeLineConfig.getStrokeType() == StrokeType.NO_ENDPOINT) {
+            if (i == 0) {
+                lineStartY = view.getTop() + view.getHeight() / 2;
+                lineStopY = view.getBottom() + globalRect.bottom;
+            } else if (i == parent.getAdapter().getItemCount() - 1) {
+                lineStartY = view.getTop() - globalRect.top;
+                lineStopY = view.getTop() + view.getHeight() / 2;
+            } else {
+                lineStartY = view.getTop() - globalRect.top;
+                lineStopY = view.getBottom() + globalRect.bottom;
+            }
+
+            if (i <= currentNum - 1.5f) {
+                rectStopY = view.getBottom() + globalRect.bottom;
+            } else if (i > currentNum - 1.5f && i <= currentNum - 1f) {
+                rectStopY = (int) (view.getTop() + view.getHeight() / 2 +
+                        (view.getHeight() / 2 + globalRect.bottom) * 2 * (currentNum - (int) currentNum));
+            } else if (i > currentNum - 1f && i <= currentNum - 0.5) {
+                rectStopY = (int) (view.getTop() - globalRect.top +
+                        (view.getHeight() / 2 + globalRect.top) * 2 * (currentNum - (int) currentNum));
+            }
+        }
+        switch ((TimeLineType.StepViewType) timeLineConfig.getType()) {
+            case LEFT_STEP_PROGRESS:
+                lineStartX = lineStopX = (int) (padding / 2);
+                break;
+            case RIGHT_STEP_PROGRESS:
+                lineStartX = lineStopX = view.getRight() + (int) (padding / 2);
+                break;
+        }
+        c.drawLine(lineStartX, lineStartY, lineStopX, lineStopY, circlePaint);
+
+        c.drawRect(lineStartX - padding / 2, lineStartY, lineStartX + padding / 2,
+                rectStopY, overlayPaint);
     }
 
     private void drawVerticalStep(Canvas c, RecyclerView parent) {
@@ -198,71 +254,20 @@ public class SingleStepViewDivider extends BaseDivider {
         for (int i = 0; i < parent.getChildCount(); i++) {
             int layoutId = c.saveLayer(recyclerView.getPaddingLeft(),
                     recyclerView.getPaddingTop(),
-                    recyclerView.getWidth() - recyclerView.getPaddingLeft() - recyclerView.getPaddingRight(),
-                    recyclerView.getHeight() - recyclerView.getPaddingTop() - recyclerView.getPaddingBottom(),
+                    recyclerView.getWidth() - recyclerView.getPaddingRight(),
+                    recyclerView.getHeight() - recyclerView.getPaddingBottom(),
                     null);
             View view = parent.getChildAt(i);
-            int circleX = 0, rectLeft = 0, rectRight = 0;
+            drawVerticalLine(c, parent, view);
+            int circleX = 0;
             int circleY = view.getTop() + view.getHeight() / 2;
             if (timeLineConfig.getType() == LEFT_STEP_PROGRESS) {
                 circleX = view.getLeft() - (int) padding / 2;
-                rectLeft = view.getLeft() - (int) padding;
-                rectRight = view.getLeft();
             } else if (timeLineConfig.getType() == RIGHT_STEP_PROGRESS) {
                 circleX = view.getRight() + (int) padding / 2;
-                rectLeft = view.getRight();
-                rectRight = view.getRight() + (int) padding;
-            }
-            switch (timeLineConfig.getStrokeType()) {
-                case NORMAL:
-                    c.drawLine(circleX, view.getTop() - globalRect.top,
-                            circleX, view.getBottom() + globalRect.bottom, circlePaint);
-                    break;
-                case NO_ENDPOINT:
-                    if (i == 0) {
-                        c.drawLine(circleX, circleY,
-                                circleX, view.getBottom() + globalRect.bottom, circlePaint);
-                    } else if (i == parent.getChildCount() - 1) {
-                        c.drawLine(circleX, view.getTop() - globalRect.top,
-                                circleX, circleY, circlePaint);
-                    } else {
-                        c.drawLine(circleX, view.getTop() - globalRect.top,
-                                circleX, view.getBottom() + globalRect.bottom, circlePaint);
-                    }
-                    c.drawLine(circleX, view.getTop() - globalRect.top,
-                            circleX, view.getBottom() + globalRect.bottom, circlePaint);
-                    break;
-                default:
-                    break;
             }
 
             drawDefaultCircle(c, circleX, circleY, i);
-
-            switch (timeLineConfig.getStrokeType()) {
-                case NORMAL:
-                    if (i < currentNum && i > currentNum - 1) {
-                        c.drawRect(rectLeft, view.getTop() - globalRect.top,
-                                rectRight,
-                                (view.getBottom() + globalRect.bottom) * (currentNum - i), overlayPaint);
-                    } else if (i <= currentNum - 1) {
-                        c.drawRect(rectLeft, view.getTop() - globalRect.top,
-                                rectRight,
-                                view.getBottom() + globalRect.bottom, overlayPaint);
-                    }
-                    break;
-                case NO_ENDPOINT:
-                    if (i <= currentNum) {
-                        c.drawRect(rectLeft, view.getTop() - globalRect.top,
-                                rectRight,
-                                view.getBottom() + globalRect.bottom, overlayPaint);
-                    } else if (i == currentNum + 1 && i < parent.getChildCount() - 1) {
-                        c.drawRect(rectLeft, view.getTop() - globalRect.top,
-                                rectRight,
-                                (view.getBottom() + globalRect.bottom) * (currentNum + 0.5f - i), overlayPaint);
-                    }
-                    break;
-            }
-
             drawDrawable(c, circleX, circleY, i);
             drawText(c, circleX, circleY, i);
             c.restoreToCount(layoutId);
@@ -270,25 +275,7 @@ public class SingleStepViewDivider extends BaseDivider {
         c.restore();
     }
 
-
-    private void drawLine() {
-        switch (timeLineConfig.getStrokeType()) {
-            case NORMAL:
-                break;
-            case NO_ENDPOINT:
-                break;
-            default:
-                throw new RuntimeException("unknown stroke_type");
-        }
-    }
-
-    private void drawNormalLine() {
-
-    }
-
-    private void drawNoEndPointLine() {
-
-    }
+//DividerItemDecoration
 
     /**
      * 绘制默认的圆
@@ -351,6 +338,7 @@ public class SingleStepViewDivider extends BaseDivider {
                         currentNum = (float) animation.getAnimatedValue();
                         timeLineConfig.getStepViewConfig().setDividerNum((int) currentNum);
                         recyclerView.invalidateItemDecorations();
+                        recyclerView.postInvalidate();
                     }
                 }
             });

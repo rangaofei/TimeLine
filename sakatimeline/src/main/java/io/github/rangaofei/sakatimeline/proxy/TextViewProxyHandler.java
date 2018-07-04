@@ -7,15 +7,19 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 public class TextViewProxyHandler implements InvocationHandler {
-    private TextViewInterface anInterface;
+    private TextView textView;
 
-    public TextViewProxyHandler(TextViewInterface anInterface) {
-        this.anInterface = anInterface;
+    public TextViewProxyHandler(TextView textView) {
+        this.textView = textView;
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Log.d("+++", method.getName());
-        return method.invoke(anInterface, args);
+        if (method.getName().equals("setTextAppearance")) {
+            Log.d("+++", proxy.getClass().getName());
+            return method.invoke(new TextViewProxy(textView), args);
+        }
+        return method.invoke(this, args);
     }
 }

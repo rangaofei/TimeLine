@@ -12,10 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:gravity="center_horizontal">
 
         <TextView
             android:id="@+id/time"
+            android:padding="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -23,11 +25,11 @@
             android:id="@+id/value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@color/colorAccent"
+            android:layout_gravity="center"
             android:text="@{content}" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/iv"
             android:layout_width="24dp"
             android:layout_height="24dp" />

@@ -133,12 +133,29 @@ public class TimeLineView extends RecyclerView {
             case 2:
                 break;
         }
+        final int timeLineType = ta.getInt(R.styleable.TimeLineView_timeLineType, 0);
+        switch (timeLineType) {
+            case 0:
+                timeLineConfig.setType(LEFT_STEP_PROGRESS);
+                break;
+            case 1:
+                timeLineConfig.setType(RIGHT_STEP_PROGRESS);
+                break;
+            case 2:
+                timeLineConfig.setType(TOP_STEP_PROGRESS);
+                break;
+            case 3:
+                timeLineConfig.setType(BOTTOM_STEP_PROGRESS);
+                break;
+
+        }
         timeLineConfig.setPadding(padding);
         timeLineConfig.setTimeDrawable(drawable);
         timeLineConfig.setTimeColor(strokeColor);
         timeLineConfig.setTimeStrokeWidth(strokeWidth);
 
         ta.recycle();
+        this.setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
 

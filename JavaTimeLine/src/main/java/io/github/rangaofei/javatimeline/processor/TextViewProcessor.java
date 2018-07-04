@@ -2,6 +2,8 @@ package io.github.rangaofei.javatimeline.processor;
 
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +64,9 @@ public class TextViewProcessor implements TimeLineProcess {
     }
 
     private CodeBlock generateTextViewCodeBlock(boolean isKey) {
+        ClassName proxyUtil = ClassName.bestGuess("io.github.rangaofei.sakatimeline.util.ProxyUtil");
+        ClassName viewInterface = ClassName.get("io.github.rangaofei.sakatimeline.proxy", "ViewInterface");
+        TypeName viewInterfaceOfTextView = ParameterizedTypeName.get(viewInterface, textView);
         String holderName = null;
         if (isKey) {
             holderName = "KeyViewHolder";
@@ -78,15 +83,17 @@ public class TextViewProcessor implements TimeLineProcess {
             if (!isKey && textViewAttr.isKey()) {
                 continue;
             }
-            builder.addStatement("$T $L = (($L)holder).itemView.findViewById($L)",
-                    textView, filedName, holderName, textViewAttr.getTextViewId());
+//            builder.addStatement("$T $L = (($L)holder).itemView.findViewById($L)",
+//                    textView, filedName, holderName, textViewAttr.getTextViewId());
+            builder.addStatement("$T $L = $T.createView(($L)holder,$L)",
+                    viewInterfaceOfTextView, filedName, proxyUtil, holderName, textViewAttr.getTextViewId());
             if (anchorInfoList.size() < 1 ||
                     !anchorInfoList.get(0).getAnchorIds().contains(textViewAttr.getTextViewId())) {
                 if (!textViewAttr.getStyleId().equals(TimeConfig.ID_NULL)) {
                     generateTextViewProxyCode(builder, filedName, textViewAttr.getStyleId());
                 }
                 if (textViewAttr.getTextString() != null) {
-                    builder.addStatement("$L.setText(data.$L)", filedName, textViewAttr.getTextString());
+                    builder.addStatement("$L.getView().setText(data.$L)", filedName, textViewAttr.getTextString());
                 }
             } else {
                 builder.beginControlFlow("if (data.$L)", anchorInfoList.get(0).getFieldName());
@@ -96,10 +103,12 @@ public class TextViewProcessor implements TimeLineProcess {
                 builder.nextControlFlow("else ");
                 if (!textViewAttr.getStyleId().equals(TimeConfig.ID_NULL)) {
                     generateTextViewProxyCode(builder, filedName, textViewAttr.getStyleId());
+                } else {
+                    generateTextViewProxyCode(builder, filedName, "R.style.DefaultViewAttr");
                 }
                 builder.endControlFlow();
                 if (textViewAttr.getTextString() != null) {
-                    builder.addStatement("$L.setText(data.$L)", filedName, textViewAttr.getTextString());
+                    builder.addStatement("$L.getView().setText(data.$L)", filedName, textViewAttr.getTextString());
                 }
             }
         }
@@ -107,22 +116,23 @@ public class TextViewProcessor implements TimeLineProcess {
     }
 
     private void generateTextViewProxyCode(CodeBlock.Builder builder, String fieldName, String styleId) {
-        ClassName textViewInterface =
-                ClassName.bestGuess("io.github.rangaofei.sakatimeline.proxy.TextViewInterface");
-        ClassName textViewProxy =
-                ClassName.bestGuess("io.github.rangaofei.sakatimeline.proxy.TextViewProxy");
-        ClassName textViewProxyHandler =
-                ClassName.bestGuess("io.github.rangaofei.sakatimeline.proxy.TextViewProxyHandler");
-        ClassName proxy =
-                ClassName.bestGuess("java.lang.reflect.Proxy");
-        builder.addStatement("$T textViewInterface = new $T($L)",
-                textViewInterface, textViewProxy, fieldName);
-        builder.addStatement("$T textProxy=($T)$T.newProxyInstance(\n" +
-                        "                TextViewInterface.class.getClassLoader(),\n" +
-                        "                new Class[]{TextViewInterface.class},\n" +
-                        "                new $T(textViewInterface))",
-                textViewInterface, textViewInterface, proxy, textViewProxyHandler);
-        builder.addStatement("textProxy.setTextAppearance($L.getContext(), $L)",
-                fieldName, styleId);
+//        ClassName textViewInterface =
+//                ClassName.bestGuess("io.github.rangaofei.sakatimeline.proxy.TextViewInterface");
+//        ClassName textViewProxy =
+//                ClassName.bestGuess("io.github.rangaofei.sakatimeline.proxy.TextViewProxy");
+//        ClassName textViewProxyHandler =
+//                ClassName.bestGuess("io.github.rangaofei.sakatimeline.proxy.TextViewProxyHandler");
+//        ClassName proxy =
+//                ClassName.bestGuess("java.lang.reflect.Proxy");
+//        builder.addStatement("$T textProxy=($T)$T.newProxyInstance(\n" +
+//                        "                TextViewInterface.class.getClassLoader(),\n" +
+//                        "                new Class[]{TextViewInterface.class},\n" +
+//                        "                new $T($L))",
+//                textViewInterface, textViewInterface, proxy, textViewProxyHandler,fieldName);
+//        builder.addStatement("textProxy.setTextAppearance($L.getContext(), $L)",
+//                 fieldName, styleId);
+
+        builder.addStatement("$L.setStyle($L)", fieldName, styleId);
+
     }
 }
