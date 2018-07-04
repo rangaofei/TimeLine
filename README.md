@@ -5,7 +5,7 @@
 ## 集成方式
 
 ```groovy
-implementation 'com.rangaofei:sakatimeline:0.1.5'
+implementation 'com.rangaofei:sakatimeline:0.1.6'
 ```
 然后修改app级别的module的build.gradle 文件：
 
@@ -127,7 +127,6 @@ public class StepViewModel {
     <attr name="android:shadowDy"/>
     <attr name="android:shadowDx"/>
     <attr name="android:shadowRadius"/>
-    <attr name="android:backGround"/>
 ```
 
 下面是示例中定义的两个style：
@@ -141,7 +140,7 @@ public class StepViewModel {
 <style name="StepView2" parent="AppTheme">
     <item name="android:textSize">20sp</item>
     <item name="android:textColor">@color/black</item>
-    <item name="android:background">@color/white</item>
+    <item name="backgroundProxy">@color/white</item>
 </style>
 ```
 
@@ -229,3 +228,63 @@ public void updateDividerNum(int dividerNum)
 public void updateDividerNum(int dividerNum, boolean showAnim)
 
 ```
+
+## TimeLineView的xml配置
+
+#### timePadding
+
+空白位置的大小，也就是用来显示时间轴的宽度(纵向)或者高度(横向)
+设置后，自定义时间轴指示器drawable的默认宽和高均为此值的2/3；
+默认的时间轴指示器的半径为此值的1/2.
+
+#### timeStrokeWidth
+
+时间轴的粗细。默认值是10dp。
+
+#### timeStrokeColor
+
+时间轴的颜色。默认是灰色。
+
+#### strokeType
+
+时间轴的类型。有两种：normal和noEndPoint。如图所示
+
+#### timeLineType
+
+时间轴的位置，共有四种：left、right、top、bottom
+
+#### timeIndexColor
+
+显示序号的颜色
+
+#### timeIndexSize
+
+显示序号的字的大小
+
+#### stepShowOrder
+
+是否显示序号
+
+#### stepPreColor
+
+设置前景色
+
+#### stepAfterColor
+
+设置后景色
+
+## style可以设置的属性
+
+#### visibleProxy
+
+设置可见性，visible，invisible，gone，和view的可见性一致
+
+#### backgroundProxy
+
+设置背景，和view的background一致
+
+#### clickProxy
+
+设置可点击，与view的clickable一致
+
+
