@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         ((TimeLineView) findViewById(R.id.one)).
                 setTimeLineConfig(firstAdapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 2, list);
         ((TimeLineView) findViewById(R.id.two)).
-                setTimeLineConfig(secondAdapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 3);
+                setTimeLineConfig(secondAdapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS, 3);
 
         new Handler().postDelayed(new Runnable() {
             @Override

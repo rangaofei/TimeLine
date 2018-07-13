@@ -3,16 +3,16 @@ package io.github.rangaofei.sakatimeline.divider;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Surface;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -29,23 +29,29 @@ import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType
 public class SingleStepViewDivider extends BaseDivider {
     private Paint textPaint;
     private Paint circlePaint;
-    private Paint overlayPaint;
+    private Paint iconOverlayPaint;
+    private Paint itemOverlayPaint;
     private Paint.FontMetrics fm;
     private RecyclerView recyclerView;
     private float currentNum;
     private PorterDuff.Mode mode = PorterDuff.Mode.SRC_IN;
     private PorterDuffXfermode porterDuffXfermode = new PorterDuffXfermode(mode);
-
     private DividerLayoutAdapter dividerLayoutAdapter;
 
     private Rect drawRect = new Rect();
+    private Rect layerRect = new Rect();
 
     public SingleStepViewDivider(Context context, TimeLineConfig timeLineConfig) {
         super(context, timeLineConfig);
-        overlayPaint = new Paint();
-        overlayPaint.setColor(timeLineConfig.getStepViewConfig().getPreColor());
-        overlayPaint.setAntiAlias(true);
-        overlayPaint.setXfermode(porterDuffXfermode);
+        iconOverlayPaint = new Paint();
+        iconOverlayPaint.setColor(timeLineConfig.getStepViewConfig().getPreColor());
+        iconOverlayPaint.setAntiAlias(true);
+        iconOverlayPaint.setXfermode(porterDuffXfermode);
+
+        itemOverlayPaint = new Paint();
+        itemOverlayPaint.setColor(timeLineConfig.getStepViewConfig().getAfterColor());
+        itemOverlayPaint.setAntiAlias(true);
+        itemOverlayPaint.setXfermode(porterDuffXfermode);
 
 
         textPaint = new Paint();
@@ -91,7 +97,17 @@ public class SingleStepViewDivider extends BaseDivider {
 
     @Override
     public void onChildDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-
+        RecyclerView.LayoutManager layoutManager = parent.getLayoutManager();
+        if (layoutManager instanceof PerfectLinearLayoutManager) {
+            switch (((PerfectLinearLayoutManager) layoutManager).getOrientation()) {
+                case PerfectLinearLayoutManager.HORIZONTAL:
+                    break;
+                case PerfectLinearLayoutManager.VERTICAL:
+                    break;
+                default:
+                    throwException(ExceptionMessage.UNKNOWN_ORIENTATION);
+            }
+        }
     }
 
     @Override
@@ -169,18 +185,22 @@ public class SingleStepViewDivider extends BaseDivider {
         c.drawLine(lineStartX, lineStartY, lineStopX, lineStopY, circlePaint);
 
         c.drawRect(lineStartX, lineStartY - (int) (padding / 2), rectStopX,
-                lineStopY + (int) (padding / 2), overlayPaint);
+                lineStopY + (int) (padding / 2), iconOverlayPaint);
     }
 
     //DividerItemDecoration
     private void drawHorizontalStep(Canvas c, RecyclerView parent) {
         c.save();
         for (int i = 0; i < parent.getChildCount(); i++) {
+            layerRect.set(recyclerView.getPaddingLeft(),
+                    recyclerView.getPaddingTop(),
+                    recyclerView.getWidth() - recyclerView.getPaddingRight(),
+                    recyclerView.getHeight() - recyclerView.getPaddingBottom());
             int layoutId = c.saveLayer(recyclerView.getPaddingLeft(),
                     recyclerView.getPaddingTop(),
                     recyclerView.getWidth() - recyclerView.getPaddingRight(),
                     recyclerView.getHeight() - recyclerView.getPaddingBottom(),
-                    null);
+                    null, Canvas.ALL_SAVE_FLAG);
 
             View view = parent.getChildAt(i);
             drawHorizontalLine(c, parent, view);
@@ -246,7 +266,7 @@ public class SingleStepViewDivider extends BaseDivider {
         c.drawLine(lineStartX, lineStartY, lineStopX, lineStopY, circlePaint);
 
         c.drawRect(lineStartX - padding / 2, lineStartY, lineStartX + padding / 2,
-                rectStopY, overlayPaint);
+                rectStopY, iconOverlayPaint);
     }
 
     private void drawVerticalStep(Canvas c, RecyclerView parent) {
@@ -256,7 +276,7 @@ public class SingleStepViewDivider extends BaseDivider {
                     recyclerView.getPaddingTop(),
                     recyclerView.getWidth() - recyclerView.getPaddingRight(),
                     recyclerView.getHeight() - recyclerView.getPaddingBottom(),
-                    null);
+                    null, Canvas.ALL_SAVE_FLAG);
             View view = parent.getChildAt(i);
             drawVerticalLine(c, parent, view);
             int circleX = 0;

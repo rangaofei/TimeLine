@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 
 import java.util.List;
@@ -17,7 +18,9 @@ import io.github.rangaofei.sakatimeline.config.StrokeType;
 import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 import io.github.rangaofei.sakatimeline.customlayoutmanager.PerfectLinearLayoutManager;
 import io.github.rangaofei.sakatimeline.divider.BaseDivider;
+import io.github.rangaofei.sakatimeline.divider.SakaItemTouchHelper;
 import io.github.rangaofei.sakatimeline.divider.SingleStepViewDivider;
+import io.github.rangaofei.sakatimeline.divider.SlideTouchHelperCallBack;
 import io.github.rangaofei.sakatimeline.divider.TimeLineType;
 import io.github.rangaofei.sakatimeline.util.ExceptionUtil;
 
@@ -27,6 +30,7 @@ public class TimeLineView extends RecyclerView {
     private LayoutManager layoutManager;
     private BaseDivider divider;
     private TimeLineConfig timeLineConfig;
+
 
     public TimeLineView(Context context) {
         this(context, null);
@@ -66,6 +70,9 @@ public class TimeLineView extends RecyclerView {
         this.addItemDecoration(divider);
         timeLineConfig.getAdapter().setTimeLineType(timeLineConfig.getType());
         this.setAdapter(timeLineConfig.getAdapter());
+        SakaItemTouchHelper itemTouchHelper = new SakaItemTouchHelper(new SlideTouchHelperCallBack());
+        itemTouchHelper.attachToRecyclerView(this);
+//        this.setNestedScrollingEnabled(false);
     }
 
     private void getTimeLineViewAttr(AttributeSet as) {

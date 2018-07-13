@@ -10,7 +10,7 @@
 
     <style name="StepView1">
         <item name="timePadding">14sp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/black</item>
         <item name="visibleProxy">visible</item>
     </style>
 

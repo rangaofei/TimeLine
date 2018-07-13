@@ -4,14 +4,14 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "io.github.rangaofei.timeline"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions{
-            annotationProcessorOptions.includeCompileClasspath=true
+        javaCompileOptions {
+            annotationProcessorOptions.includeCompileClasspath = true
         }
     }
     buildTypes {
@@ -21,10 +21,9 @@ android {
         }
     }
 
-    dataBinding{
-        enabled=true
+    dataBinding {
+        enabled = true
     }
-
 
 
 }
