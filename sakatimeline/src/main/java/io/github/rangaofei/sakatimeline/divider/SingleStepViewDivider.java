@@ -171,7 +171,7 @@ public class SingleStepViewDivider extends BaseDivider {
                         (view.getWidth() / 2 + globalRect.right) * 2 * (currentNum - (int) currentNum));
             } else if (i > currentNum - 1f && i <= currentNum - 0.5) {
                 rectStopX = (int) (view.getLeft() - globalRect.left +
-                        (view.getWidth() / 2 + globalRect.left) * 2 * (currentNum - (int) currentNum));
+                        (view.getWidth() / 2 + globalRect.left) * (currentNum - (int) currentNum));
             }
         }
         switch ((TimeLineType.StepViewType) timeLineConfig.getType()) {
@@ -252,7 +252,7 @@ public class SingleStepViewDivider extends BaseDivider {
                         (view.getHeight() / 2 + globalRect.bottom) * 2 * (currentNum - (int) currentNum));
             } else if (i > currentNum - 1f && i <= currentNum - 0.5) {
                 rectStopY = (int) (view.getTop() - globalRect.top +
-                        (view.getHeight() / 2 + globalRect.top) * 2 * (currentNum - (int) currentNum));
+                        (view.getHeight() / 2 + globalRect.top) * (currentNum - (int) currentNum));
             }
         }
         switch ((TimeLineType.StepViewType) timeLineConfig.getType()) {
@@ -295,7 +295,6 @@ public class SingleStepViewDivider extends BaseDivider {
         c.restore();
     }
 
-//DividerItemDecoration
 
     /**
      * 绘制默认的圆

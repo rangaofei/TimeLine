@@ -1,9 +1,13 @@
 package io.github.rangaofei.sakatimeline.config;
 
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 
 import java.util.List;
 
+import io.github.rangaofei.sakatimeline.R;
 import io.github.rangaofei.sakatimeline.divider.DividerLayoutAdapter;
 
 /**
@@ -80,5 +84,22 @@ public class StepViewConfig {
 
         this.dividerLayoutAdapter = new DividerLayoutAdapter(drawableList) {
         };
+    }
+
+
+    public StepViewConfig getStepViewAttr(AttributeSet as, Context context) {
+        StepViewConfig stepViewConfig = new StepViewConfig();
+        final TypedArray ta = context.obtainStyledAttributes(as, R.styleable.StepViewDivider);
+        if (ta == null) {
+            return stepViewConfig;
+        }
+        final boolean showIndex = ta.getBoolean(R.styleable.StepViewDivider_stepShowOrder, false);
+        final int preColor = ta.getColor(R.styleable.StepViewDivider_stepPreColor, context.getResources().getColor(R.color.teal));
+        final int afterColor = ta.getColor(R.styleable.StepViewDivider_stepAfterColor, context.getResources().getColor(R.color.grey));
+        ta.recycle();
+        stepViewConfig.setShowStepText(showIndex);
+        stepViewConfig.setPreColor(preColor);
+        stepViewConfig.setAfterColor(afterColor);
+        return stepViewConfig;
     }
 }

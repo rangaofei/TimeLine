@@ -1,8 +1,10 @@
 package io.github.rangaofei.sakatimeline.config;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 
 import java.util.List;
 
@@ -117,5 +119,9 @@ public class TimeLineConfig {
 
     public void setStrokeType(StrokeType strokeType) {
         this.strokeType = strokeType;
+    }
+
+    public void getTimeLineConfig(AttributeSet as, Context context){
+
     }
 }

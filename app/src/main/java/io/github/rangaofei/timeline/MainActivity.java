@@ -67,15 +67,17 @@ public class MainActivity extends AppCompatActivity {
 
         secondAdapter = new StepViewModelAdapter(secondStepViewModels);
         ((TimeLineView) findViewById(R.id.one)).
-                setTimeLineConfig(firstAdapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 2, list);
+                setTimeLineConfig(firstAdapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 3, list);
         ((TimeLineView) findViewById(R.id.two)).
-                setTimeLineConfig(secondAdapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS, 3);
+                setTimeLineConfig(secondAdapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS, 2);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 firstStepViewModels.get(0).right = false;
                 firstAdapter.notifyDataSetChanged();
+                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(2);
+                ((TimeLineView) findViewById(R.id.two)).updateDividerNum(3);
             }
         }, 3000);
 

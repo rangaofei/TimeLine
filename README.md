@@ -5,7 +5,7 @@
 ## 集成方式
 
 ```groovy
-implementation 'com.rangaofei:sakatimeline:0.1.8'
+implementation 'com.rangaofei:sakatimeline:0.1.9'
 ```
 然后修改app级别的module的build.gradle 文件：
 

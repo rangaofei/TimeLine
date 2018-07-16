@@ -34,9 +34,6 @@ public abstract class AbstractTimeLineAdapter<T> extends RecyclerView.Adapter<Ba
         this.datas = list;
     }
 
-    public ItemClickListener getItemClickListener() {
-        return itemClickListener;
-    }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;

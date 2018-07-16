@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
+import android.view.View;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class TimeLineView extends RecyclerView {
     public TimeLineView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         getCustomAttr(attrs);
+        this.setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
 
@@ -70,16 +72,8 @@ public class TimeLineView extends RecyclerView {
         this.addItemDecoration(divider);
         timeLineConfig.getAdapter().setTimeLineType(timeLineConfig.getType());
         this.setAdapter(timeLineConfig.getAdapter());
-        SakaItemTouchHelper itemTouchHelper = new SakaItemTouchHelper(new SlideTouchHelperCallBack());
-        itemTouchHelper.attachToRecyclerView(this);
-//        this.setNestedScrollingEnabled(false);
     }
 
-    private void getTimeLineViewAttr(AttributeSet as) {
-        final TypedArray ta = getContext().obtainStyledAttributes(as, R.styleable.TimeLineView);
-
-        ta.recycle();
-    }
 
     private IndexTextConfig getIndexTextAttr(AttributeSet as) {
         final IndexTextConfig indexTextConfig = new IndexTextConfig();
@@ -160,15 +154,9 @@ public class TimeLineView extends RecyclerView {
         timeLineConfig.setTimeDrawable(drawable);
         timeLineConfig.setTimeColor(strokeColor);
         timeLineConfig.setTimeStrokeWidth(strokeWidth);
-
         ta.recycle();
-        this.setOverScrollMode(OVER_SCROLL_NEVER);
     }
 
-
-    public void setTimeLineConfig(AbstractTimeLineAdapter adapter, TimeLineType type) {
-        this.setTimeLineConfig(adapter, type, 0);
-    }
 
     public void setTimeLineConfig(AbstractTimeLineAdapter adapter, TimeLineType type, int dividerNum) {
         this.setTimeLineConfig(adapter, type, dividerNum, null);
