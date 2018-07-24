@@ -2,19 +2,17 @@ package io.github.rangaofei.sakatimeline.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
-import io.github.rangaofei.javatimeline.annotations.TimeLine;
 import io.github.rangaofei.sakatimeline.R;
 import io.github.rangaofei.sakatimeline.divider.TimeLineType;
 
-import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType.*;
-import static io.github.rangaofei.sakatimeline.divider.TimeLineType.TimeLineViewType.*;
+import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType.StepViewType;
+import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType.TimeLineViewType;
 
 public abstract class AbstractTimeLineAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 

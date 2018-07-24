@@ -3,6 +3,8 @@ package io.github.rangaofei.timeline;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
@@ -26,8 +28,9 @@ public class SwipeRecyclerViewActivity extends AppCompatActivity {
             data.add(String.valueOf(i));
         }
         recyclerView.setAdapter(new SwipeAdapter(data));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        SakaItemTouchHelper itemTouchHelper = new SakaItemTouchHelper(new SlideTouchHelperCallBack());
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        recyclerView.setLayoutManager(
+                new LinearLayoutManager(this));
+        LinearSnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
     }
 }

@@ -5,16 +5,12 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.rangaofei.javatimeline.annotations.TimeLineDividerAdapter;
+import io.github.rangaofei.libannotations.TimeLineDividerAdapter;
 import io.github.rangaofei.sakatimeline.TimeLineView;
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
 import io.github.rangaofei.sakatimeline.adapter.ItemClickListener;

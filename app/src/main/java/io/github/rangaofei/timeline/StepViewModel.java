@@ -1,9 +1,10 @@
 package io.github.rangaofei.timeline;
 
-import io.github.rangaofei.javatimeline.annotations.TimeLine;
-import io.github.rangaofei.javatimeline.annotations.TimeLineAnchor;
-import io.github.rangaofei.javatimeline.annotations.TimeLineImageView;
-import io.github.rangaofei.javatimeline.annotations.TimeLineTextView;
+
+import io.github.rangaofei.libannotations.TimeLine;
+import io.github.rangaofei.libannotations.TimeLineAnchor;
+import io.github.rangaofei.libannotations.TimeLineImageView;
+import io.github.rangaofei.libannotations.TimeLineTextView;
 
 @TimeLine(valueLayoutId = "R.layout.item_value")
 public class StepViewModel {

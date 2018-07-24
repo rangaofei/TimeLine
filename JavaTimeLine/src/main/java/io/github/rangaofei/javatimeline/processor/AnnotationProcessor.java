@@ -18,8 +18,8 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
 import io.github.rangaofei.javatimeline.TimeLineContext;
-import io.github.rangaofei.javatimeline.annotations.TimeLine;
-import io.github.rangaofei.javatimeline.annotations.TimeLineDividerAdapter;
+import io.github.rangaofei.libannotations.TimeLine;
+import io.github.rangaofei.libannotations.TimeLineDividerAdapter;
 
 
 @AutoService(Processor.class)

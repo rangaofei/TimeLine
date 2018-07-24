@@ -1,4 +1,4 @@
-package io.github.rangaofei.javatimeline.annotations;
+package io.github.rangaofei.libannotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

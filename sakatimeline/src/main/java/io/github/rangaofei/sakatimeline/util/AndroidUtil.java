@@ -19,6 +19,7 @@ public class AndroidUtil {
         return (int) (dpValue * scale + 0.5f);
     }
 
+
     /**
      * px转换成dp
      */

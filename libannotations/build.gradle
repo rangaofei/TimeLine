@@ -2,22 +2,14 @@ apply plugin: 'java-library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-
-
-version = project.ext.version
-
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    //    implementation 'com.google.auto:auto-common:0.10'
-    implementation 'com.google.auto.service:auto-service:1.0-rc3'
-    implementation 'com.squareup:javapoet:1.9.0'
-    testImplementation 'junit:junit:4.12'
-    implementation 'com.rangaofei:libannotations:0.2.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-//sourceCompatibility = "1.8"
-//targetCompatibility = "1.8"
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
 
+version = project.ext.version
 
 
 def siteUrl = 'https://github.com/rangaofei/TimeLine'
@@ -30,7 +22,7 @@ install {
         pom {
             project {
                 packaging 'jar'
-                name 'JavaTimeLine'
+                name 'libannotations'
                 // #CONFIG# // project title
                 url siteUrl
                 // Set your license
@@ -88,7 +80,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "JavaTimeLine"
+        name = "libannotations"
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

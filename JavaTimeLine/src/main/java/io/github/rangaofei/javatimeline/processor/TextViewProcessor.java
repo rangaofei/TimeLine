@@ -11,10 +11,10 @@ import java.util.List;
 import javax.lang.model.element.Element;
 import javax.lang.model.util.ElementFilter;
 
-import io.github.rangaofei.javatimeline.TimeConfig;
-import io.github.rangaofei.javatimeline.annotations.TimeLineTextView;
 import io.github.rangaofei.javatimeline.viewattr.AnchorInfo;
 import io.github.rangaofei.javatimeline.viewattr.TextViewAttr;
+import io.github.rangaofei.libannotations.TimeConfig;
+import io.github.rangaofei.libannotations.TimeLineTextView;
 
 public class TextViewProcessor implements TimeLineProcess {
 

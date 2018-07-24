@@ -12,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.MonthDisplayHelper;
 import android.view.Surface;
 import android.view.View;
 import android.view.animation.LinearInterpolator;

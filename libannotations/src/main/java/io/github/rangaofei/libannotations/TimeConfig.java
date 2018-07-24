@@ -1,4 +1,4 @@
-package io.github.rangaofei.javatimeline;
+package io.github.rangaofei.libannotations;
 
 public class TimeConfig {
     public static final String NULL = "not_set";

@@ -13,16 +13,10 @@ import java.util.List;
 
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
-import javax.lang.model.util.ElementFilter;
 
-import io.github.rangaofei.javatimeline.annotations.TimeLine;
-import io.github.rangaofei.javatimeline.annotations.TimeLineDividerAdapter;
-import io.github.rangaofei.javatimeline.annotations.TimeLineImageView;
-import io.github.rangaofei.javatimeline.annotations.TimeLineTextView;
 import io.github.rangaofei.javatimeline.viewattr.ImageViewAttr;
-import io.github.rangaofei.javatimeline.viewattr.TextViewAttr;
-
-import static io.github.rangaofei.javatimeline.TimeConfig.NULL;
+import io.github.rangaofei.libannotations.TimeLine;
+import io.github.rangaofei.libannotations.TimeLineDividerAdapter;
 
 public class AdapterUtil {
 

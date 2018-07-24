@@ -1,11 +1,9 @@
-package io.github.rangaofei.javatimeline.annotations;
+package io.github.rangaofei.libannotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import io.github.rangaofei.javatimeline.TimeConfig;
 
 /**
  * 表示这个类将会是用来做list元素的类

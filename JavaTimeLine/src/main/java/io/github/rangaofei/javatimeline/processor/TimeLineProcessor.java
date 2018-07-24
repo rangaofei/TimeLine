@@ -17,8 +17,8 @@ import javax.lang.model.element.Modifier;
 
 import io.github.rangaofei.javatimeline.AdapterUtil;
 import io.github.rangaofei.javatimeline.TimeLineContext;
-import io.github.rangaofei.javatimeline.annotations.TimeLine;
 import io.github.rangaofei.javatimeline.viewattr.AnchorInfo;
+import io.github.rangaofei.libannotations.TimeLine;
 
 public class TimeLineProcessor implements TimeLineProcess {
     private Element element;

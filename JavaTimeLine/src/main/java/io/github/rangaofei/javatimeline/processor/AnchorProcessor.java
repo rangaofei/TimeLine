@@ -7,8 +7,8 @@ import javax.lang.model.element.Element;
 import javax.lang.model.util.ElementFilter;
 
 import io.github.rangaofei.javatimeline.TimeLineContext;
-import io.github.rangaofei.javatimeline.annotations.TimeLineAnchor;
 import io.github.rangaofei.javatimeline.viewattr.AnchorInfo;
+import io.github.rangaofei.libannotations.TimeLineAnchor;
 
 public class AnchorProcessor implements TimeLineProcess {
     private Element element;

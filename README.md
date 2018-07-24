@@ -5,7 +5,8 @@
 ## 集成方式
 
 ```groovy
-implementation 'com.rangaofei:sakatimeline:0.1.9'
+    implementation 'com.rangaofei:sakatimeline:0.2.1'
+    annotationProcessor 'com.rangaofei:JavaTimeLine:0.2.1'
 ```
 然后修改app级别的module的build.gradle 文件：
 
@@ -24,7 +25,7 @@ android {
 
 假如没出现问题的话就集成成功了
 
-## 使用SetpView
+## 使用StepView
 
 StepView内部使用apt处理注解实现了adapter，adapter包含两种布局，key和value。目前推出的只需要使用value布局即可。
 

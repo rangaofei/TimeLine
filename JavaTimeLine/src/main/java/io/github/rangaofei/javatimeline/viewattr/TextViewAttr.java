@@ -1,9 +1,7 @@
 package io.github.rangaofei.javatimeline.viewattr;
 
-import com.squareup.javapoet.CodeBlock;
 
-import io.github.rangaofei.javatimeline.annotations.TimeLine;
-import io.github.rangaofei.javatimeline.annotations.TimeLineTextView;
+import io.github.rangaofei.libannotations.TimeLineTextView;
 
 public class TextViewAttr {
     private String textViewId;

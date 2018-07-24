@@ -1,1 +1,1 @@
-include ':app', ':sakatimeline', ':JavaTimeLine'
+include ':app', ':sakatimeline', ':JavaTimeLine', ':libannotations'

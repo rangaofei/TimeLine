@@ -5,9 +5,9 @@ import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 
-import io.github.rangaofei.javatimeline.annotations.TimeLine;
-import io.github.rangaofei.javatimeline.annotations.TimeLineImageView;
-import io.github.rangaofei.javatimeline.annotations.TimeLineTextView;
+import io.github.rangaofei.libannotations.TimeLine;
+import io.github.rangaofei.libannotations.TimeLineImageView;
+import io.github.rangaofei.libannotations.TimeLineTextView;
 
 
 @TimeLine(name = "BaseModelAdapter", keyLayoutId = "R.layout.item_key", valueLayoutId = "R.layout.item_value")

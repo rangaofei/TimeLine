@@ -9,12 +9,11 @@ import java.util.List;
 import javax.lang.model.element.Element;
 import javax.lang.model.util.ElementFilter;
 
-import io.github.rangaofei.javatimeline.TimeConfig;
 import io.github.rangaofei.javatimeline.TimeLineContext;
-import io.github.rangaofei.javatimeline.annotations.TimeLineImageView;
 import io.github.rangaofei.javatimeline.utils.StringUtil;
 import io.github.rangaofei.javatimeline.viewattr.AnchorInfo;
 import io.github.rangaofei.javatimeline.viewattr.ImageViewAttr;
+import io.github.rangaofei.libannotations.TimeLineImageView;
 
 public class ImageViewProcessor implements TimeLineProcess {
     private Element element;
