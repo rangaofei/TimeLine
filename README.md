@@ -27,8 +27,8 @@ app:strokeType="midEndPoint"
 ## 集成方式
 
 ```groovy
-    implementation 'com.rangaofei:sakatimeline:0.2.2'
-    annotationProcessor 'com.rangaofei:JavaTimeLine:0.2.2'
+    implementation 'com.rangaofei:sakatimeline:0.2.3'
+    annotationProcessor 'com.rangaofei:JavaTimeLine:0.2.3'
 ```
 然后修改app级别的module的build.gradle 文件：
 
