@@ -17,7 +17,8 @@
             <enum name="top" value="2" />
             <enum name="bottom" value="3" />
         </attr>
-
+        <attr name="timeLineIconWidth" format="dimension" />
+        <attr name="timeLineIconHeight" format="dimension" />
 
     </declare-styleable>
 

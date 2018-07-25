@@ -124,6 +124,8 @@ public class TimeLineView extends RecyclerView {
                 ta.getDimensionPixelSize(R.styleable.TimeLineView_timeStrokeWidth,
                         getResources().getDimensionPixelOffset(R.dimen.default_stroke_width));
         final int strokeType = ta.getInt(R.styleable.TimeLineView_strokeType, 0);
+        final int iconWidth = ta.getDimensionPixelSize(R.styleable.TimeLineView_timeLineIconWidth, 0);
+        final int iconHeight = ta.getDimensionPixelSize(R.styleable.TimeLineView_timeLineIconHeight, 0);
         switch (strokeType) {
             case 0:
                 timeLineConfig.setStrokeType(StrokeType.NORMAL);
@@ -154,6 +156,8 @@ public class TimeLineView extends RecyclerView {
         timeLineConfig.setTimeDrawable(drawable);
         timeLineConfig.setTimeColor(strokeColor);
         timeLineConfig.setTimeStrokeWidth(strokeWidth);
+        timeLineConfig.setIconWidth(iconWidth);
+        timeLineConfig.setIconHeight(iconHeight);
         ta.recycle();
     }
 

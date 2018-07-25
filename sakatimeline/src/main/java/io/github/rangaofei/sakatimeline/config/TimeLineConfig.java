@@ -32,6 +32,9 @@ public class TimeLineConfig {
 
     private StrokeType strokeType;
 
+    private int iconWidth;
+    private int iconHeight;
+
     public IndexTextConfig getIndexTextConfig() {
         return indexTextConfig;
     }
@@ -121,7 +124,19 @@ public class TimeLineConfig {
         this.strokeType = strokeType;
     }
 
-    public void getTimeLineConfig(AttributeSet as, Context context){
+    public int getIconWidth() {
+        return iconWidth;
+    }
 
+    public void setIconWidth(int iconWidth) {
+        this.iconWidth = iconWidth;
+    }
+
+    public int getIconHeight() {
+        return iconHeight;
+    }
+
+    public void setIconHeight(int iconHeight) {
+        this.iconHeight = iconHeight;
     }
 }

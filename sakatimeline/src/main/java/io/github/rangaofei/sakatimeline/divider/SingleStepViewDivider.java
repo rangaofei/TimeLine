@@ -42,6 +42,9 @@ public class SingleStepViewDivider extends BaseDivider {
     private Rect drawRect = new Rect();
     private Rect layerRect = new Rect();
 
+    private int iconW;
+    private int iconH;
+
     public SingleStepViewDivider(Context context, TimeLineConfig timeLineConfig) {
         super(context, timeLineConfig);
         iconOverlayPaint = new Paint();
@@ -68,6 +71,16 @@ public class SingleStepViewDivider extends BaseDivider {
 
         currentNum = timeLineConfig.getStepViewConfig().getDividerNum();
         dividerLayoutAdapter = timeLineConfig.getStepViewConfig().getDividerLayoutAdapter();
+
+        iconW = timeLineConfig.getIconWidth();
+        iconH = timeLineConfig.getIconHeight();
+        if (iconH == 0 && iconW == 0) {
+            iconH = iconW = (int) (padding / 3 * 2);
+        } else if (iconH == 0) {
+            iconH = iconW;
+        } else if (iconW == 0) {
+            iconW = iconH;
+        }
 
     }
 
@@ -316,8 +329,8 @@ public class SingleStepViewDivider extends BaseDivider {
     private void drawDrawable(Canvas c, int circleX, int circleY, int i) {
         if (dividerLayoutAdapter != null && dividerLayoutAdapter.getDrawable(i) != null) {
             Drawable drawable = dividerLayoutAdapter.getDrawable(i);
-            drawRect.set(circleX - (int) padding / 3, circleY - (int) padding / 3,
-                    circleX + (int) padding / 3, circleY + (int) padding / 3);
+            drawRect.set(circleX - iconW / 2, circleY - iconH / 2,
+                    circleX + iconW / 2, circleY + iconH / 2);
             drawable.setBounds(drawRect);
             drawable.draw(c);
         }
