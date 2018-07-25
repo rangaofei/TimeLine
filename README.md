@@ -18,7 +18,7 @@ app:strokeType="midEndPoint"
 如图：
 
   <div align="center">
- <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/Screenshot_1532504922.jpg" height="480" width="270" >
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/Screenshot_1532504922.png" height="480" width="270" >
   </div>
 
 未设置该大小时会自动设置成为timePadding的三分之二；当其中一个设置另一个未设置时，
