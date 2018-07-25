@@ -12,13 +12,13 @@ app:timeLineIconWidth="30dp"
 ```
 
 未设置该大小时会自动设置成为timePadding的三分之二；当其中一个设置另一个未设置时，
-未设置的值会自动编程设置的值。
+未设置的值会自动设置成为已设置的值。
 
 ## 集成方式
 
 ```groovy
-    implementation 'com.rangaofei:sakatimeline:0.2.1'
-    annotationProcessor 'com.rangaofei:JavaTimeLine:0.2.1'
+    implementation 'com.rangaofei:sakatimeline:0.2.2'
+    annotationProcessor 'com.rangaofei:JavaTimeLine:0.2.2'
 ```
 然后修改app级别的module的build.gradle 文件：
 

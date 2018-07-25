@@ -24,8 +24,8 @@
                 app:stepShowOrder="true"
                 app:strokeType="noEndPoint"
                 app:timePadding="30dp"
-                app:timeLineIconHeight="30dp"
-                app:timeLineIconWidth="30dp"
+                app:timeLineIconHeight="10dp"
+                app:timeLineIconWidth="10dp"
                 app:timeStrokeWidth="3dp" />
 
             <View
