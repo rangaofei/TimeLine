@@ -2,6 +2,18 @@
 
 一个简单的时间线控件，采用recyclerview实现。
 
+0.2.2更新：
+
+新增可以控制icon大小的属性：
+
+```xml
+app:timeLineIconHeight="30dp"
+app:timeLineIconWidth="30dp"
+```
+
+未设置该大小时会自动设置成为timePadding的三分之二；当其中一个设置另一个未设置时，
+未设置的值会自动编程设置的值。
+
 ## 集成方式
 
 ```groovy
