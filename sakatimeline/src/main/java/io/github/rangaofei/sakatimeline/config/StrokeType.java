@@ -1,5 +1,5 @@
 package io.github.rangaofei.sakatimeline.config;
 
-public enum  StrokeType {
-    NORMAL,NO_ENDPOINT
+public enum StrokeType {
+    NORMAL, NO_ENDPOINT, MID_ENDPOINT
 }

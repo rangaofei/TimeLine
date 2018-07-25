@@ -10,6 +10,7 @@
         <attr name="strokeType" format="enum">
             <enum name="normal" value="0" />
             <enum name="noEndPoint" value="1" />
+            <enum name="midEndPoint" value="2" />
         </attr>
         <attr name="timeLineType" format="enum">
             <enum name="left" value="0" />

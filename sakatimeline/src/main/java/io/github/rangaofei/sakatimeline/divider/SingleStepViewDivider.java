@@ -166,6 +166,23 @@ public class SingleStepViewDivider extends BaseDivider {
                 rectStopX = (int) (view.getLeft() - globalRect.left +
                         widthWithPadding * (currentNum - (int) currentNum));
             }
+        } else if (timeLineConfig.getStrokeType() == StrokeType.MID_ENDPOINT) {
+            if (i == 0) {
+                lineStartX = view.getLeft() + view.getWidth() / 2;
+                lineStopX = view.getRight() + globalRect.right;
+            } else if (i == parent.getChildCount() - 1) {
+                lineStartX = view.getLeft() - globalRect.left;
+                lineStopX = view.getRight() - view.getWidth() / 2;
+            }else {
+                lineStartX = view.getLeft() - globalRect.left;
+                lineStopX = view.getRight() + globalRect.right;
+            }
+            if (i <= currentNum - 1) {
+                rectStopX = view.getRight() + globalRect.right;
+            } else if (i > currentNum - 1 && i <= currentNum) {
+                rectStopX = (int) (view.getLeft() - globalRect.left +
+                        widthWithPadding * (currentNum - (int) currentNum));
+            }
         } else if (timeLineConfig.getStrokeType() == StrokeType.NO_ENDPOINT) {
             if (i == 0) {
                 lineStartX = view.getLeft() + view.getWidth() / 2;
@@ -241,6 +258,23 @@ public class SingleStepViewDivider extends BaseDivider {
         if (timeLineConfig.getStrokeType() == StrokeType.NORMAL) {
             lineStartY = view.getTop() - globalRect.top;
             lineStopY = view.getBottom() + globalRect.bottom;
+            if (i <= currentNum - 1) {
+                rectStopY = view.getBottom() + globalRect.bottom;
+            } else if (i > currentNum - 1 && i <= currentNum) {
+                rectStopY = (int) (view.getTop() - globalRect.top +
+                        heightWithPadding * (currentNum - (int) currentNum));
+            }
+        } else if (timeLineConfig.getStrokeType() == StrokeType.MID_ENDPOINT) {
+            if (i == 0) {
+                lineStartY = view.getTop() + view.getHeight() / 2;
+                lineStopY = view.getBottom() + globalRect.bottom;
+            } else if (i == parent.getChildCount() - 1) {
+                lineStartY = view.getTop() - globalRect.top;
+                lineStopY = view.getBottom() - view.getHeight() / 2;
+            }else {
+                lineStartY = view.getTop() - globalRect.top;
+                lineStopY = view.getBottom() + globalRect.bottom;
+            }
             if (i <= currentNum - 1) {
                 rectStopY = view.getBottom() + globalRect.bottom;
             } else if (i > currentNum - 1 && i <= currentNum) {

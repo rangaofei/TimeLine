@@ -2,7 +2,7 @@
 
 一个简单的时间线控件，采用recyclerview实现。
 
-0.2.2更新：
+0.2.3更新：
 
 新增可以控制icon大小的属性：
 
@@ -10,6 +10,16 @@
 app:timeLineIconHeight="30dp"
 app:timeLineIconWidth="30dp"
 ```
+
+新增样式
+```xml
+app:strokeType="midEndPoint"
+```
+如图：
+
+  <div align="center">
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/Screenshot_1532504922.jpg" height="480" width="270" >
+  </div>
 
 未设置该大小时会自动设置成为timePadding的三分之二；当其中一个设置另一个未设置时，
 未设置的值会自动设置成为已设置的值。

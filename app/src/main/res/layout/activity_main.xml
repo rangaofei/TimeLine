@@ -22,7 +22,7 @@
                 android:layout_marginTop="10dp"
                 app:stepPreColor="@color/colorAccent"
                 app:stepShowOrder="true"
-                app:strokeType="noEndPoint"
+                app:strokeType="midEndPoint"
                 app:timePadding="30dp"
                 app:timeLineIconHeight="10dp"
                 app:timeLineIconWidth="10dp"
@@ -41,7 +41,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 app:stepPreColor="@color/colorAccent"
-                app:strokeType="noEndPoint"
+                app:strokeType="midEndPoint"
                 app:timePadding="30dp"
                 app:timeStrokeWidth="3dp" />
 

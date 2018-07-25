@@ -134,6 +134,7 @@ public class TimeLineView extends RecyclerView {
                 timeLineConfig.setStrokeType(StrokeType.NO_ENDPOINT);
                 break;
             case 2:
+                timeLineConfig.setStrokeType(StrokeType.MID_ENDPOINT);
                 break;
         }
         final int timeLineType = ta.getInt(R.styleable.TimeLineView_timeLineType, 0);
