@@ -180,7 +180,7 @@ public class TimeLineView extends RecyclerView {
         initData();
     }
 
-    public void updateDividerNum(int dividerNum, boolean showAnim) {
+    public void updateDividerNum(float dividerNum, boolean showAnim) {
         ExceptionUtil.checkIfNull(this.timeLineConfig, "TimeLineConfig");
         ExceptionUtil.checkIfNull(this.timeLineConfig.getStepViewConfig(), "StepViewConfig");
 
@@ -193,7 +193,7 @@ public class TimeLineView extends RecyclerView {
 
     }
 
-    public void updateDividerNum(int dividerNum) {
+    public void updateDividerNum(float dividerNum) {
         updateDividerNum(dividerNum, true);
     }
 }

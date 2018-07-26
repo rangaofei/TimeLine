@@ -20,12 +20,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                app:stepPreColor="@color/colorAccent"
+                app:stepPreColor="@color/colorPrimaryDark"
                 app:stepShowOrder="true"
-                app:strokeType="midEndPoint"
+                app:strokeType="noEndPoint"
                 app:timePadding="30dp"
-                app:timeLineIconHeight="10dp"
-                app:timeLineIconWidth="10dp"
+                app:timeIndexColor="@color/black"
+                app:timeLineIconHeight="30dp"
+                app:timeLineIconWidth="30dp"
                 app:timeStrokeWidth="3dp" />
 
             <View
@@ -41,7 +42,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 app:stepPreColor="@color/colorAccent"
-                app:strokeType="midEndPoint"
+                app:strokeType="noEndPoint"
                 app:timePadding="30dp"
                 app:timeStrokeWidth="3dp" />
 

@@ -38,7 +38,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation project(path: ':sakatimeline')
     annotationProcessor project(path: ':JavaTimeLine')
-//    implementation 'com.rangaofei:sakatimeline:0.2.2'
-//    annotationProcessor 'com.rangaofei:JavaTimeLine:0.2.2'
+//    implementation 'com.rangaofei:sakatimeline:0.2.3'
+//    annotationProcessor 'com.rangaofei:JavaTimeLine:0.2.3'
     implementation 'com.android.support:cardview-v7:27.1.1'
 }

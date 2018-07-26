@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         list = new ArrayList<>();
         list.add(getResources().getDrawable(R.drawable.ic_order));
         list.add(null);
+        list.add(getResources().getDrawable(R.drawable.withpadding));
         initRecyclerView();
 
     }
@@ -63,17 +64,17 @@ public class MainActivity extends AppCompatActivity {
 
         secondAdapter = new StepViewModelAdapter(secondStepViewModels);
         ((TimeLineView) findViewById(R.id.one)).
-                setTimeLineConfig(firstAdapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 3, list);
+                setTimeLineConfig(firstAdapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 1, list);
         ((TimeLineView) findViewById(R.id.two)).
-                setTimeLineConfig(secondAdapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS, 2);
+                setTimeLineConfig(secondAdapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS, 0);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 firstStepViewModels.get(0).right = false;
                 firstAdapter.notifyDataSetChanged();
-                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(2);
-                ((TimeLineView) findViewById(R.id.two)).updateDividerNum(3);
+                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(2.7f);
+                ((TimeLineView) findViewById(R.id.two)).updateDividerNum(4.0f);
             }
         }, 3000);
 

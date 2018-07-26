@@ -17,7 +17,7 @@ public class StepViewConfig {
     //是否显示index，序号，从1开始
     private boolean showStepText;
     //当前分割点
-    private int dividerNum;
+    private float dividerNum;
     //分割点前边线的颜色
     private int preColor;
     //分割点后边线的颜色
@@ -36,11 +36,11 @@ public class StepViewConfig {
     }
 
 
-    public int getDividerNum() {
+    public float getDividerNum() {
         return dividerNum;
     }
 
-    public void setDividerNum(int dividerNum) {
+    public void setDividerNum(float dividerNum) {
         this.dividerNum = dividerNum;
     }
 

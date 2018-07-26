@@ -2,7 +2,7 @@
 
 一个简单的时间线控件，采用recyclerview实现。
 
-0.2.3更新：
+0.2.4更新：
 
 新增可以控制icon大小的属性：
 
@@ -24,11 +24,13 @@ app:strokeType="midEndPoint"
 未设置该大小时会自动设置成为timePadding的三分之二；当其中一个设置另一个未设置时，
 未设置的值会自动设置成为已设置的值。
 
+可以设置dividerNum为浮点型，会自动调整进度，这种形式在noEndPoint模式下工作最好。
+
 ## 集成方式
 
 ```groovy
-    implementation 'com.rangaofei:sakatimeline:0.2.3'
-    annotationProcessor 'com.rangaofei:JavaTimeLine:0.2.3'
+    implementation 'com.rangaofei:sakatimeline:0.2.4'
+    annotationProcessor 'com.rangaofei:JavaTimeLine:0.2.4'
 ```
 然后修改app级别的module的build.gradle 文件：
 

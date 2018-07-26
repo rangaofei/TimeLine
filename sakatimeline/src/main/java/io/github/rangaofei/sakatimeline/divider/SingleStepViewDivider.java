@@ -162,7 +162,7 @@ public class SingleStepViewDivider extends BaseDivider {
             lineStopX = view.getRight() + globalRect.right;
             if (i <= currentNum - 1) {
                 rectStopX = view.getRight() + globalRect.right;
-            } else if (i > currentNum - 1 && i <= currentNum) {
+            } else if (i > currentNum - 1 && i <= (int) currentNum) {
                 rectStopX = (int) (view.getLeft() - globalRect.left +
                         widthWithPadding * (currentNum - (int) currentNum));
             }
@@ -173,13 +173,13 @@ public class SingleStepViewDivider extends BaseDivider {
             } else if (i == parent.getChildCount() - 1) {
                 lineStartX = view.getLeft() - globalRect.left;
                 lineStopX = view.getRight() - view.getWidth() / 2;
-            }else {
+            } else {
                 lineStartX = view.getLeft() - globalRect.left;
                 lineStopX = view.getRight() + globalRect.right;
             }
             if (i <= currentNum - 1) {
                 rectStopX = view.getRight() + globalRect.right;
-            } else if (i > currentNum - 1 && i <= currentNum) {
+            } else if (i > currentNum - 1 && i <= (int) currentNum) {
                 rectStopX = (int) (view.getLeft() - globalRect.left +
                         widthWithPadding * (currentNum - (int) currentNum));
             }
@@ -197,12 +197,12 @@ public class SingleStepViewDivider extends BaseDivider {
 
             if (i <= currentNum - 1.5f) {
                 rectStopX = view.getRight() + globalRect.right;
-            } else if (i > currentNum - 1.5f && i <= currentNum - 1f) {
+            } else if (i > currentNum - 1.5f && i <= currentNum - 1) {
                 rectStopX = (int) (view.getLeft() + view.getWidth() / 2 +
                         (view.getWidth() / 2 + globalRect.right) * 2 * (currentNum - (int) currentNum));
-            } else if (i > currentNum - 1f && i <= currentNum - 0.5) {
+            } else if (i > currentNum - 1 && i <= currentNum - 0.5) {
                 rectStopX = (int) (view.getLeft() - globalRect.left +
-                        (view.getWidth() / 2 + globalRect.left) * (currentNum - (int) currentNum));
+                        (view.getWidth() / 2 + globalRect.left) * (currentNum-0.5 - (int) currentNum));
             }
         }
         switch ((TimeLineType.StepViewType) timeLineConfig.getType()) {
@@ -271,7 +271,7 @@ public class SingleStepViewDivider extends BaseDivider {
             } else if (i == parent.getChildCount() - 1) {
                 lineStartY = view.getTop() - globalRect.top;
                 lineStopY = view.getBottom() - view.getHeight() / 2;
-            }else {
+            } else {
                 lineStartY = view.getTop() - globalRect.top;
                 lineStopY = view.getBottom() + globalRect.bottom;
             }
@@ -295,12 +295,12 @@ public class SingleStepViewDivider extends BaseDivider {
 
             if (i <= currentNum - 1.5f) {
                 rectStopY = view.getBottom() + globalRect.bottom;
-            } else if (i > currentNum - 1.5f && i <= currentNum - 1f) {
+            } else if (i > currentNum - 1.5f && i <= currentNum - 1) {
                 rectStopY = (int) (view.getTop() + view.getHeight() / 2 +
                         (view.getHeight() / 2 + globalRect.bottom) * 2 * (currentNum - (int) currentNum));
-            } else if (i > currentNum - 1f && i <= currentNum - 0.5) {
+            } else if (i > currentNum - 1 && i <= currentNum - 0.5) {
                 rectStopY = (int) (view.getTop() - globalRect.top +
-                        (view.getHeight() / 2 + globalRect.top) * (currentNum - (int) currentNum));
+                        (view.getHeight() / 2 + globalRect.top) * (currentNum-0.5 - (int) currentNum));
             }
         }
         switch ((TimeLineType.StepViewType) timeLineConfig.getType()) {
@@ -384,12 +384,12 @@ public class SingleStepViewDivider extends BaseDivider {
      * @param num      进度值
      * @param showAnim 是否显示动画
      */
-    public void updateDividerNum(int num, boolean showAnim) {
+    public void updateDividerNum(float num, boolean showAnim) {
         if (recyclerView == null) {
             return;
         }
-        if (num > recyclerView.getChildCount() + 1) {
-            num = recyclerView.getChildCount() + 1;
+        if (num > recyclerView.getChildCount()) {
+            num = recyclerView.getChildCount();
         }
         if (num < 0) {
             num = 0;
@@ -403,7 +403,7 @@ public class SingleStepViewDivider extends BaseDivider {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     if (recyclerView != null) {
                         currentNum = (float) animation.getAnimatedValue();
-                        timeLineConfig.getStepViewConfig().setDividerNum((int) currentNum);
+                        timeLineConfig.getStepViewConfig().setDividerNum(currentNum);
                         recyclerView.invalidateItemDecorations();
                         recyclerView.postInvalidate();
                     }
@@ -414,7 +414,7 @@ public class SingleStepViewDivider extends BaseDivider {
         } else {
             if (recyclerView != null) {
                 currentNum = num;
-                timeLineConfig.getStepViewConfig().setDividerNum((int) currentNum);
+                timeLineConfig.getStepViewConfig().setDividerNum(currentNum);
                 recyclerView.invalidateItemDecorations();
             }
         }
