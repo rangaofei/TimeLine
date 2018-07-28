@@ -12,7 +12,7 @@
 这是朋友应用的效果：
 
 <div align="center">
- <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/xiaobalu.jpg" height="480" width="270" >
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/xiaobalu.jpg" height="469" width="519" >
   </div>
 
 0.2.4更新：
@@ -285,7 +285,7 @@ public void updateDividerNum(int dividerNum, boolean showAnim)
 
 #### strokeType
 
-时间轴的类型。有两种：normal和noEndPoint。如图所示
+时间轴的类型。有三种：normal，midEndPoint和noEndPoint。如图所示
 
 #### timeLineType
 
