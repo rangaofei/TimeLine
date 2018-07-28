@@ -9,11 +9,6 @@
 6. 支持四种时间线位置，item大小不同时会自动进行位置对齐。比如时间线在上方，所有的item会自动顶部对齐。
 7. 支持三种时间线模式
 
-这是朋友应用的效果：
-
-<div align="center">
- <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/xiaobalu.jpg" height="469" width="519" >
-  </div>
 
 0.2.4更新：
 
