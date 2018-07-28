@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
         secondStepViewModels.add(new StepViewModel("签约日", false, "04/25"));
         secondStepViewModels.add(new StepViewModel("签约日", false, "04/25"));
         secondStepViewModels.add(new StepViewModel("签约日", false, "04/25"));
+        secondStepViewModels.add(new StepViewModel("签约日", false, "04/25"));
+        secondStepViewModels.add(new StepViewModel("签约日", false, "04/25"));
+        secondStepViewModels.add(new StepViewModel("签约日", false, "04/25"));
+        secondStepViewModels.add(new StepViewModel("签约日", false, "04/25"));
+        secondStepViewModels.add(new StepViewModel("签约日", false, "04/25"));
+        secondStepViewModels.add(new StepViewModel("签约日", false, "04/25"));
         firstAdapter = new StepViewModelAdapter(firstStepViewModels);
         firstAdapter.setItemClickListener(new ItemClickListener() {
             @Override
@@ -64,17 +70,18 @@ public class MainActivity extends AppCompatActivity {
 
         secondAdapter = new StepViewModelAdapter(secondStepViewModels);
         ((TimeLineView) findViewById(R.id.one)).
-                setTimeLineConfig(firstAdapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 1, list);
+                setTimeLineConfig(firstAdapter, TimeLineType.StepViewType.TOP_STEP_PROGRESS, 1.3f, list);
         ((TimeLineView) findViewById(R.id.two)).
                 setTimeLineConfig(secondAdapter, TimeLineType.StepViewType.LEFT_STEP_PROGRESS, 0);
+//        ((TimeLineView) findViewById(R.id.one)).updateDividerNum(2.3f);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 firstStepViewModels.get(0).right = false;
                 firstAdapter.notifyDataSetChanged();
-                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(2.7f);
-                ((TimeLineView) findViewById(R.id.two)).updateDividerNum(4.0f);
+//                ((TimeLineView) findViewById(R.id.one)).updateDividerNum(2.3f);
+//                ((TimeLineView) findViewById(R.id.two)).updateDividerNum(4.0f);
             }
         }, 3000);
 

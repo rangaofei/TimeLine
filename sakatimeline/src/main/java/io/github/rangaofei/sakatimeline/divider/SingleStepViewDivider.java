@@ -45,8 +45,9 @@ public class SingleStepViewDivider extends BaseDivider {
     private int iconW;
     private int iconH;
 
-    public SingleStepViewDivider(Context context, TimeLineConfig timeLineConfig) {
-        super(context, timeLineConfig);
+    public SingleStepViewDivider(RecyclerView recyclerView, TimeLineConfig timeLineConfig) {
+        super(recyclerView, timeLineConfig);
+//        this.recyclerView = recyclerView;
         iconOverlayPaint = new Paint();
         iconOverlayPaint.setColor(timeLineConfig.getStepViewConfig().getPreColor());
         iconOverlayPaint.setAntiAlias(true);
@@ -202,7 +203,7 @@ public class SingleStepViewDivider extends BaseDivider {
                         (view.getWidth() / 2 + globalRect.right) * 2 * (currentNum - (int) currentNum));
             } else if (i > currentNum - 1 && i <= currentNum - 0.5) {
                 rectStopX = (int) (view.getLeft() - globalRect.left +
-                        (view.getWidth() / 2 + globalRect.left) * (currentNum-0.5 - (int) currentNum));
+                        (view.getWidth() / 2 + globalRect.left) * (currentNum - 0.5 - (int) currentNum));
             }
         }
         switch ((TimeLineType.StepViewType) timeLineConfig.getType()) {
@@ -300,7 +301,7 @@ public class SingleStepViewDivider extends BaseDivider {
                         (view.getHeight() / 2 + globalRect.bottom) * 2 * (currentNum - (int) currentNum));
             } else if (i > currentNum - 1 && i <= currentNum - 0.5) {
                 rectStopY = (int) (view.getTop() - globalRect.top +
-                        (view.getHeight() / 2 + globalRect.top) * (currentNum-0.5 - (int) currentNum));
+                        (view.getHeight() / 2 + globalRect.top) * (currentNum - 0.5 - (int) currentNum));
             }
         }
         switch ((TimeLineType.StepViewType) timeLineConfig.getType()) {
@@ -386,7 +387,7 @@ public class SingleStepViewDivider extends BaseDivider {
      */
     public void updateDividerNum(float num, boolean showAnim) {
         if (recyclerView == null) {
-            return;
+            throw new UnsupportedOperationException("you cannot call this method before your activity resumed");
         }
         if (num > recyclerView.getChildCount()) {
             num = recyclerView.getChildCount();

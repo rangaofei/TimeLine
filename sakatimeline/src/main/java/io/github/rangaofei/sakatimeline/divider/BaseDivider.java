@@ -21,8 +21,8 @@ public abstract class BaseDivider extends RecyclerView.ItemDecoration {
     protected static final int DEFAULT_BOTTOM_DIVIDER_GAP = 10;
 
 
-    public BaseDivider(Context context, TimeLineConfig timeLineConfig) {
-        this.context = context;
+    public BaseDivider(RecyclerView recyclerView, TimeLineConfig timeLineConfig) {
+        this.context = recyclerView.getContext();
         this.timeLineConfig = timeLineConfig;
         this.padding = timeLineConfig.getPadding();
     }

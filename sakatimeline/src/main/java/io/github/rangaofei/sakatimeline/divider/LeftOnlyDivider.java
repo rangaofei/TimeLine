@@ -17,8 +17,8 @@ public class LeftOnlyDivider extends BaseDivider {
     private Paint linePaint;
     private Rect drawRect = new Rect();
 
-    public LeftOnlyDivider(Context context, TimeLineConfig timeLineConfig) {
-        super(context, timeLineConfig);
+    public LeftOnlyDivider(RecyclerView recyclerView, TimeLineConfig timeLineConfig) {
+        super(recyclerView, timeLineConfig);
         drawPaint = new Paint();
         drawPaint.setColor(Color.parseColor("#259b24"));
         drawPaint.setStrokeWidth(timeLineConfig.getTimeStrokeWidth());

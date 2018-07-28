@@ -64,7 +64,7 @@ public class TimeLineView extends RecyclerView {
                     ((PerfectLinearLayoutManager) layoutManager).setRTL(true);
                     break;
             }
-            divider = new SingleStepViewDivider(getContext(), timeLineConfig);
+            divider = new SingleStepViewDivider(this, timeLineConfig);
 
         }
 
@@ -163,13 +163,13 @@ public class TimeLineView extends RecyclerView {
     }
 
 
-    public void setTimeLineConfig(AbstractTimeLineAdapter adapter, TimeLineType type, int dividerNum) {
+    public void setTimeLineConfig(AbstractTimeLineAdapter adapter, TimeLineType type, float dividerNum) {
         this.setTimeLineConfig(adapter, type, dividerNum, null);
     }
 
     public void setTimeLineConfig(AbstractTimeLineAdapter adapter,
                                   TimeLineType type,
-                                  int dividerNum,
+                                  float dividerNum,
                                   List<Drawable> list) {
         ExceptionUtil.checkIfNull(this.timeLineConfig, "TimeLineConfig");
         ExceptionUtil.checkIfNull(adapter, "AbstractTimeLineAdapter");

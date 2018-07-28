@@ -1,6 +1,6 @@
 # sakatimeline
 
-一个简单的时间线控件，采用RecyclerView实现。主要特性：
+一个简单的时间线控件，采用RecyclerView实现，无任何三方依赖库，一个纯净的库。主要特性：
 1. 可定制timeline的icon图标，每个图标可以通过list作为参数传入
 2. 可定制item布局，每个item中的view都可通过anchor注解来设置不同的style
 3. 支持时间线的前景色和后景色，采用src_in方式覆盖
@@ -8,6 +8,12 @@
 5. 采用编译期注解，在运行期未使用反射
 6. 支持四种时间线位置，item大小不同时会自动进行位置对齐。比如时间线在上方，所有的item会自动顶部对齐。
 7. 支持三种时间线模式
+
+这是朋友应用的效果：
+
+<div align="center">
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/xiaobalu.jpg" height="480" width="270" >
+  </div>
 
 0.2.4更新：
 
@@ -58,6 +64,8 @@ android {
 
 ## 使用StepView
 
+StepView基于注解
+
 StepView内部使用apt处理注解实现了adapter，adapter包含两种布局，key和value。目前推出的只需要使用value布局即可。
 
 首先要定义一个model，这个model要编写一些注解
@@ -82,7 +90,7 @@ public class StepViewModel {
     }
 }
 ```
-注意，每个变量必须采用public修饰，否则获取不到变量的值
+注意，每个变量必须采用public修饰，否则获取不到变量的值（其实是目前我没有做任何getter和setter方法）
 
 然后先build一次，在需要使用model的时候要写入
 
@@ -116,9 +124,7 @@ binding.tlv.setTimeLineConfig(adapter, TimeLineType.StepViewType.RIGHT_STEP_PROG
   </div>
 ## 为item设置不同的样式
 
-注意：目前只支持textview的部分属性的不同样式设置
-
-支持imageview的src显示。
+注意：目前只支持textview的部分属性的不同样式设置，支持imageview的src显示。
 
 同样是前边的类，稍微修改一下：
 

@@ -10,8 +10,8 @@ import io.github.rangaofei.sakatimeline.config.TimeLineConfig;
 import io.github.rangaofei.sakatimeline.adapter.AbstractTimeLineAdapter;
 
 public class LeftRightDivider extends BaseDivider {
-    public LeftRightDivider(Context context, TimeLineConfig timeLineConfig) {
-        super(context, timeLineConfig);
+    public LeftRightDivider(RecyclerView recyclerView, TimeLineConfig timeLineConfig) {
+        super(recyclerView, timeLineConfig);
     }
 
     @Override
