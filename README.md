@@ -326,3 +326,7 @@ public void updateDividerNum(int dividerNum, boolean showAnim)
 设置可点击，与view的clickable一致
 
 
+最后，有建议的朋友可以邮箱或者微信：
+
+邮箱：876038559@qq.com
+微信：<img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/wechat.png" >
