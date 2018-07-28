@@ -329,4 +329,4 @@ public void updateDividerNum(int dividerNum, boolean showAnim)
 最后，有建议的朋友可以邮箱或者微信：
 
 邮箱：876038559@qq.com
-微信：<img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/wechat.png" >
+微信：<img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/wechat.jpg" height="448" width="337" >
