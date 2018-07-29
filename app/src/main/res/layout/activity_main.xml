@@ -3,51 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <LinearLayout
+            android:id="@+id/ll_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:context=".MainActivity">
+            android:layout_height="wrap_content">
 
-
-            <io.github.rangaofei.sakatimeline.TimeLineView
-                android:id="@+id/one"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                app:stepPreColor="@color/colorPrimaryDark"
-                app:stepShowOrder="true"
-                app:strokeType="noEndPoint"
-                app:timePadding="30dp"
-                app:timeIndexColor="@color/black"
-                app:timeLineIconHeight="30dp"
-                app:timeLineIconWidth="30dp"
-                app:timeStrokeWidth="3dp" />
+                android:layout_weight="1"
+                android:text="淘宝" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/colorAccent"
-                android:visibility="gone" />
-
-            <io.github.rangaofei.sakatimeline.TimeLineView
-                android:id="@+id/two"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                app:stepPreColor="@color/colorAccent"
-                app:strokeType="noEndPoint"
-                app:timePadding="30dp"
-                app:timeStrokeWidth="3dp" />
-
-
+                android:layout_weight="1"
+                android:text="慕课" />
         </LinearLayout>
-    </ScrollView>
+
+
+        <!--<io.github.rangaofei.sakatimeline.TimeLineView-->
+        <!--android:id="@+id/one"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--app:stepPreColor="@color/colorPrimaryDark"-->
+        <!--app:stepShowOrder="true"-->
+        <!--app:strokeType="noEndPoint"-->
+        <!--app:timeIndexColor="@color/black"-->
+        <!--app:timeLineIconHeight="30dp"-->
+        <!--app:timeLineIconWidth="30dp"-->
+        <!--app:timePadding="30dp"-->
+        <!--app:timeStrokeWidth="3dp" />-->
+
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="2dp"-->
+        <!--android:background="@color/colorAccent"-->
+        <!--android:visibility="gone" />-->
+
+        <!--<io.github.rangaofei.sakatimeline.TimeLineView-->
+        <!--android:id="@+id/two"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--app:fastScrollEnabled="true"-->
+        <!--app:fastScrollVerticalThumbDrawable="@drawable/order"-->
+        <!--app:stepPreColor="@color/colorAccent"-->
+        <!--app:strokeType="noEndPoint"-->
+        <!--app:timePadding="30dp"-->
+        <!--app:timeStrokeWidth="3dp" />-->
+
+
+    </LinearLayout>
 
 </layout>

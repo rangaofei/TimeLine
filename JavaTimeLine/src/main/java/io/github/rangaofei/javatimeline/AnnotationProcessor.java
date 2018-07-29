@@ -1,4 +1,4 @@
-package io.github.rangaofei.javatimeline.processor;
+package io.github.rangaofei.javatimeline;
 
 import com.google.auto.service.AutoService;
 
@@ -18,10 +18,15 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 
 import io.github.rangaofei.javatimeline.TimeLineContext;
+import io.github.rangaofei.javatimeline.processor.DividerProcessor;
+import io.github.rangaofei.javatimeline.processor.TimeLineProcess;
+import io.github.rangaofei.javatimeline.processor.TimeLineProcessor;
 import io.github.rangaofei.libannotations.TimeLine;
 import io.github.rangaofei.libannotations.TimeLineDividerAdapter;
 
-
+/**
+ * 注解处理入口类
+ */
 @AutoService(Processor.class)
 public class AnnotationProcessor extends AbstractProcessor {
 
@@ -34,7 +39,7 @@ public class AnnotationProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> s = new HashSet<>();
-        s.add(TimeLine.class.getName());
+        s.add(TimeLine.class.getCanonicalName());
         return s;
     }
 
@@ -49,6 +54,7 @@ public class AnnotationProcessor extends AbstractProcessor {
         TimeLineContext.filter = processingEnvironment.getFiler();
         TimeLineContext.messager = processingEnvironment.getMessager();
         TimeLineContext.elementUtil = processingEnvironment.getElementUtils();
+        TimeLineContext.typeUtil = processingEnvironment.getTypeUtils();
     }
 
     @Override
@@ -61,9 +67,8 @@ public class AnnotationProcessor extends AbstractProcessor {
         Set<? extends Element> timeLineElements = roundEnvironment.getElementsAnnotatedWith(TimeLine.class);
         for (Element element : timeLineElements) {
             TimeLineContext.note(element.getSimpleName().toString());
-            if (element.getKind() == ElementKind.CLASS) {
-                TimeLineContext.note("correct element");
-            } else {
+            if (element.getKind() != ElementKind.CLASS) {
+                TimeLineContext.error("%s can not annotated with other than class", TimeLine.class.getName());
                 throw new RuntimeException("this element is not annotated with class");
             }
 

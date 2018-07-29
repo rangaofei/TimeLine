@@ -15,7 +15,7 @@ public class AnchorProcessor implements TimeLineProcess {
     private List<AnchorInfo> anchorInfos;
 
 
-    public AnchorProcessor(Element element) {
+    AnchorProcessor(Element element) {
         this.element = element;
         anchorInfos = new ArrayList<>();
     }

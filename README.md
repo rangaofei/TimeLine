@@ -9,6 +9,14 @@
 6. 支持四种时间线位置，item大小不同时会自动进行位置对齐。比如时间线在上方，所有的item会自动顶部对齐。
 7. 支持三种时间线模式
 
+看两张效果图,仿淘宝退款，和一个不太标准的仿慕课：
+
+<div align="center">
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/muke.png" height="480" width="270" >
+
+ <img src="https://github.com/rangaofei/TimeLine/blob/master/Pics/taobao.png" height="480" width="270" >
+
+  </div>
 
 0.2.4更新：
 

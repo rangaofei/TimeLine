@@ -20,6 +20,9 @@ import io.github.rangaofei.javatimeline.TimeLineContext;
 import io.github.rangaofei.javatimeline.viewattr.AnchorInfo;
 import io.github.rangaofei.libannotations.TimeLine;
 
+/**
+ * 处理TimeLine注解
+ */
 public class TimeLineProcessor implements TimeLineProcess {
     private Element element;
     private String adapterName;
@@ -57,6 +60,10 @@ public class TimeLineProcessor implements TimeLineProcess {
 
     /**
      * 获取TimeLine标注的类的基本信息
+     * 包名
+     * 类名
+     * 类的全路径名
+     * 适配器名
      */
     private void getBasicField() {
         if (this.element == null) {

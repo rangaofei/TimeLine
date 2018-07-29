@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MukeFragment">
+
+    <io.github.rangaofei.sakatimeline.TimeLineView
+        android:id="@+id/muke_tlv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        app:strokeType="normal"
+        app:timePadding="30dp"
+        app:timeStrokeWidth="3dp" />
+</LinearLayout>

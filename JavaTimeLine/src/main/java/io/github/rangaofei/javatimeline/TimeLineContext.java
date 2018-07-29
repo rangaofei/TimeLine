@@ -1,10 +1,16 @@
 package io.github.rangaofei.javatimeline;
 
+
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
+/**
+ * 上下文的一个类。
+ * 1. 打印日志
+ */
 public class TimeLineContext {
 
     public static final String TAG = "TimeLine";
@@ -14,6 +20,8 @@ public class TimeLineContext {
     public static Messager messager;
 
     public static Elements elementUtil;
+
+    public static Types typeUtil;
 
 
     public static Filer getFilter() {
@@ -56,7 +64,7 @@ public class TimeLineContext {
         logMessage(Diagnostic.Kind.OTHER, msg, args);
     }
 
-    public static void logMessage(Diagnostic.Kind kind, String msg, Object... args) {
+    private static void logMessage(Diagnostic.Kind kind, String msg, Object... args) {
         if (DEBUG) {
             if (messager == null) {
                 throw new RuntimeException("Messager is NULL");
