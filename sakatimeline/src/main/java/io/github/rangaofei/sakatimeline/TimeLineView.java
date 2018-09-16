@@ -1,5 +1,6 @@
 package io.github.rangaofei.sakatimeline;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -27,16 +28,25 @@ import io.github.rangaofei.sakatimeline.util.ExceptionUtil;
 
 import static io.github.rangaofei.sakatimeline.divider.TimeLineType.StepViewType.*;
 
+/**
+ * 主要类
+ */
 public class TimeLineView extends RecyclerView {
     private LayoutManager layoutManager;
     private BaseDivider divider;
     private TimeLineConfig timeLineConfig;
 
 
+    /**
+     * Java代码中的构造方法
+     */
     public TimeLineView(Context context) {
         this(context, null);
     }
 
+    /**
+     * XML布局文件中的构造方法
+     */
     public TimeLineView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         getCustomAttr(attrs);
@@ -90,9 +100,15 @@ public class TimeLineView extends RecyclerView {
         return indexTextConfig;
     }
 
+    /**
+     * 获取时间轴中步骤的属性
+     *
+     * @param as
+     * @return
+     */
     private StepViewConfig getStepViewAttr(AttributeSet as) {
         StepViewConfig stepViewConfig = new StepViewConfig();
-        final TypedArray ta = getContext().obtainStyledAttributes(as, R.styleable.StepViewDivider);
+        @SuppressLint("CustomViewStyleable") final TypedArray ta = getContext().obtainStyledAttributes(as, R.styleable.StepViewDivider);
         if (ta == null) {
             return stepViewConfig;
         }
@@ -106,6 +122,9 @@ public class TimeLineView extends RecyclerView {
         return stepViewConfig;
     }
 
+    /**
+     * 获取所有的属性
+     */
     private void getCustomAttr(AttributeSet attributeSet) {
         this.timeLineConfig = new TimeLineConfig();
         this.timeLineConfig.setStepViewConfig(getStepViewAttr(attributeSet));
